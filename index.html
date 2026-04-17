@@ -1,780 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>5-Day Last Moment Revision Plan | JEE • MHT-CET • Class 12</title>
-<meta name="description" content="The only revision guide you need before your exam. High-weightage topics, formulas & PYQ patterns — in 20 pages. Just ₹49.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ink: #0d0d0d;
-    --cream: #f7f4ef;
-    --gold: #c9a84c;
-    --gold-light: #f0d98a;
-    --red: #d63031;
-    --red-dark: #a82224;
-    --muted: #6b6b6b;
-    --border: #e0dbd2;
-    --white: #ffffff;
-  }
+<!-- ONLY SHOWING CHANGED PARTS TO SAVE YOUR TIME -->
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<!-- HERO TEXT FIX -->
+<h1 class="fade-up fade-up-2">
+  Crack Your Exam in<br>
+  <em>5 Days</em> Not 5 Months
+</h1>
 
-  html { scroll-behavior: smooth; }
+<p class="hero-sub fade-up fade-up-3">
+  The only revision guide built for students scoring 50–70 marks who need a fast, strategic boost — covering high-weightage topics, formulas & PYQ patterns in just 30 pages.
+</p>
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    overflow-x: hidden;
-  }
+<!-- STATS FIX -->
+<div class="stat-num">30</div>
+<div class="stat-label">Focused Pages</div>
 
-  /* ── NOISE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9999; opacity: 0.5;
-  }
+<!-- CTA FIX -->
+<p>30 pages. 5 days. One shot at the score you deserve.</p>
 
-  /* ── TOPBAR ── */
-  .topbar {
-    background: var(--ink);
-    color: var(--gold-light);
-    text-align: center;
-    padding: 10px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
-  .topbar strong { color: #fff; }
+<!-- REMOVE TESTIMONIALS SECTION COMPLETELY -->
+<!-- (DELETE FULL TESTIMONIALS SECTION FROM YOUR CODE) -->
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100svh;
-    display: grid;
-    place-items: center;
-    padding: 60px 20px 80px;
-    position: relative;
-    overflow: hidden;
-  }
 
-  .hero::after {
-    content: 'REVISION';
-    position: absolute;
-    bottom: -30px; right: -20px;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(80px, 18vw, 220px);
-    font-weight: 900;
-    color: rgba(0,0,0,0.04);
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .hero-inner { max-width: 760px; text-align: center; }
-
-  .exam-badges {
-    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
-    margin-bottom: 28px;
-  }
-  .badge {
-    background: var(--ink); color: var(--gold-light);
-    padding: 5px 14px; border-radius: 2px;
-    font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-  }
-
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 7vw, 72px);
-    line-height: 1.1;
-    font-weight: 900;
-    color: var(--ink);
-    margin-bottom: 20px;
-  }
-  .hero h1 em {
-    font-style: normal;
-    color: var(--red);
-    position: relative;
-    display: inline-block;
-  }
-  .hero h1 em::after {
-    content: '';
-    position: absolute;
-    bottom: 4px; left: 0; right: 0;
-    height: 3px;
-    background: var(--gold);
-    border-radius: 2px;
-  }
-
-  .hero-sub {
-    font-size: clamp(16px, 2.5vw, 20px);
-    color: var(--muted);
-    line-height: 1.6;
-    max-width: 560px;
-    margin: 0 auto 36px;
-    font-weight: 400;
-  }
-
-  .price-row {
-    display: flex; align-items: center; justify-content: center; gap: 16px;
-    margin-bottom: 32px; flex-wrap: wrap;
-  }
-  .price-old {
-    font-size: 20px; color: var(--muted);
-    text-decoration: line-through; font-weight: 400;
-  }
-  .price-new {
-    font-family: 'Playfair Display', serif;
-    font-size: 52px; font-weight: 900; color: var(--ink); line-height: 1;
-  }
-  .price-new sup { font-size: 28px; vertical-align: super; }
-  .price-tag {
-    background: var(--gold); color: var(--ink);
-    padding: 4px 12px; border-radius: 2px;
-    font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-  }
-
-  .cta-btn {
-    display: inline-block;
-    background: var(--red);
-    color: #fff;
-    padding: 18px 48px;
-    font-size: 17px; font-weight: 700;
-    letter-spacing: 0.04em; text-transform: uppercase;
-    border: none; cursor: pointer;
-    text-decoration: none;
-    border-radius: 3px;
-    box-shadow: 0 6px 30px rgba(214,48,49,0.35);
-    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-    position: relative; overflow: hidden;
-  }
-  .cta-btn::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.12) 50%, transparent 70%);
-    transform: translateX(-100%);
-    transition: transform 0.5s;
-  }
-  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(214,48,49,0.45); background: var(--red-dark); }
-  .cta-btn:hover::after { transform: translateX(100%); }
-  .cta-btn:active { transform: translateY(0); }
-
-  .trust-line {
-    margin-top: 18px;
-    font-size: 13px; color: var(--muted);
-    display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
-  }
-  .trust-line span { display: flex; align-items: center; gap: 5px; }
-  .trust-line svg { width: 14px; height: 14px; }
-
-  /* ── SECTION COMMON ── */
-  section { padding: 80px 20px; }
-  .section-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 14px;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 5vw, 48px);
-    font-weight: 900; line-height: 1.15;
-    max-width: 600px;
-  }
-
-  /* ── DIVIDER ── */
-  .divider {
-    display: flex; align-items: center; gap: 16px;
-    padding: 0 20px; max-width: 900px; margin: 0 auto;
-  }
-  .divider-line { flex: 1; height: 1px; background: var(--border); }
-  .divider-diamond {
-    width: 8px; height: 8px; background: var(--gold);
-    transform: rotate(45deg); flex-shrink: 0;
-  }
-
-  /* ── FOR WHOM ── */
-  .for-whom {
-    background: var(--ink); color: var(--cream);
-    clip-path: polygon(0 30px, 100% 0, 100% calc(100% - 30px), 0 100%);
-    padding: 100px 20px;
-  }
-  .for-whom .section-label { color: var(--gold); }
-  .for-whom .section-title { color: var(--cream); }
-  .for-whom-inner { max-width: 900px; margin: 0 auto; }
-
-  .for-whom-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 24px; margin-top: 48px;
-  }
-  .for-card {
-    border: 1px solid rgba(201,168,76,0.25);
-    padding: 28px 24px; border-radius: 4px;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .for-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
-  .for-card-icon { font-size: 28px; margin-bottom: 14px; }
-  .for-card h3 { font-size: 16px; font-weight: 600; color: var(--gold-light); margin-bottom: 8px; }
-  .for-card p { font-size: 14px; color: rgba(247,244,239,0.65); line-height: 1.6; }
-
-  /* ── BENEFITS ── */
-  .benefits-inner { max-width: 900px; margin: 0 auto; }
-  .benefits-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px; margin-top: 48px;
-  }
-  .benefit-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 6px; padding: 28px 24px;
-    position: relative; overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .benefit-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 3px; background: var(--gold);
-  }
-  .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
-  .benefit-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 48px; font-weight: 900;
-    color: rgba(201,168,76,0.2); line-height: 1;
-    margin-bottom: 12px;
-  }
-  .benefit-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-  .benefit-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
-  /* ── PREVIEW ── */
-  .preview { background: var(--white); }
-  .preview-inner { max-width: 900px; margin: 0 auto; }
-  .preview-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px; margin-top: 48px;
-  }
-  .preview-card {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    aspect-ratio: 3/4;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 24px 16px; text-align: center;
-    gap: 12px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: default;
-  }
-  .preview-card:hover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
-  .preview-card-day {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--gold);
-  }
-  .preview-card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--ink);
-  }
-  .preview-card-topics {
-    font-size: 12px; color: var(--muted); line-height: 1.5;
-  }
-  .preview-card-icon { font-size: 32px; }
-
-  /* ── STATS STRIP ── */
-  .stats-strip {
-    background: var(--gold);
-    padding: 40px 20px;
-  }
-  .stats-inner {
-    max-width: 800px; margin: 0 auto;
-    display: flex; justify-content: space-around; flex-wrap: wrap; gap: 32px;
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 40px; font-weight: 900; color: var(--ink); line-height: 1;
-  }
-  .stat-label { font-size: 13px; font-weight: 500; color: rgba(13,13,13,0.65); margin-top: 6px; }
-
-  /* ── TESTIMONIALS ── */
-  .testimonials-inner { max-width: 900px; margin: 0 auto; }
-  .testi-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px; margin-top: 48px;
-  }
-  .testi-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 6px; padding: 28px 24px;
-    position: relative;
-  }
-  .testi-card::before {
-    content: '"';
-    font-family: 'Playfair Display', serif;
-    font-size: 80px; line-height: 0.7;
-    color: var(--gold); opacity: 0.3;
-    position: absolute; top: 20px; left: 20px;
-    pointer-events: none;
-  }
-  .testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 12px; }
-  .testi-text { font-size: 15px; line-height: 1.7; color: var(--ink); margin-bottom: 20px; font-weight: 400; }
-  .testi-author { display: flex; align-items: center; gap: 12px; }
-  .testi-avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--ink); color: var(--gold);
-    font-family: 'Playfair Display', serif;
-    font-size: 18px; font-weight: 700;
-    display: grid; place-items: center; flex-shrink: 0;
-  }
-  .testi-name { font-size: 13px; font-weight: 600; }
-  .testi-info { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-  /* ── CTA BLOCK ── */
-  .cta-block {
-    background: var(--ink);
-    text-align: center; padding: 100px 20px;
-    clip-path: polygon(0 30px, 100% 0, 100% 100%, 0 100%);
-  }
-  .cta-block .section-label { color: var(--gold); }
-  .cta-block h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(30px, 5vw, 52px); font-weight: 900;
-    color: var(--cream); margin: 14px 0 20px; line-height: 1.15;
-  }
-  .cta-block p { font-size: 16px; color: rgba(247,244,239,0.65); margin-bottom: 40px; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .cta-price-row {
-    display: flex; align-items: flex-end; justify-content: center; gap: 12px;
-    margin-bottom: 32px; flex-wrap: wrap;
-  }
-  .cta-price-old { font-size: 20px; color: rgba(247,244,239,0.35); text-decoration: line-through; }
-  .cta-price-new {
-    font-family: 'Playfair Display', serif;
-    font-size: 64px; font-weight: 900; color: var(--gold); line-height: 1;
-  }
-  .cta-price-new sup { font-size: 32px; }
-  .cta-guarantee {
-    margin-top: 24px; font-size: 13px;
-    color: rgba(247,244,239,0.5);
-    display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
-  }
-
-  /* ── FAQ ── */
-  .faq-inner { max-width: 680px; margin: 0 auto; }
-  .faq-list { margin-top: 48px; }
-  .faq-item {
-    border-bottom: 1px solid var(--border); overflow: hidden;
-  }
-  .faq-q {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 4px; cursor: pointer; font-weight: 500; font-size: 15px;
-    gap: 12px; list-style: none; user-select: none;
-  }
-  .faq-q::-webkit-details-marker { display: none; }
-  .faq-icon {
-    width: 24px; height: 24px; flex-shrink: 0;
-    border: 1px solid var(--border); border-radius: 50%;
-    display: grid; place-items: center;
-    font-size: 16px; color: var(--gold); transition: transform 0.25s;
-  }
-  details[open] .faq-icon { transform: rotate(45deg); }
-  .faq-a {
-    padding: 0 4px 20px;
-    font-size: 14px; color: var(--muted); line-height: 1.7;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink); color: rgba(247,244,239,0.4);
-    text-align: center; padding: 32px 20px;
-    font-size: 13px; line-height: 1.8;
-  }
-  footer a { color: var(--gold); text-decoration: none; }
-
-  /* ── STICKY CTA ── */
-  .sticky-cta {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: var(--white);
-    border-top: 2px solid var(--gold);
-    padding: 12px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 16px; z-index: 100;
-    box-shadow: 0 -4px 30px rgba(0,0,0,0.1);
-    transform: translateY(100%);
-    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .sticky-cta.visible { transform: translateY(0); }
-  .sticky-left { font-size: 14px; font-weight: 500; }
-  .sticky-left span { color: var(--red); font-weight: 700; }
-  .sticky-btn {
-    background: var(--red); color: #fff;
-    padding: 12px 28px; border: none; cursor: pointer;
-    font-size: 14px; font-weight: 700; letter-spacing: 0.04em;
-    text-transform: uppercase; border-radius: 3px;
-    white-space: nowrap; text-decoration: none;
-    box-shadow: 0 4px 16px rgba(214,48,49,0.3);
-    transition: background 0.15s;
-  }
-  .sticky-btn:hover { background: var(--red-dark); }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .fade-up { animation: fadeUp 0.7s ease both; }
-  .fade-up-1 { animation-delay: 0.1s; }
-  .fade-up-2 { animation-delay: 0.25s; }
-  .fade-up-3 { animation-delay: 0.4s; }
-  .fade-up-4 { animation-delay: 0.55s; }
-  .fade-up-5 { animation-delay: 0.7s; }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 6px 30px rgba(214,48,49,0.35); }
-    50%       { box-shadow: 0 6px 50px rgba(214,48,49,0.6); }
-  }
-  .cta-btn { animation: pulse 2.5s ease-in-out infinite; }
-  .cta-btn:hover { animation: none; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 520px) {
-    .preview-grid { grid-template-columns: 1fr 1fr; }
-    .sticky-left { display: none; }
-    .sticky-btn { width: 100%; text-align: center; }
-  }
-</style>
-</head>
-<body>
-
-<!-- TOPBAR -->
-<div class="topbar">
-  🔥 <strong>Limited Offer:</strong> Get the full 5-Day Revision Plan for just ₹49 — Instant PDF Download
-</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="exam-badges fade-up fade-up-1">
-      <span class="badge">JEE Main / Adv</span>
-      <span class="badge">MHT-CET</span>
-      <span class="badge">Class 12 Boards</span>
-    </div>
-    <h1 class="fade-up fade-up-2">
-      Crack Your Exam in<br>
-      <em>5 Days.</em> Not 5 Months.
-    </h1>
-    <p class="hero-sub fade-up fade-up-3">
-      The only revision guide built for students scoring 50–70 marks who need a fast, strategic boost — covering high-weightage topics, formulas & PYQ patterns in just 20 pages.
-    </p>
-    <div class="price-row fade-up fade-up-4">
-      <span class="price-old">₹299</span>
-      <span class="price-new"><sup>₹</sup>49</span>
-      <span class="price-tag">84% Off</span>
-    </div>
-    <a href="#buy" class="cta-btn fade-up fade-up-5">Download Now — ₹49 →</a>
-    <p class="trust-line fade-up fade-up-5">
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Instant PDF Access
-      </span>
-      <span>·</span>
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        Secure UPI / Card Payment
-      </span>
-      <span>·</span>
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        5-Minute Setup
-      </span>
-    </p>
-  </div>
-</section>
-
-<!-- DIVIDER -->
-<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-<!-- FOR WHOM -->
-<section class="for-whom">
-  <div class="for-whom-inner">
-    <p class="section-label">This is for you if…</p>
-    <h2 class="section-title">Sound familiar?</h2>
-    <div class="for-whom-grid">
-      <div class="for-card">
-        <div class="for-card-icon">😰</div>
-        <h3>"I have 5 days and no idea where to start"</h3>
-        <p>Syllabus feels huge, time feels short. This tells you exactly what to study — and what to skip.</p>
-      </div>
-      <div class="for-card">
-        <div class="for-card-icon">📉</div>
-        <h3>"I'm stuck at 50–70 marks"</h3>
-        <p>You're close. A focused push on the right chapters will break you through to the next level.</p>
-      </div>
-      <div class="for-card">
-        <div class="for-card-icon">🤯</div>
-        <h3>"I can't memorize 500 formulas"</h3>
-        <p>You don't need to. This plan curates only the high-yield formulas that actually appear in exams.</p>
-      </div>
-      <div class="for-card">
-        <div class="for-card-icon">🎯</div>
-        <h3>"I need a strategy, not more content"</h3>
-        <p>Smart attempt order, time allocation, and question selection — all covered inside.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BENEFITS -->
+<!-- NEW EXAM SECTIONS (ADD THIS BELOW BENEFITS SECTION) -->
 <section>
   <div class="benefits-inner">
-    <p class="section-label">What's inside</p>
-    <h2 class="section-title">Everything you need. Nothing you don't.</h2>
+    <p class="section-label">Built for your exam</p>
+    <h2 class="section-title">Tailored for every target</h2>
+
     <div class="benefits-grid">
+
       <div class="benefit-card">
-        <div class="benefit-num">01</div>
-        <h3>🔑 High-Weightage Topic List</h3>
-        <p>Chapter-wise priority breakdown for Physics, Chemistry & Maths — focus only on what the exam repeatedly rewards.</p>
+        <h3>🎯 JEE Main / Advanced</h3>
+        <p>Focus on high-weightage Physics numericals, advanced Maths patterns, and selective Chemistry scoring chapters.</p>
       </div>
+
       <div class="benefit-card">
-        <div class="benefit-num">02</div>
-        <h3>📐 Formula Rapid-Fire Sheets</h3>
-        <p>All must-know formulas, derivations & constants in a scannable format — designed for last-moment revision.</p>
+        <h3>⚡ MHT-CET</h3>
+        <p>Speed-based solving, repeated PYQ patterns, and formula-heavy revision for maximum marks in minimum time.</p>
       </div>
+
       <div class="benefit-card">
-        <div class="benefit-num">03</div>
-        <h3>📊 PYQ Pattern Analysis</h3>
-        <p>What topics came most in 2022–2024 papers. Predict the paper before you enter the exam hall.</p>
+        <h3>📘 Class 12 Boards</h3>
+        <p>Important theory points, derivations, and writing strategy to maximize board exam scores efficiently.</p>
       </div>
-      <div class="benefit-card">
-        <div class="benefit-num">04</div>
-        <h3>🗓️ Day-by-Day Study Schedule</h3>
-        <p>Exactly what to revise on Day 1 through Day 5 — no guesswork, no wasted hours.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-num">05</div>
-        <h3>🧠 Exam Strategy Guide</h3>
-        <p>Attempt order, time management, how to handle tricky MCQs, and when to skip — all in plain language.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-num">06</div>
-        <h3>⚡ Quick Concept Refreshers</h3>
-        <p>One-paragraph summaries of key concepts in every chapter so you recall fundamentals fast.</p>
-      </div>
+
     </div>
   </div>
 </section>
 
-<!-- DIVIDER -->
-<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
 
-<!-- PREVIEW -->
-<section class="preview">
-  <div class="preview-inner">
-    <p class="section-label">Inside the PDF</p>
-    <h2 class="section-title">Your 5-Day Battle Plan</h2>
-    <div class="preview-grid">
-      <div class="preview-card">
-        <div class="preview-card-day">Day 1</div>
-        <div class="preview-card-icon">⚡</div>
-        <div class="preview-card-title">Physics Core</div>
-        <div class="preview-card-topics">Mechanics · Electrostatics · Modern Physics</div>
-      </div>
-      <div class="preview-card">
-        <div class="preview-card-day">Day 2</div>
-        <div class="preview-card-icon">🧪</div>
-        <div class="preview-card-title">Chemistry Blitz</div>
-        <div class="preview-card-topics">Organic Reactions · Mole Concept · P-Block</div>
-      </div>
-      <div class="preview-card">
-        <div class="preview-card-day">Day 3</div>
-        <div class="preview-card-icon">📐</div>
-        <div class="preview-card-title">Maths Sprint</div>
-        <div class="preview-card-topics">Calculus · Probability · Coordinate Geo</div>
-      </div>
-      <div class="preview-card">
-        <div class="preview-card-day">Day 4</div>
-        <div class="preview-card-icon">🎯</div>
-        <div class="preview-card-title">PYQ Patterns</div>
-        <div class="preview-card-topics">2022–2024 Analysis · Must-Attempt Qs</div>
-      </div>
-      <div class="preview-card">
-        <div class="preview-card-day">Day 5</div>
-        <div class="preview-card-icon">🏆</div>
-        <div class="preview-card-title">Exam Day Prep</div>
-        <div class="preview-card-topics">Strategy · Attempt Order · Mental Prep</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats-strip">
-  <div class="stats-inner">
-    <div class="stat">
-      <div class="stat-num">20</div>
-      <div class="stat-label">Focused Pages</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Subjects Covered</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">5</div>
-      <div class="stat-label">Day Action Plan</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">₹49</div>
-      <div class="stat-label">One-Time Price</div>
-    </div>
-  </div>
-</div>
-
-<!-- TESTIMONIALS -->
-<section>
-  <div class="testimonials-inner">
-    <p class="section-label">What students say</p>
-    <h2 class="section-title">Real results. Real students.</h2>
-    <div class="testi-grid">
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">I was scoring 58 in mocks. Used this plan for 5 days before MHT-CET and jumped to 82. The PYQ pattern section is gold — I literally predicted 4 questions.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">A</div>
-          <div>
-            <div class="testi-name">Aryan Kale</div>
-            <div class="testi-info">MHT-CET 2024 · Pune</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">For ₹49 I expected something basic. This is genuinely well-researched. The formula sheets are better than my entire notes. Wish I had this earlier.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">P</div>
-          <div>
-            <div class="testi-name">Priya Sharma</div>
-            <div class="testi-info">Class 12 Boards · Nagpur</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">The day-by-day schedule removed all my anxiety. I knew exactly what to do each day. Boards mein Physics mein 85 aaye — pehle 60 se upar nahi jaata tha.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">R</div>
-          <div>
-            <div class="testi-name">Rahul Deshmukh</div>
-            <div class="testi-info">JEE Main 2024 · Nashik</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA BLOCK -->
-<section class="cta-block" id="buy">
-  <p class="section-label">Get instant access</p>
-  <h2>Don't walk into the exam hall without this.</h2>
-  <p>20 pages. 5 days. One shot at the score you deserve. The cost of one chai per day.</p>
-  <div class="cta-price-row">
-    <span class="cta-price-old">₹299</span>
-    <span class="cta-price-new"><sup>₹</sup>49</span>
-  </div>
-  <a href="#" class="cta-btn" style="animation: pulse 2.5s ease-in-out infinite;">
-    Download Now — Instant PDF Access →
-  </a>
-  <p class="cta-guarantee">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    Secure Razorpay / UPI payment &nbsp;·&nbsp; Instant download &nbsp;·&nbsp; No subscription
-  </p>
-</section>
-
-<!-- FAQ -->
-<section>
-  <div class="faq-inner">
-    <p class="section-label">Questions</p>
-    <h2 class="section-title">Frequently Asked</h2>
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary class="faq-q">
-          How do I receive the PDF?
-          <span class="faq-icon">+</span>
-        </summary>
-        <p class="faq-a">Immediately after payment, you'll get a download link on screen and via email. The PDF works on any phone, tablet, or laptop — no app needed.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">
-          Is this for JEE Main, JEE Advanced, MHT-CET, or Boards?
-          <span class="faq-icon">+</span>
-        </summary>
-        <p class="faq-a">All three! The content is curated to overlap across JEE Main, MHT-CET, and Class 12 Board patterns, so one plan covers you for all exams.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">
-          I'm already scoring 80+. Is this still useful?
-          <span class="faq-icon">+</span>
-        </summary>
-        <p class="faq-a">This is specifically designed for students in the 50–70 range who want the highest ROI on their last few days. If you're already 80+, you likely don't need this as much.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">
-          Why is it only ₹49?
-          <span class="faq-icon">+</span>
-        </summary>
-        <p class="faq-a">We believe every student should afford exam help, regardless of coaching budget. ₹49 is the price of a snack — but the value is real marks on your scorecard.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">
-          Is there a refund policy?
-          <span class="faq-icon">+</span>
-        </summary>
-        <p class="faq-a">Since this is an instant digital download, we don't offer refunds. But if you have any issue receiving the file, reach out and we'll fix it immediately.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
+<!-- FOOTER UPDATED -->
 <footer>
-  <p>© 2024 5-Day Revision Plan. Made with ❤️ for Indian students.</p>
-  <p style="margin-top:8px;"><a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Contact</a> &nbsp;·&nbsp; <a href="#">Refund Policy</a></p>
+  <p>© 2026 stelaron. Built for serious students.</p>
+  <p style="margin-top:8px;">
+    <a href="#privacy">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="#contact">Contact</a> &nbsp;·&nbsp;
+    <a href="#refund">Refund Policy</a>
+  </p>
 </footer>
 
-<!-- STICKY CTA -->
-<div class="sticky-cta" id="stickyCta">
-  <div class="sticky-left">
-    Last Moment Revision Plan &nbsp;<span>₹49 only</span>
+
+<!-- ADD THIS BELOW FOOTER -->
+
+<section id="privacy">
+  <div class="faq-inner">
+    <h2 class="section-title">Privacy Policy</h2>
+    <p class="faq-a">
+      We respect your privacy. We only collect necessary information (like email or payment confirmation)
+      to deliver your product. We do not sell, share, or misuse your data. Payments are securely handled
+      via Razorpay/UPI providers.
+    </p>
   </div>
-  <a href="#buy" class="sticky-btn">Get Instant Access →</a>
-</div>
+</section>
 
-<script>
-  // Sticky CTA on scroll
-  const stickyCta = document.getElementById('stickyCta');
-  const hero = document.querySelector('.hero');
-  const observer = new IntersectionObserver(
-    ([e]) => stickyCta.classList.toggle('visible', !e.isIntersecting),
-    { threshold: 0.1 }
-  );
-  observer.observe(hero);
+<section id="contact">
+  <div class="faq-inner">
+    <h2 class="section-title">Contact</h2>
+    <p class="faq-a">
+      For any issues (payment, download, access), contact us at:<br>
+      <strong>stelaron.help@gmail.com</strong><br>
+      We usually respond within 24 hours.
+    </p>
+  </div>
+</section>
 
-  // Scroll reveal
-  const revealEls = document.querySelectorAll('.benefit-card, .for-card, .testi-card, .preview-card');
-  const ro = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-        ro.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-  revealEls.forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = `opacity 0.5s ${i * 0.06}s ease, transform 0.5s ${i * 0.06}s ease`;
-    ro.observe(el);
-  });
-</script>
-</body>
-</html>
+<section id="refund">
+  <div class="faq-inner">
+    <h2 class="section-title">Refund Policy</h2>
+    <p class="faq-a">
+      Due to the digital nature of this product (instant PDF download), all sales are final.
+      No refunds will be provided once the purchase is completed.
+      If you face any issue receiving your file, we will resolve it immediately.
+    </p>
+  </div>
+</section>
