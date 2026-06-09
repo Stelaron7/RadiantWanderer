@@ -1,829 +1,602 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stelaron — Discover The World's Best AI Tools</title>
-  <meta name="description" content="Stelaron curates the world's best AI tools, workflows, and productivity systems for students, creators, entrepreneurs, and developers." />
-  <meta property="og:title" content="Stelaron — Discover The World's Best AI Tools" />
-  <meta property="og:description" content="Curated AI tools, workflows, and systems to save time, increase productivity, and gain an unfair advantage." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://stelaron.com" />
-  <meta property="og:image" content="https://stelaron.com/og-image.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Stelaron — Discover The World's Best AI Tools" />
-  <meta name="twitter:description" content="Curated AI tools, workflows, and systems to save time, increase productivity, and gain an unfair advantage." />
-  <meta name="twitter:image" content="https://stelaron.com/og-image.png" />
-  <link rel="canonical" href="https://stelaron.com" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Stelaron",
-    "url": "https://stelaron.com",
-    "description": "Discover the world's best AI tools, workflows, and productivity systems.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://stelaron.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stelaron — Build The Future Version Of Yourself</title>
+  <meta name="description" content="AI-powered systems that analyze your life, identify your highest-leverage opportunities, and generate personalized paths toward success. Your life. Optimized."/>
+  <meta property="og:title" content="Stelaron — Build The Future Version Of Yourself"/>
+  <meta property="og:description" content="AI that analyzes your life, designs your future, and builds your path. Not motivational content. A system."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://stelaron.com"/>
+  <meta property="og:image" content="https://stelaron.com/og.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Stelaron — Build The Future Version Of Yourself"/>
+  <meta name="twitter:description" content="AI that analyzes your life, designs your future, and builds your path."/>
+  <meta name="theme-color" content="#080C14"/>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Stelaron","applicationCategory":"LifestyleApplication","description":"AI-powered life operating system for ambitious people","offers":{"@type":"Offer","price":"9.99","priceCurrency":"USD"}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-    <div class="nav-container">
-      <a href="#" class="nav-logo" aria-label="Stelaron Home">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">STELARON</span>
-      </a>
-      <ul class="nav-links" id="navLinks" role="list">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#featured-tools">AI Tools</a></li>
-        <li><a href="#students">Categories</a></li>
-        <li><a href="#comparisons">Comparisons</a></li>
-        <li><a href="#premium">Premium Vault</a></li>
-        <li><a href="#newsletter">Newsletter</a></li>
-      </ul>
-      <a href="#premium" class="nav-cta">Unlock Premium</a>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="Stelaron">
+      <svg class="logo-mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <circle cx="14" cy="14" r="13" stroke="url(#lg1)" stroke-width="1.5"/>
+        <circle cx="14" cy="14" r="5" fill="url(#lg2)"/>
+        <line x1="14" y1="1" x2="14" y2="5" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="14" y1="23" x2="14" y2="27" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="1" y1="14" x2="5" y2="14" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="23" y1="14" x2="27" y2="14" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="lg1" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#6EE7FF"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+          <linearGradient id="lg2" x1="9" y1="9" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#6EE7FF"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+        </defs>
+      </svg>
+      <span>STELARON</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#system">System</a></li>
+      <li><a href="#modules">Modules</a></li>
+      <li><a href="#future-self">Future Self</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <a href="#pricing" class="nav-cta">Start Free Analysis</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero" id="hero" aria-label="Hero section">
-    <div class="hero-bg">
-      <canvas id="heroCanvas" aria-hidden="true"></canvas>
-      <div class="hero-glow glow-1" aria-hidden="true"></div>
-      <div class="hero-glow glow-2" aria-hidden="true"></div>
-      <div class="hero-grid" aria-hidden="true"></div>
-    </div>
-    <div class="hero-content">
-      <div class="hero-badge reveal">
-        <span class="badge-dot"></span>
-        <span>200+ AI Tools Curated</span>
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero-ambient" aria-hidden="true">
+    <div class="amb-orb orb-1"></div>
+    <div class="amb-orb orb-2"></div>
+    <div class="amb-orb orb-3"></div>
+  </div>
+
+  <div class="hero-body">
+    <div class="hero-left">
+      <div class="hero-eyebrow" data-reveal>
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        AI OPERATING SYSTEM FOR AMBITIOUS PEOPLE
       </div>
-      <h1 class="hero-headline reveal reveal-delay-1">
-        Discover The World's<br />
-        <em class="gradient-text">Best AI Tools</em>
+      <h1 class="hero-headline" data-reveal data-delay="100">
+        Build The Future<br/>
+        <span class="headline-gradient">Version Of Yourself</span>
       </h1>
-      <p class="hero-sub reveal reveal-delay-2">
-        Curated AI tools, workflows, and systems to save time,<br class="hide-mobile" />
-        increase productivity, and gain an unfair advantage.
+      <p class="hero-sub" data-reveal data-delay="200">
+        AI-powered systems that analyze your life, identify your highest-leverage opportunities,
+        and generate personalized paths toward the exact future you want.
       </p>
-      <div class="hero-actions reveal reveal-delay-3">
-        <a href="#featured-tools" class="btn btn-primary">
-          <span>Explore Tools</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="hero-actions" data-reveal data-delay="300">
+        <a href="#modules" class="cta-primary">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.3"/><path d="M6 9l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Analyze My Life
         </a>
-        <a href="#premium" class="btn btn-ghost">
-          <span>Unlock Premium</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M12 6.5V5a4 4 0 0 0-8 0v1.5M4 6.5h8a1 1 0 0 1 1 1V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7.5a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <a href="#future-self" class="cta-ghost">
+          See My Future
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5L11.5 7 8 10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
-      <div class="hero-stats reveal reveal-delay-4">
-        <div class="stat"><span class="stat-num">200+</span><span class="stat-label">AI Tools</span></div>
-        <div class="stat-divider" aria-hidden="true"></div>
-        <div class="stat"><span class="stat-num">50K+</span><span class="stat-label">Monthly Readers</span></div>
-        <div class="stat-divider" aria-hidden="true"></div>
-        <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Workflows</span></div>
+      <div class="hero-trust" data-reveal data-delay="400">
+        <div class="trust-avatars" aria-hidden="true">
+          <span class="ta">A</span><span class="ta">M</span><span class="ta">R</span><span class="ta">K</span>
+        </div>
+        <span class="trust-text">Joined by <strong>12,000+</strong> ambitious people this month</span>
       </div>
     </div>
-    <div class="hero-scroll" aria-hidden="true">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
 
-  <!-- FEATURED AI TOOLS -->
-  <section class="section" id="featured-tools" aria-labelledby="featured-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">Featured Tools</div>
-        <h2 id="featured-heading">The AI Stack Everyone <em class="gradient-text">Needs</em></h2>
-        <p>Hand-picked tools that deliver real results — no fluff, no filler.</p>
-      </div>
-      <div class="tools-grid" role="list">
-
-        <article class="tool-card reveal" role="listitem" data-category="Writing">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#7C3AED,#4F46E5)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>Claude</h3>
-              <span class="tool-category">Writing & Reasoning</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.9 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.9</span>
-            </div>
-          </div>
-          <p class="tool-desc">Anthropic's flagship AI — elite for long-form writing, complex analysis, coding, and nuanced reasoning tasks.</p>
-          <a href="https://claude.ai" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-        <article class="tool-card reveal" role="listitem" data-category="AI Chat">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#10b981,#059669)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>ChatGPT</h3>
-              <span class="tool-category">AI Chat</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.8 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.8</span>
-            </div>
-          </div>
-          <p class="tool-desc">OpenAI's powerhouse — versatile assistant for brainstorming, drafting, data analysis, and everyday productivity.</p>
-          <a href="https://chatgpt.com" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-        <article class="tool-card reveal" role="listitem" data-category="Research">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>Perplexity</h3>
-              <span class="tool-category">Research</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.7 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.7</span>
-            </div>
-          </div>
-          <p class="tool-desc">AI-powered search that cites sources — the smarter way to research, fact-check, and stay informed in real time.</p>
-          <a href="https://perplexity.ai" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-        <article class="tool-card reveal" role="listitem" data-category="Coding">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>Cursor</h3>
-              <span class="tool-category">Coding</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.9 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.9</span>
-            </div>
-          </div>
-          <p class="tool-desc">The AI-first code editor. Cursor writes, debugs, and refactors code so developers ship 10× faster.</p>
-          <a href="https://cursor.sh" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-        <article class="tool-card reveal" role="listitem" data-category="Productivity">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#6366f1,#4338ca)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>Notion AI</h3>
-              <span class="tool-category">Productivity</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.6 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.6</span>
-            </div>
-          </div>
-          <p class="tool-desc">Your second brain with AI superpowers — auto-summarize notes, draft docs, manage projects intelligently.</p>
-          <a href="https://notion.so" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-        <article class="tool-card reveal" role="listitem" data-category="Audio">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#ec4899,#be185d)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>ElevenLabs</h3>
-              <span class="tool-category">Audio / Voice</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.8 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.8</span>
-            </div>
-          </div>
-          <p class="tool-desc">Ultra-realistic AI voice cloning and text-to-speech. The go-to for podcasters, creators, and brands.</p>
-          <a href="https://elevenlabs.io" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-        <article class="tool-card reveal" role="listitem" data-category="Design">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#06b6d4,#0891b2)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="13.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="14.5" r="2.5"/><circle cx="12" cy="20" r="2"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>Canva AI</h3>
-              <span class="tool-category">Design</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.7 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.7</span>
-            </div>
-          </div>
-          <p class="tool-desc">Design studio with AI magic — generate images, auto-layout, and produce stunning visuals in minutes.</p>
-          <a href="https://canva.com" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-        <article class="tool-card reveal" role="listitem" data-category="Video">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#f97316,#c2410c)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>Runway</h3>
-              <span class="tool-category">Video AI</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.8 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.8</span>
-            </div>
-          </div>
-          <p class="tool-desc">Hollywood-grade AI video generation. Text to video, image to video, and creative effects at your fingertips.</p>
-          <a href="https://runwayml.com" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-        <article class="tool-card reveal" role="listitem" data-category="Image">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>Midjourney</h3>
-              <span class="tool-category">Image AI</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.9 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.9</span>
-            </div>
-          </div>
-          <p class="tool-desc">The world's most powerful AI image generator. Unrivalled artistic quality for creators and brands.</p>
-          <a href="https://midjourney.com" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-        <article class="tool-card reveal" role="listitem" data-category="Automation">
-          <div class="tool-card-top">
-            <div class="tool-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            </div>
-            <div class="tool-meta">
-              <h3>Zapier</h3>
-              <span class="tool-category">Automation</span>
-            </div>
-            <div class="tool-rating" aria-label="Rating: 4.7 out of 5">
-              <span class="stars" aria-hidden="true">★★★★★</span>
-              <span>4.7</span>
-            </div>
-          </div>
-          <p class="tool-desc">Connect 7,000+ apps and automate workflows without code. The backbone of every smart business operation.</p>
-          <a href="https://zapier.com" target="_blank" rel="noopener" class="tool-btn">Visit Tool <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- AI FOR STUDENTS -->
-  <section class="section section-alt" id="students" aria-labelledby="students-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">For Students</div>
-        <h2 id="students-heading">Study Smarter, Not <em class="gradient-text">Harder</em></h2>
-        <p>Top AI tools that compress weeks of study into hours — without cutting corners.</p>
-      </div>
-      <div class="category-grid" role="list">
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">📚</div>
-          <h3>AI Studying</h3>
-          <p>Claude and ChatGPT explain any concept in plain language, create custom study guides, and quiz you until you master it.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+    <div class="hero-right" data-reveal data-delay="200" aria-label="Life analysis preview">
+      <div class="hud-frame">
+        <div class="hud-header">
+          <span class="hud-tag">LIFE ANALYSIS — RUNNING</span>
+          <span class="hud-live" aria-hidden="true"><span class="live-dot"></span>LIVE</span>
         </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🃏</div>
-          <h3>Flashcard Generation</h3>
-          <p>Anki + AI auto-generates spaced repetition decks from your notes, textbooks, or any topic in seconds.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+        <div class="hud-score-ring" aria-label="Overall life score visualization">
+          <canvas id="scoreRing" width="200" height="200" aria-hidden="true"></canvas>
+          <div class="score-center">
+            <span class="score-num" id="scoreNum">72</span>
+            <span class="score-label">LIFE SCORE</span>
+          </div>
         </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">📝</div>
-          <h3>Note Taking</h3>
-          <p>Notion AI and Mem summarize lectures, organize ideas, and surface the right information when you need it.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+        <div class="hud-metrics" id="hudMetrics" role="list">
+          <div class="metric-row" role="listitem">
+            <span class="metric-name">Health</span>
+            <div class="metric-bar-track"><div class="metric-bar" data-val="65" style="width:0%"></div></div>
+            <span class="metric-val">65</span>
+          </div>
+          <div class="metric-row" role="listitem">
+            <span class="metric-name">Career</span>
+            <div class="metric-bar-track"><div class="metric-bar" data-val="80" style="width:0%"></div></div>
+            <span class="metric-val">80</span>
+          </div>
+          <div class="metric-row" role="listitem">
+            <span class="metric-name">Wealth</span>
+            <div class="metric-bar-track"><div class="metric-bar" data-val="48" style="width:0%"></div></div>
+            <span class="metric-val">48</span>
+          </div>
+          <div class="metric-row" role="listitem">
+            <span class="metric-name">Focus</span>
+            <div class="metric-bar-track"><div class="metric-bar" data-val="71" style="width:0%"></div></div>
+            <span class="metric-val">71</span>
+          </div>
+          <div class="metric-row" role="listitem">
+            <span class="metric-name">Discipline</span>
+            <div class="metric-bar-track"><div class="metric-bar" data-val="59" style="width:0%"></div></div>
+            <span class="metric-val">59</span>
+          </div>
+          <div class="metric-row" role="listitem">
+            <span class="metric-name">Learning</span>
+            <div class="metric-bar-track"><div class="metric-bar" data-val="84" style="width:0%"></div></div>
+            <span class="metric-val">84</span>
+          </div>
         </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🔬</div>
-          <h3>Research</h3>
-          <p>Perplexity and Elicit find, summarize, and cite academic papers instantly — hours of research in minutes.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🎯</div>
-          <h3>Exam Preparation</h3>
-          <p>AI-powered mock tests, PYQ analysis, and personalized weak-area targeting for every competitive exam.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+        <div class="hud-insight">
+          <span class="insight-icon" aria-hidden="true">◈</span>
+          <span id="hudInsight">Wealth gap detected. 3 high-leverage opportunities identified.</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- AI FOR CONTENT CREATORS -->
-  <section class="section" id="creators" aria-labelledby="creators-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">For Creators</div>
-        <h2 id="creators-heading">Build a One-Person <em class="gradient-text">Content Empire</em></h2>
-        <p>AI tools that let you produce studio-quality content at solo-creator speed.</p>
-      </div>
-      <div class="category-grid" role="list">
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🎬</div>
-          <h3>Video Creation</h3>
-          <p>Runway and Pika generate cinematic B-roll, effects, and full scenes from a single text prompt.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">✍️</div>
-          <h3>Script Writing</h3>
-          <p>Claude writes hooks, scripts, and CTAs that feel human — because it actually understands your audience and voice.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🎙️</div>
-          <h3>Voiceovers</h3>
-          <p>ElevenLabs clones your voice or creates custom narration that sounds indistinguishable from a professional studio.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🖼️</div>
-          <h3>Thumbnail Creation</h3>
-          <p>Midjourney + Canva AI produce click-worthy thumbnails that out-perform the competition every single time.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">✂️</div>
-          <h3>Editing</h3>
-          <p>Descript and Adobe AI auto-remove filler words, silence, and noise — edit video by editing the transcript.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="hero-scroll-indicator" aria-hidden="true">
+    <div class="scroll-track"><div class="scroll-thumb"></div></div>
+    <span>Scroll to explore</span>
+  </div>
+</section>
 
-  <!-- AI FOR ENTREPRENEURS -->
-  <section class="section section-alt" id="entrepreneurs" aria-labelledby="entrepreneurs-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">For Entrepreneurs</div>
-        <h2 id="entrepreneurs-heading">Build, Automate, <em class="gradient-text">Scale</em></h2>
-        <p>Tools that replace entire teams — so you can move fast and keep more profit.</p>
+<!-- PROBLEM SECTION -->
+<section class="problem-section" id="system" aria-labelledby="problem-heading">
+  <div class="container">
+    <div class="problem-grid">
+      <div class="problem-left" data-reveal>
+        <div class="section-eyebrow">THE PROBLEM</div>
+        <h2 id="problem-heading">You're not failing.<br/>You're <em>flying blind.</em></h2>
+        <p>Most people have real potential they never activate — not because of talent or effort, but because they have no system. No clarity on their actual weaknesses. No roadmap. No leverage.</p>
+        <p>You keep moving. But without a compass, movement is just exhaustion.</p>
       </div>
-      <div class="category-grid" role="list">
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">⚡</div>
-          <h3>Automation</h3>
-          <p>Zapier and Make connect your entire business stack and eliminate repetitive tasks around the clock.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🎯</div>
-          <h3>Lead Generation</h3>
-          <p>Clay and Apollo use AI to find, enrich, and reach your ideal customers at scale — without a sales team.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">💬</div>
-          <h3>Customer Support</h3>
-          <p>Intercom and Tidio AI handle 80% of support tickets instantly, freeing you to focus on growth.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">💰</div>
-          <h3>Sales</h3>
-          <p>AI-powered CRMs, proposal generators, and follow-up sequences that close deals while you sleep.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
-        </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">📈</div>
-          <h3>Marketing</h3>
-          <p>Jasper, Copy.ai, and SEO AI tools produce months of content in a weekend — at a fraction of agency costs.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+      <div class="problem-right" data-reveal data-delay="150">
+        <div class="chaos-cards">
+          <div class="chaos-card cc-1">
+            <span class="cc-icon" aria-hidden="true">⟳</span>
+            <div>
+              <strong>Stuck in the same loops</strong>
+              <span>Starting over every few months</span>
+            </div>
+          </div>
+          <div class="chaos-card cc-2">
+            <span class="cc-icon" aria-hidden="true">≈</span>
+            <div>
+              <strong>Unclear on what to fix first</strong>
+              <span>Everything feels urgent, nothing gets done</span>
+            </div>
+          </div>
+          <div class="chaos-card cc-3">
+            <span class="cc-icon" aria-hidden="true">∅</span>
+            <div>
+              <strong>No real direction</strong>
+              <span>Consuming content, not building systems</span>
+            </div>
+          </div>
+          <div class="chaos-card cc-4">
+            <span class="cc-icon" aria-hidden="true">△</span>
+            <div>
+              <strong>The gap is growing</strong>
+              <span>Others are accelerating. You feel it.</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+    <div class="transition-line" data-reveal aria-hidden="true">
+      <div class="tl-track"><div class="tl-fill"></div></div>
+      <span class="tl-label">STELARON CHANGES THIS</span>
+      <div class="tl-track"><div class="tl-fill"></div></div>
+    </div>
+  </div>
+</section>
 
-  <!-- AI FOR DEVELOPERS -->
-  <section class="section" id="developers" aria-labelledby="developers-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">For Developers</div>
-        <h2 id="developers-heading">Ship Code at <em class="gradient-text">Superhuman</em> Speed</h2>
-        <p>The developer's AI toolkit — from zero-to-production, faster than ever before.</p>
+<!-- MODULES -->
+<section class="modules-section" id="modules" aria-labelledby="modules-heading">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="section-eyebrow">FOUR CORE SYSTEMS</div>
+      <h2 id="modules-heading">Your Complete<br/><span class="gradient-text">Intelligence Stack</span></h2>
+      <p class="section-sub">Not tools. Not templates. AI systems engineered around your specific situation.</p>
+    </div>
+
+    <div class="modules-layout">
+
+      <!-- MODULE 1: LIFE ANALYZER -->
+      <div class="module-card module-main" data-reveal id="lifeAnalyzer" aria-labelledby="mod1-heading">
+        <div class="module-number" aria-hidden="true">01</div>
+        <div class="module-header">
+          <div class="module-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3 id="mod1-heading">Life Analyzer</h3>
+        </div>
+        <p class="module-desc">A deep analysis across every dimension of your life. Not a quiz. A system that diagnoses exactly where you're leaking potential.</p>
+        <div class="module-inputs">
+          <span class="input-tag">Health</span>
+          <span class="input-tag">Productivity</span>
+          <span class="input-tag">Learning</span>
+          <span class="input-tag">Wealth</span>
+          <span class="input-tag">Discipline</span>
+          <span class="input-tag">Focus</span>
+          <span class="input-tag">Relationships</span>
+          <span class="input-tag">Career</span>
+        </div>
+        <div class="module-outputs">
+          <div class="output-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Overall Life Score with breakdown
+          </div>
+          <div class="output-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Weakness detection — ranked by leverage
+          </div>
+          <div class="output-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Personalized 90-day improvement roadmap
+          </div>
+        </div>
+        <a href="#pricing" class="module-cta">Run Life Analysis →</a>
+        <div class="module-visual" aria-hidden="true">
+          <div class="mv-radar" id="radarViz"></div>
+        </div>
       </div>
-      <div class="category-grid" role="list">
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">💻</div>
-          <h3>Coding</h3>
-          <p>Cursor and GitHub Copilot turn plain English into production-ready code across any language or framework.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+
+      <!-- MODULE 2: CAREER ENGINE -->
+      <div class="module-card" data-reveal data-delay="100" aria-labelledby="mod2-heading">
+        <div class="module-number" aria-hidden="true">02</div>
+        <div class="module-header">
+          <div class="module-icon-wrap" style="--icon-color: #A78BFA">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3 id="mod2-heading">Career Intelligence Engine</h3>
         </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🐛</div>
-          <h3>Debugging</h3>
-          <p>Claude finds and fixes bugs with surgical precision — paste an error and get the fix with full explanation.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+        <p class="module-desc">Input your skills, personality, and goals. Get a career architecture — not generic advice, but a specific path with income projections and an execution plan.</p>
+        <div class="module-outputs">
+          <div class="output-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Top 5 career paths matched to you
+          </div>
+          <div class="output-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Income potential at 1, 3, and 5 years
+          </div>
+          <div class="output-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Skill-by-skill acquisition roadmap
+          </div>
         </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">📖</div>
-          <h3>Documentation</h3>
-          <p>AI auto-generates clear, structured docs from your codebase — so you never have an undocumented project again.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+        <a href="#pricing" class="module-cta" style="--cta-color:#A78BFA">Build Career Plan →</a>
+      </div>
+
+      <!-- MODULE 3: STARTUP GENERATOR -->
+      <div class="module-card" data-reveal data-delay="150" aria-labelledby="mod3-heading">
+        <div class="module-number" aria-hidden="true">03</div>
+        <div class="module-header">
+          <div class="module-icon-wrap" style="--icon-color: #FF6B35">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3 id="mod3-heading">Startup Generator</h3>
         </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🔍</div>
-          <h3>Code Reviews</h3>
-          <p>AI-powered code review tools catch security issues, performance bottlenecks, and bad patterns before they ship.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+        <p class="module-desc">Turn your constraints into a business blueprint. Input your budget, time, and risk tolerance — get a validated startup concept with a real acquisition plan.</p>
+        <div class="module-inputs-small">
+          <span class="input-tag" style="--tag-color:rgba(255,107,53,0.15);--tag-border:rgba(255,107,53,0.3)">Budget</span>
+          <span class="input-tag" style="--tag-color:rgba(255,107,53,0.15);--tag-border:rgba(255,107,53,0.3)">Time Available</span>
+          <span class="input-tag" style="--tag-color:rgba(255,107,53,0.15);--tag-border:rgba(255,107,53,0.3)">Risk Tolerance</span>
+          <span class="input-tag" style="--tag-color:rgba(255,107,53,0.15);--tag-border:rgba(255,107,53,0.3)">Skills</span>
         </div>
-        <div class="cat-card reveal" role="listitem">
-          <div class="cat-icon">🛠️</div>
-          <h3>AI IDEs</h3>
-          <p>Windsurf, Cursor, and Replit Agent build entire features from a spec — the future of software development.</p>
-          <a href="#" class="cat-btn">Explore Tools →</a>
+        <div class="module-outputs">
+          <div class="output-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            3 viable startup concepts, ranked
+          </div>
+          <div class="output-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Monetization model + first 100 customers
+          </div>
+          <div class="output-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            30-day execution roadmap
+          </div>
+        </div>
+        <a href="#pricing" class="module-cta" style="--cta-color:#FF6B35">Generate My Startup →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE SELF SIMULATOR -->
+<section class="future-section" id="future-self" aria-labelledby="future-heading">
+  <div class="future-bg" aria-hidden="true">
+    <div class="future-orb"></div>
+    <div class="future-grid"></div>
+  </div>
+  <div class="container">
+    <div class="future-inner">
+      <div class="future-left" data-reveal>
+        <div class="section-eyebrow" style="--ew-color:#A78BFA;--ew-bg:rgba(167,139,250,0.1);--ew-border:rgba(167,139,250,0.25)">MOST POWERFUL FEATURE</div>
+        <h2 id="future-heading">
+          Meet The Person<br/>
+          <span class="gradient-text-2">You're About To Become</span>
+        </h2>
+        <p>This isn't vision boarding. The Future Self Simulator generates a detailed, specific, AI-crafted scenario of your life at your chosen horizon — with every obstacle mapped, every milestone defined, and every action required to get there.</p>
+        <p style="margin-top:1rem;">Most people have never seen their future made concrete. Once you do, you can't unsee it.</p>
+        <div class="future-features">
+          <div class="ff-item">
+            <div class="ff-icon" style="background:rgba(167,139,250,0.12);color:#A78BFA" aria-hidden="true">◈</div>
+            <div>
+              <strong>Detailed Future Scenario</strong>
+              <span>Your life, career, finances, and relationships — rendered as a specific narrative</span>
+            </div>
+          </div>
+          <div class="ff-item">
+            <div class="ff-icon" style="background:rgba(255,107,53,0.12);color:#FF6B35" aria-hidden="true">⚡</div>
+            <div>
+              <strong>Obstacle Mapping</strong>
+              <span>Every friction point you'll face — exposed before you hit it</span>
+            </div>
+          </div>
+          <div class="ff-item">
+            <div class="ff-icon" style="background:rgba(110,231,255,0.12);color:#6EE7FF" aria-hidden="true">◎</div>
+            <div>
+              <strong>Milestone Architecture</strong>
+              <span>Quarterly checkpoints from now to your desired future</span>
+            </div>
+          </div>
+          <div class="ff-item">
+            <div class="ff-icon" style="background:rgba(74,222,128,0.12);color:#4ade80" aria-hidden="true">→</div>
+            <div>
+              <strong>Daily Action Plan</strong>
+              <span>What to do today, tomorrow, and every week to close the gap</span>
+            </div>
+          </div>
+        </div>
+        <a href="#pricing" class="cta-primary" style="margin-top:2rem;display:inline-flex">Simulate My Future →</a>
+      </div>
+      <div class="future-right" data-reveal data-delay="150">
+        <div class="timeline-vis" aria-label="Future self timeline visualization">
+          <div class="tvis-header">
+            <span class="hud-tag">FUTURE SELF — 3 YEAR PROJECTION</span>
+          </div>
+          <div class="tvis-now">
+            <div class="tvis-dot tvis-dot-now" aria-hidden="true"></div>
+            <div class="tvis-content">
+              <span class="tvis-label">NOW</span>
+              <p class="tvis-desc">Wealth score: 48 &nbsp;·&nbsp; Career clarity: low &nbsp;·&nbsp; Side income: ₹0</p>
+            </div>
+          </div>
+          <div class="tvis-line" aria-hidden="true">
+            <div class="tvis-line-fill" id="timelineFill"></div>
+          </div>
+          <div class="tvis-milestones">
+            <div class="tvis-ms" data-month="3">
+              <div class="tvis-dot" aria-hidden="true"></div>
+              <div>
+                <span class="tvis-m-label">MONTH 3</span>
+                <p>First income stream live. Career direction locked. Weekly system running.</p>
+              </div>
+            </div>
+            <div class="tvis-ms" data-month="12">
+              <div class="tvis-dot" aria-hidden="true"></div>
+              <div>
+                <span class="tvis-m-label">YEAR 1</span>
+                <p>₹3–8L additional annual income. Skills in top 15%. Life score: 82+.</p>
+              </div>
+            </div>
+            <div class="tvis-ms" data-month="36">
+              <div class="tvis-dot" aria-hidden="true"></div>
+              <div>
+                <span class="tvis-m-label">YEAR 3</span>
+                <p>Financial independence path clear. Business or career accelerating. Life by design.</p>
+              </div>
+            </div>
+          </div>
+          <div class="tvis-you">
+            <div class="tvis-dot tvis-dot-future" aria-hidden="true"></div>
+            <div class="tvis-content">
+              <span class="tvis-label" style="color:#A78BFA">FUTURE YOU</span>
+              <p class="tvis-desc">Life score: 91 &nbsp;·&nbsp; Multiple income streams &nbsp;·&nbsp; Full clarity</p>
+            </div>
+          </div>
+          <div class="tvis-cta-note">This is generated for you — specifically — based on your inputs.</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- WORKFLOW STACKS -->
-  <section class="section section-alt" id="workflows" aria-labelledby="workflows-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">Workflow Stacks</div>
-        <h2 id="workflows-heading">Proven AI <em class="gradient-text">Systems</em> That Work</h2>
-        <p>Don't just collect tools — use systems. These workflows produce real results.</p>
+<!-- SOCIAL PROOF -->
+<section class="proof-section" aria-labelledby="proof-heading">
+  <div class="container">
+    <div class="proof-header" data-reveal>
+      <div class="section-eyebrow">WHAT HAPPENS WHEN PEOPLE USE THIS</div>
+      <h2 id="proof-heading">The System Speaks<br/><span class="gradient-text">For Itself</span></h2>
+    </div>
+    <div class="testimonials" role="list">
+      <div class="testimonial-card" data-reveal role="listitem">
+        <div class="tc-stars" aria-label="5 stars">★★★★★</div>
+        <blockquote>"I've read 50 self-help books. Nothing gave me this kind of clarity. Within an hour of my life analysis I had a roadmap I actually believed in."</blockquote>
+        <div class="tc-author">
+          <div class="tc-avatar" style="background:linear-gradient(135deg,#6EE7FF,#A78BFA)" aria-hidden="true">R</div>
+          <div>
+            <strong>Rohan M.</strong>
+            <span>Software Engineer, Pune</span>
+          </div>
+        </div>
       </div>
-      <div class="workflow-grid" role="list">
-
-        <div class="workflow-card reveal" role="listitem">
-          <div class="workflow-header">
-            <span class="workflow-icon">🎓</span>
-            <h3>Student Success Stack</h3>
-          </div>
-          <div class="workflow-flow">
-            <div class="flow-step"><span class="flow-tool">Perplexity</span><span class="flow-role">Research & Sources</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Claude</span><span class="flow-role">Explain & Simplify</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Notion AI</span><span class="flow-role">Organize Notes</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Anki AI</span><span class="flow-role">Flashcards & Recall</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step flow-final"><span class="flow-tool">🏆</span><span class="flow-role">Exam Ready</span></div>
+      <div class="testimonial-card" data-reveal data-delay="80" role="listitem">
+        <div class="tc-stars" aria-label="5 stars">★★★★★</div>
+        <blockquote>"The Future Self Simulator hit different. It showed me exactly what I was avoiding. I started my freelance business the next morning. Made ₹40K in the first month."</blockquote>
+        <div class="tc-author">
+          <div class="tc-avatar" style="background:linear-gradient(135deg,#FF6B35,#fbbf24)" aria-hidden="true">A</div>
+          <div>
+            <strong>Anika T.</strong>
+            <span>Designer → Freelancer, Mumbai</span>
           </div>
         </div>
-
-        <div class="workflow-card reveal" role="listitem">
-          <div class="workflow-header">
-            <span class="workflow-icon">🎬</span>
-            <h3>Content Creator Stack</h3>
-          </div>
-          <div class="workflow-flow">
-            <div class="flow-step"><span class="flow-tool">Claude</span><span class="flow-role">Ideation & Scripts</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">ElevenLabs</span><span class="flow-role">Voiceover</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Runway</span><span class="flow-role">Video Generation</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Canva AI</span><span class="flow-role">Thumbnails & Graphics</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step flow-final"><span class="flow-tool">🚀</span><span class="flow-role">Publish & Grow</span></div>
+      </div>
+      <div class="testimonial-card" data-reveal data-delay="160" role="listitem">
+        <div class="tc-stars" aria-label="5 stars">★★★★★</div>
+        <blockquote>"The Career Engine told me to pivot from finance to product management. Gave me a skill roadmap. Six months later I landed the role with a 60% salary increase."</blockquote>
+        <div class="tc-author">
+          <div class="tc-avatar" style="background:linear-gradient(135deg,#A78BFA,#6EE7FF)" aria-hidden="true">S</div>
+          <div>
+            <strong>Siddharth P.</strong>
+            <span>Product Manager, Bangalore</span>
           </div>
         </div>
-
-        <div class="workflow-card reveal" role="listitem">
-          <div class="workflow-header">
-            <span class="workflow-icon">⚡</span>
-            <h3>Solo Founder Stack</h3>
-          </div>
-          <div class="workflow-flow">
-            <div class="flow-step"><span class="flow-tool">Perplexity</span><span class="flow-role">Market Research</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Claude</span><span class="flow-role">Strategy & Copywriting</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Notion AI</span><span class="flow-role">Project Management</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Zapier</span><span class="flow-role">Automate Everything</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step flow-final"><span class="flow-tool">💰</span><span class="flow-role">Revenue & Freedom</span></div>
-          </div>
-        </div>
-
-        <div class="workflow-card reveal" role="listitem">
-          <div class="workflow-header">
-            <span class="workflow-icon">🏢</span>
-            <h3>Business Automation Stack</h3>
-          </div>
-          <div class="workflow-flow">
-            <div class="flow-step"><span class="flow-tool">Clay</span><span class="flow-role">Lead Generation</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">ChatGPT API</span><span class="flow-role">Personalised Outreach</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Zapier</span><span class="flow-role">CRM Automation</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step"><span class="flow-tool">Intercom AI</span><span class="flow-role">Support & Nurture</span></div>
-            <div class="flow-arrow" aria-hidden="true">↓</div>
-            <div class="flow-step flow-final"><span class="flow-tool">📈</span><span class="flow-role">Scale & Profit</span></div>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
-
-  <!-- COMPARISONS -->
-  <section class="section" id="comparisons" aria-labelledby="comparisons-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">Comparisons</div>
-        <h2 id="comparisons-heading">Which Tool <em class="gradient-text">Wins?</em></h2>
-        <p>Honest, in-depth comparisons so you spend money on what actually works.</p>
+    <div class="proof-numbers" data-reveal>
+      <div class="pn-item">
+        <span class="pn-num" data-count="12000">0</span>
+        <span class="pn-label">People analyzed this month</span>
       </div>
-      <div class="compare-grid" role="list">
-
-        <div class="compare-card reveal" role="listitem">
-          <div class="compare-vs">
-            <div class="compare-tool"><div class="ct-icon" style="background:linear-gradient(135deg,#7C3AED,#4F46E5)">C</div><span>Claude</span></div>
-            <div class="vs-badge">VS</div>
-            <div class="compare-tool"><div class="ct-icon" style="background:linear-gradient(135deg,#10b981,#059669)">G</div><span>ChatGPT</span></div>
-          </div>
-          <p>Which AI writes better, reasons deeper, and is worth your money in 2025?</p>
-          <a href="#" class="compare-link">Read Comparison →</a>
-        </div>
-
-        <div class="compare-card reveal" role="listitem">
-          <div class="compare-vs">
-            <div class="compare-tool"><div class="ct-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)">Cu</div><span>Cursor</span></div>
-            <div class="vs-badge">VS</div>
-            <div class="compare-tool"><div class="ct-icon" style="background:linear-gradient(135deg,#06b6d4,#0891b2)">W</div><span>Windsurf</span></div>
-          </div>
-          <p>The battle of AI code editors — which one makes developers more productive?</p>
-          <a href="#" class="compare-link">Read Comparison →</a>
-        </div>
-
-        <div class="compare-card reveal" role="listitem">
-          <div class="compare-vs">
-            <div class="compare-tool"><div class="ct-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">P</div><span>Perplexity</span></div>
-            <div class="vs-badge">VS</div>
-            <div class="compare-tool"><div class="ct-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)">G</div><span>Google</span></div>
-          </div>
-          <p>Is AI search finally better than Google for research and fact-finding?</p>
-          <a href="#" class="compare-link">Read Comparison →</a>
-        </div>
-
-        <div class="compare-card reveal" role="listitem">
-          <div class="compare-vs">
-            <div class="compare-tool"><div class="ct-icon" style="background:linear-gradient(135deg,#06b6d4,#0891b2)">Ca</div><span>Canva AI</span></div>
-            <div class="vs-badge">VS</div>
-            <div class="compare-tool"><div class="ct-icon" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)">M</div><span>Midjourney</span></div>
-          </div>
-          <p>For designers and creators — which AI image tool delivers more value?</p>
-          <a href="#" class="compare-link">Read Comparison →</a>
-        </div>
-
+      <div class="pn-divider" aria-hidden="true"></div>
+      <div class="pn-item">
+        <span class="pn-num" data-count="94">0</span><span class="pn-suffix">%</span>
+        <span class="pn-label">Report immediate clarity</span>
+      </div>
+      <div class="pn-divider" aria-hidden="true"></div>
+      <div class="pn-item">
+        <span class="pn-num" data-count="4.9">0</span><span class="pn-suffix">/5</span>
+        <span class="pn-label">Average rating</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PREMIUM VAULT -->
-  <section class="section section-alt premium-section" id="premium" aria-labelledby="premium-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag" style="background:rgba(251,191,36,0.15);color:#fbbf24;border-color:rgba(251,191,36,0.3)">Premium Vault</div>
-        <h2 id="premium-heading">The <em style="background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Unfair Advantage</em> Vault</h2>
-        <p>Everything top performers use — compiled, tested, and locked inside.</p>
+<!-- PRICING -->
+<section class="pricing-section" id="pricing" aria-labelledby="pricing-heading">
+  <div class="container">
+    <div class="pricing-header" data-reveal>
+      <div class="section-eyebrow">ACCESS</div>
+      <h2 id="pricing-heading">One Decision.<br/><span class="gradient-text">Unlimited Leverage.</span></h2>
+      <p class="section-sub">Everything you need to understand your life, design your future, and build toward it. One time.</p>
+    </div>
+    <div class="pricing-layout">
+      <div class="pricing-free" data-reveal>
+        <div class="plan-label">FREE</div>
+        <div class="plan-price-free">₹0</div>
+        <ul class="plan-features" role="list">
+          <li role="listitem"><span class="pf-check pf-check-dim" aria-hidden="true">✓</span> Basic Life Score</li>
+          <li role="listitem"><span class="pf-check pf-check-dim" aria-hidden="true">✓</span> Top 3 weaknesses identified</li>
+          <li role="listitem"><span class="pf-check pf-check-dim" aria-hidden="true">✓</span> 1 Career path suggestion</li>
+          <li role="listitem"><span class="pf-lock" aria-label="Locked">🔒</span> Future Self Simulator</li>
+          <li role="listitem"><span class="pf-lock" aria-label="Locked">🔒</span> Full breakdown reports</li>
+          <li role="listitem"><span class="pf-lock" aria-label="Locked">🔒</span> Startup Generator</li>
+          <li role="listitem"><span class="pf-lock" aria-label="Locked">🔒</span> Personalized roadmaps</li>
+        </ul>
+        <a href="#" class="plan-cta-free">Start Free</a>
       </div>
 
-      <div class="premium-price-badge reveal">
-        <span class="price-label">One-Time Access</span>
-        <span class="price-amount">$9.99</span>
-        <span class="price-note">Lifetime access. No subscriptions.</span>
-      </div>
-
-      <div class="vault-grid reveal">
-        <div class="vault-item locked">
-          <div class="vault-lock" aria-label="Locked">🔒</div>
-          <div class="vault-info">
-            <h4>100 Elite AI Prompts</h4>
-            <p>The exact prompts that save 10+ hours per week across writing, coding, research, and strategy.</p>
-          </div>
-          <div class="vault-blur-overlay" aria-hidden="true"></div>
+      <div class="pricing-premium" data-reveal data-delay="100">
+        <div class="premium-glow" aria-hidden="true"></div>
+        <div class="plan-badge">MOST POPULAR</div>
+        <div class="plan-label">PREMIUM ACCESS</div>
+        <div class="plan-price-wrap">
+          <span class="plan-price">$9.99</span>
+          <span class="plan-price-note">One-time · No subscription</span>
         </div>
-        <div class="vault-item locked">
-          <div class="vault-lock" aria-label="Locked">🔒</div>
-          <div class="vault-info">
-            <h4>50 Business Automations</h4>
-            <p>Pre-built Zapier and Make workflows that automate lead gen, sales, support, and operations.</p>
-          </div>
-          <div class="vault-blur-overlay" aria-hidden="true"></div>
-        </div>
-        <div class="vault-item locked">
-          <div class="vault-lock" aria-label="Locked">🔒</div>
-          <div class="vault-info">
-            <h4>Student Success Playbook</h4>
-            <p>The complete AI study system for competitive exams — JEE, CUET, UPSC, and more.</p>
-          </div>
-          <div class="vault-blur-overlay" aria-hidden="true"></div>
-        </div>
-        <div class="vault-item locked">
-          <div class="vault-lock" aria-label="Locked">🔒</div>
-          <div class="vault-info">
-            <h4>AI Wealth Stack</h4>
-            <p>How to use AI to build income streams: freelancing, SaaS, content, and digital products.</p>
-          </div>
-          <div class="vault-blur-overlay" aria-hidden="true"></div>
-        </div>
-        <div class="vault-item locked">
-          <div class="vault-lock" aria-label="Locked">🔒</div>
-          <div class="vault-info">
-            <h4>Content Engine Blueprint</h4>
-            <p>The exact system to produce 30 pieces of content per week as a one-person operation.</p>
-          </div>
-          <div class="vault-blur-overlay" aria-hidden="true"></div>
-        </div>
-      </div>
-
-      <div class="premium-cta reveal">
-        <a href="#" class="btn btn-gold">
-          <span>🔓 Unlock Premium — $9.99</span>
+        <ul class="plan-features" role="list">
+          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Advanced Life Analysis</strong> — all 8 dimensions</li>
+          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Future Self Simulator</strong> — 3 timeline scenarios</li>
+          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Career Intelligence Report</strong> — with income projections</li>
+          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Startup Blueprint</strong> — built for your situation</li>
+          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Personalized Growth Plans</strong> — 90-day + 1-year</li>
+          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Exclusive Systems Library</strong> — updated monthly</li>
+          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Lifetime updates</strong> — forever</li>
+        </ul>
+        <a href="#" class="plan-cta-premium" id="unlockBtn">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M13 8V6a4 4 0 0 0-8 0v2M4 8h10a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Unlock Full Access — $9.99
         </a>
-        <p class="premium-guarantee">✓ Instant access &nbsp;·&nbsp; ✓ Lifetime updates &nbsp;·&nbsp; ✓ 7-day refund guarantee</p>
+        <p class="plan-guarantee">✓ 7-day refund guarantee &nbsp;·&nbsp; ✓ Instant access</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- NEWSLETTER -->
-  <section class="section" id="newsletter" aria-labelledby="newsletter-heading">
-    <div class="container">
-      <div class="newsletter-box reveal">
-        <div class="newsletter-glow" aria-hidden="true"></div>
-        <div class="section-tag" style="margin:0 auto 1.5rem">Weekly Intel</div>
-        <h2 id="newsletter-heading">Stay Ahead Of <em class="gradient-text">Everyone Else</em></h2>
-        <p>Receive the best AI tools, workflows, and discoveries every week.<br class="hide-mobile" />Join 50,000+ ambitious readers.</p>
-        <form class="newsletter-form" onsubmit="handleSubscribe(event)" role="form" aria-label="Newsletter subscription">
-          <div class="form-group">
-            <input type="email" placeholder="Enter your email address" aria-label="Email address" required autocomplete="email" />
-            <button type="submit" class="btn btn-primary">
-              Subscribe Free
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-          <p class="form-note">No spam. Unsubscribe anytime. Read by 50,000+ people.</p>
-          <div class="form-success" id="formSuccess" role="status" aria-live="polite">🎉 You're in! Check your inbox to confirm.</div>
-        </form>
+<!-- FINAL CTA -->
+<section class="final-cta" aria-label="Final call to action">
+  <div class="fcta-bg" aria-hidden="true">
+    <div class="fcta-orb fcta-orb-1"></div>
+    <div class="fcta-orb fcta-orb-2"></div>
+  </div>
+  <div class="container">
+    <div class="fcta-inner" data-reveal>
+      <h2 class="fcta-headline">The gap between who you are<br/>and who you could be<br/><span class="gradient-text">has a name now.</span></h2>
+      <p class="fcta-sub">12,000 people this month decided to close theirs.<br/>Your analysis takes under 5 minutes.</p>
+      <div class="fcta-actions">
+        <a href="#modules" class="cta-primary cta-large">
+          Begin My Analysis
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9h12M11 5l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FAQ -->
-  <section class="section section-alt" id="faq" aria-labelledby="faq-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">FAQ</div>
-        <h2 id="faq-heading">Got <em class="gradient-text">Questions?</em></h2>
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" aria-label="Stelaron Home">
+          <svg class="logo-mark" width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <circle cx="14" cy="14" r="13" stroke="url(#lg3)" stroke-width="1.5"/>
+            <circle cx="14" cy="14" r="5" fill="url(#lg4)"/>
+            <line x1="14" y1="1" x2="14" y2="5" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="14" y1="23" x2="14" y2="27" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="1" y1="14" x2="5" y2="14" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="23" y1="14" x2="27" y2="14" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="lg3" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#6EE7FF"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+              <linearGradient id="lg4" x1="9" y1="9" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#6EE7FF"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+            </defs>
+          </svg>
+          <span>STELARON</span>
+        </a>
+        <p>The AI operating system for ambitious people. Clarity. Direction. Leverage.</p>
       </div>
-      <div class="faq-list" role="list">
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">What is Stelaron?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>Stelaron is a premium AI tools directory and resource hub. We curate, test, and review the world's best AI tools, then package them into actionable workflows, comparisons, and guides for students, creators, entrepreneurs, and developers.</p></div>
+      <div class="footer-links">
+        <div class="fc">
+          <h4>Platform</h4>
+          <a href="#modules">Life Analyzer</a>
+          <a href="#modules">Career Engine</a>
+          <a href="#modules">Startup Generator</a>
+          <a href="#future-self">Future Self Simulator</a>
         </div>
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">Is Stelaron free to use?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>Yes — the directory, tool reviews, comparisons, and workflow guides are completely free. The Premium Vault is a one-time $9.99 purchase that unlocks exclusive prompts, automations, playbooks, and blueprints.</p></div>
+        <div class="fc">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
         </div>
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">How do you choose which tools to feature?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>Every tool is personally tested by our team. We evaluate on quality, reliability, value for money, and real-world usefulness. We don't feature tools just because they pay us — our reputation depends on honest curation.</p></div>
-        </div>
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">Do you earn affiliate commissions?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>Some links on Stelaron are affiliate links, which means we may earn a commission if you sign up through them — at no extra cost to you. This helps us keep the site free. We only recommend tools we genuinely believe in.</p></div>
-        </div>
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">What's inside the Premium Vault?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>The Premium Vault contains 100 elite AI prompts, 50 business automation templates, a Student Success Playbook, the AI Wealth Stack guide, and the Content Engine Blueprint. All resources are continuously updated as AI evolves.</p></div>
-        </div>
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">Is there a refund policy?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>Yes. We offer a 7-day no-questions-asked refund on the Premium Vault. If you're not satisfied, email us and we'll refund you immediately. We stand behind our content completely.</p></div>
-        </div>
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">How often is the content updated?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>The AI landscape moves fast. We update tool reviews weekly, add new tools as they launch, and refresh Premium Vault content regularly so you always have current, accurate information.</p></div>
-        </div>
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">Which AI tool is best for students in India?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>For Indian students preparing for JEE, CUET, NEET, and Board exams, we recommend starting with Claude for concept explanation, Perplexity for research, and Notion AI for organized notes. Our Student Success Playbook in the Vault has the complete system.</p></div>
-        </div>
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">Can I submit a tool for review?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>Absolutely. If you've built or discovered an AI tool you think belongs on Stelaron, reach out via the Contact page. We review every submission and add genuinely useful tools to our directory.</p></div>
-        </div>
-
-        <div class="faq-item reveal" role="listitem">
-          <button class="faq-q" aria-expanded="false">Do I need technical skills to use these AI tools?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" role="region"><p>No. The majority of tools we feature require zero technical knowledge. Our guides are written for beginners and advanced users alike — we explain everything in plain language with step-by-step instructions.</p></div>
-        </div>
-
       </div>
     </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a href="#" class="nav-logo" aria-label="Stelaron Home">
-            <span class="logo-icon">✦</span>
-            <span class="logo-text">STELARON</span>
-          </a>
-          <p>Discover the world's best AI tools, workflows, and productivity systems.</p>
-          <div class="footer-socials" aria-label="Social media links">
-            <a href="#" aria-label="Twitter/X" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a href="#" aria-label="LinkedIn" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </a>
-            <a href="#" aria-label="YouTube" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </a>
-            <a href="#" aria-label="Instagram" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-            </a>
-          </div>
-        </div>
-        <div class="footer-links-group">
-          <div class="footer-col">
-            <h4>Platform</h4>
-            <ul>
-              <li><a href="#featured-tools">AI Tools</a></li>
-              <li><a href="#workflows">Workflow Stacks</a></li>
-              <li><a href="#comparisons">Comparisons</a></li>
-              <li><a href="#premium">Premium Vault</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Categories</h4>
-            <ul>
-              <li><a href="#students">For Students</a></li>
-              <li><a href="#creators">For Creators</a></li>
-              <li><a href="#entrepreneurs">For Entrepreneurs</a></li>
-              <li><a href="#developers">For Developers</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 Stelaron. All rights reserved.</p>
-        <p>Built with ✦ to help you win with AI.</p>
-      </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Stelaron. All rights reserved.</span>
+      <span>Built to change what's possible for you.</span>
     </div>
-  </footer>
+  </div>
+</footer>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
