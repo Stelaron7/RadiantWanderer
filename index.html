@@ -4,522 +4,269 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STELARON — Future Potential Simulator</title>
-  <meta name="description" content="Discover the future you're currently building. In under 60 seconds, find out where your habits, ambition, and discipline are taking you." />
+  <meta name="description" content="Discover the future you're currently building. In under 60 seconds, find out where your habits, ambition, and decisions are taking you." />
   <meta property="og:title" content="STELARON — Future Potential Simulator" />
-  <meta property="og:description" content="In under 60 seconds, discover where your current habits, ambition, and discipline are likely to take you." />
+  <meta property="og:description" content="Discover the future you're currently building. Get your Future Potential Score, Tier, and Archetype." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://stelaron.com/og-image.png" />
+  <meta property="og:image" content="https://stelaron.app/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="STELARON — Future Potential Simulator" />
-  <meta name="twitter:description" content="Discover the future you're currently building. Take the 60-second simulation." />
+  <meta name="twitter:description" content="Discover the future you're currently building in under 60 seconds." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="styles.css" />
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "STELARON",
-    "description": "Future Potential Simulator — discover where your habits and ambition are taking you",
-    "applicationCategory": "LifestyleApplication"
+    "description": "Future Potential Simulator — discover the future you are currently building",
+    "applicationCategory": "LifestyleApplication",
+    "offers": { "@type": "Offer", "price": "0" }
   }
   </script>
 </head>
 <body>
 
-<!-- NAVIGATION -->
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo" onclick="showSection('home')">
-      <span class="logo-mark">✦</span>
-      <span class="logo-text">STELARON</span>
-    </a>
-    <div class="nav-links">
-      <a href="#how-it-works" class="nav-link">How It Works</a>
-      <a href="#leaderboard" class="nav-link">Leaderboard</a>
-      <button class="btn-nav-cta" onclick="showSection('quiz')">Start Simulation</button>
-    </div>
+<!-- STAR CANVAS BACKGROUND -->
+<canvas id="starCanvas"></canvas>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo" onclick="showSection('home')">STELARON</a>
+  <div class="nav-links">
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('leaderboard')">Leaderboard</a>
+    <a href="#emailSection">Community</a>
+    <button class="nav-cta" onclick="startSimulator()">Start Simulation</button>
   </div>
 </nav>
 
-<!-- ============================= HOME SECTION ============================= -->
-<section id="section-home" class="section active">
+<!-- ═══════════════════════════════════════════════
+     SECTION: HOME
+═══════════════════════════════════════════════ -->
+<section id="homeSection" class="section active">
 
-  <!-- HERO -->
-  <div class="hero" id="hero">
-    <canvas id="particles-canvas"></canvas>
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        Future Intelligence Engine — v2.0
-      </div>
-      <h1 class="hero-headline">
-        Meet Your<br/>
-        <span class="gradient-text">Future Self</span>
-      </h1>
-      <p class="hero-subheadline">
-        Discover the future you're currently building — and identify the biggest opportunities and risks standing between you and where you want to be.
-      </p>
-      <div class="hero-ctas">
-        <button class="btn-primary btn-lg" onclick="showSection('quiz')">
-          <span>Start My Simulation</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <button class="btn-ghost btn-lg" onclick="showExampleReport()">View Example Report</button>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-num">847K</span>
-          <span class="hero-stat-label">Simulations Run</span>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">94%</span>
-          <span class="hero-stat-label">Say It's Accurate</span>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">60s</span>
-          <span class="hero-stat-label">To Your Result</span>
-        </div>
-      </div>
+  <div class="hero-container">
+    <div class="hero-eyebrow">
+      <span class="pulse-dot"></span>
+      <span>Future Intelligence Engine</span>
     </div>
+
+    <h1 class="hero-headline">
+      Meet Your<br /><span class="gradient-text">Future Self</span>
+    </h1>
+    <p class="hero-sub">
+      Discover the future you're currently building — and identify<br class="hide-mobile" />
+      the biggest opportunities and risks standing in your way.
+    </p>
+
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="startSimulator()">
+        <span>Start My Simulation</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="btn-ghost" onclick="showExampleReport()">View Example Report</button>
+    </div>
+
+    <!-- HERO VISUAL: Current → Future -->
     <div class="hero-visual">
-      <div class="orbit-container">
-        <div class="orbit-ring orbit-1"></div>
-        <div class="orbit-ring orbit-2"></div>
-        <div class="orbit-ring orbit-3"></div>
-        <div class="orbit-core">
-          <div class="orbit-core-inner">
-            <div class="current-self">
-              <div class="self-label">Current Self</div>
-              <div class="self-score" id="hero-current-score">—</div>
-            </div>
-            <div class="self-arrow">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-            </div>
-            <div class="future-self">
-              <div class="self-label gradient-text">Future Self</div>
-              <div class="self-score future-score" id="hero-future-score">?</div>
-            </div>
-          </div>
-        </div>
-        <div class="orbit-node node-1">
-          <span>Discipline</span>
-        </div>
-        <div class="orbit-node node-2">
-          <span>Ambition</span>
-        </div>
-        <div class="orbit-node node-3">
-          <span>Skills</span>
-        </div>
-        <div class="orbit-node node-4">
-          <span>Focus</span>
-        </div>
+      <div class="hero-card hero-card-current">
+        <div class="card-label">Current Self</div>
+        <div class="card-orbit"></div>
+        <div class="card-score">—</div>
+        <div class="card-sublabel">Uncharted Potential</div>
+      </div>
+      <div class="hero-arrow-column">
+        <div class="hero-arrow-line"></div>
+        <svg class="hero-arrow-chevron" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12l7 7 7-7" stroke="url(#ag)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs><linearGradient id="ag" x1="12" y1="5" x2="12" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#7B5CF0"/><stop offset="1" stop-color="#F0A500"/></linearGradient></defs>
+        </svg>
+      </div>
+      <div class="hero-card hero-card-future">
+        <div class="card-label">Future Self</div>
+        <div class="card-orbit future-orbit"></div>
+        <div class="card-score gradient-text">?</div>
+        <div class="card-sublabel">Awaiting Discovery</div>
+      </div>
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-num">247K+</span>
+        <span class="stat-label">Simulations Run</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">7 Tiers</span>
+        <span class="stat-label">From Drifter to Legendary</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">60 sec</span>
+        <span class="stat-label">Time to Your Report</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features-section">
+    <p class="section-eyebrow">Why Stelaron</p>
+    <h2 class="section-title">Self-discovery at <span class="gradient-text">the speed of thought</span></h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">◈</div>
+        <h3>Logic-Driven Results</h3>
+        <p>No random outputs. Your score is calculated from a real weighting engine built on behavioral science and outcome data.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">◉</div>
+        <h3>Identity, Not Just Numbers</h3>
+        <p>Your Archetype and Tier reveal who you're becoming — giving you something worth sharing, not just a score.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">◇</div>
+        <h3>Actionable Roadmap</h3>
+        <p>Every result includes a 12-month and 5-year outlook with your highest-leverage action to change your trajectory.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⬡</div>
+        <h3>Track Your Growth</h3>
+        <p>Retake every 30 days. Watch your score evolve. Compete on the leaderboard. Build evidence of your progress.</p>
       </div>
     </div>
   </div>
 
-  <!-- HOW IT WORKS -->
-  <div class="section-container" id="how-it-works">
-    <div class="section-header">
-      <div class="section-badge">The Process</div>
-      <h2 class="section-title">Your future, calculated.</h2>
-      <p class="section-sub">A proprietary scoring engine analyzes 11 dimensions of your current trajectory to project where you're headed.</p>
+  <!-- TIER PREVIEW -->
+  <div class="tiers-section">
+    <p class="section-eyebrow">The Seven Tiers</p>
+    <h2 class="section-title">Where do you <span class="gradient-text">rank?</span></h2>
+    <div class="tiers-row">
+      <div class="tier-pill tier-drifter">DRIFTER <span>0–20</span></div>
+      <div class="tier-pill tier-wanderer">WANDERER <span>21–40</span></div>
+      <div class="tier-pill tier-builder">BUILDER <span>41–60</span></div>
+      <div class="tier-pill tier-challenger">CHALLENGER <span>61–75</span></div>
+      <div class="tier-pill tier-elite">ELITE <span>76–85</span></div>
+      <div class="tier-pill tier-visionary">VISIONARY <span>86–95</span></div>
+      <div class="tier-pill tier-legendary">LEGENDARY <span>96–100</span></div>
     </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-number">01</div>
-        <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        </div>
-        <h3>Answer 11 Questions</h3>
-        <p>Share your current habits, ambitions, income, skills, and goals. Takes under 60 seconds.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">02</div>
-        <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        </div>
-        <h3>Receive Your Score</h3>
-        <p>Our engine calculates your Future Potential Score from 0–100 across 6 dimensions.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">03</div>
-        <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-        <h3>Discover Your Archetype</h3>
-        <p>Unlock your personal archetype, tier ranking, and a detailed projection of your 1-year and 5-year outlook.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">04</div>
-        <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        </div>
-        <h3>Share &amp; Compare</h3>
-        <p>Share your premium result card. Challenge friends. Track improvement over time.</p>
-      </div>
-    </div>
+    <button class="btn-primary" style="margin-top:2.5rem;" onclick="startSimulator()">Discover Your Tier →</button>
   </div>
 
-  <!-- TIER SHOWCASE -->
-  <div class="section-container tier-showcase-section">
-    <div class="section-header">
-      <div class="section-badge">Tier System</div>
-      <h2 class="section-title">Where do you rank?</h2>
-    </div>
-    <div class="tiers-scroll">
-      <div class="tier-pill tier-drifter"><span class="tier-range">0–20</span><span class="tier-name">Drifter</span></div>
-      <div class="tier-pill tier-wanderer"><span class="tier-range">21–40</span><span class="tier-name">Wanderer</span></div>
-      <div class="tier-pill tier-builder"><span class="tier-range">41–60</span><span class="tier-name">Builder</span></div>
-      <div class="tier-pill tier-challenger"><span class="tier-range">61–75</span><span class="tier-name">Challenger</span></div>
-      <div class="tier-pill tier-elite"><span class="tier-range">76–85</span><span class="tier-name">Elite</span></div>
-      <div class="tier-pill tier-visionary"><span class="tier-range">86–95</span><span class="tier-name">Visionary</span></div>
-      <div class="tier-pill tier-legendary"><span class="tier-range">96–100</span><span class="tier-name">Legendary</span></div>
+  <!-- EMAIL CAPTURE -->
+  <div id="emailSection" class="email-section">
+    <div class="email-inner">
+      <p class="section-eyebrow">Community</p>
+      <h2 class="section-title">Join <span class="gradient-text">Future Builders</span></h2>
+      <p class="email-desc">Weekly insights on AI, careers, leverage, and how the highest-potential people are building their futures.</p>
+      <form class="email-form" onsubmit="handleEmailSubmit(event)">
+        <input type="email" placeholder="your@email.com" class="email-input" required />
+        <button type="submit" class="btn-primary">Join Free</button>
+      </form>
+      <p class="email-fine">No spam. Unsubscribe anytime.</p>
     </div>
   </div>
-
-  <!-- LEADERBOARD -->
-  <div class="section-container" id="leaderboard">
-    <div class="section-header">
-      <div class="section-badge">Live Rankings</div>
-      <h2 class="section-title">Global Leaderboard</h2>
-      <p class="section-sub">How do you compare to other builders worldwide?</p>
-    </div>
-    <div class="leaderboard-grid">
-      <div class="leaderboard-card">
-        <div class="lb-card-title">Top Scores This Week</div>
-        <div class="lb-list" id="lb-scores"></div>
-      </div>
-      <div class="leaderboard-card">
-        <div class="lb-card-title">Most Common Archetypes</div>
-        <div class="lb-list" id="lb-archetypes"></div>
-      </div>
-      <div class="leaderboard-card">
-        <div class="lb-card-title">Tier Distribution</div>
-        <div style="position:relative;height:200px;margin-top:12px;">
-          <canvas id="tierChart" role="img" aria-label="Tier distribution bar chart"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA SECTION -->
-  <div class="cta-section">
-    <div class="cta-inner">
-      <h2>Ready to meet your future self?</h2>
-      <p>Join 847,000+ people who've already discovered their potential.</p>
-      <button class="btn-primary btn-lg" onclick="showSection('quiz')">
-        <span>Start My Simulation — Free</span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- EMAIL SECTION -->
-  <div class="section-container email-section">
-    <div class="email-card">
-      <div class="email-left">
-        <div class="section-badge">Newsletter</div>
-        <h2>Join Future Builders</h2>
-        <p>Weekly insights on AI, careers, business, growth, leverage, and productivity — curated for high-potential people.</p>
-        <ul class="email-benefits">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Career velocity frameworks</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> AI tools for leverage</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Score improvement strategies</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Exclusive archetype deep-dives</li>
-        </ul>
-      </div>
-      <div class="email-right">
-        <div class="email-form-group">
-          <input type="text" placeholder="Your name" id="email-name" class="email-input" />
-        </div>
-        <div class="email-form-group">
-          <input type="email" placeholder="Your email address" id="email-addr" class="email-input" />
-        </div>
-        <button class="btn-primary" style="width:100%" onclick="handleEmailSubmit()">Join 12,400+ Future Builders</button>
-        <p class="email-note">No spam. Unsubscribe anytime. Free forever.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <span class="logo-mark">✦</span>
-        <span class="logo-text">STELARON</span>
-      </div>
-      <p class="footer-tagline">The Future Potential Simulator</p>
-      <p class="footer-copy">© 2025 Stelaron. Built for builders.</p>
-    </div>
-  </footer>
 
 </section>
 
-<!-- ============================= QUIZ SECTION ============================= -->
-<section id="section-quiz" class="section">
-  <div class="quiz-wrapper">
-    <div class="quiz-header">
-      <button class="quiz-back" onclick="showSection('home')">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        Back
-      </button>
-      <div class="quiz-logo">
-        <span class="logo-mark">✦</span> STELARON
+<!-- ═══════════════════════════════════════════════
+     SECTION: SIMULATOR
+═══════════════════════════════════════════════ -->
+<section id="simulatorSection" class="section">
+
+  <div class="sim-container">
+    <div class="sim-header">
+      <div class="sim-logo">STELARON</div>
+      <div class="sim-progress-wrap">
+        <div class="sim-progress-bar" id="simProgressBar"></div>
       </div>
-      <div class="quiz-progress-wrap">
-        <div class="quiz-progress-bar">
-          <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
-        </div>
-        <span class="quiz-progress-label" id="quiz-progress-label">1 of 11</span>
-      </div>
+      <div class="sim-step-label" id="simStepLabel">Step 1 of 11</div>
     </div>
 
-    <div class="quiz-content">
-      <div class="quiz-card" id="quiz-card">
-        <!-- Questions rendered by JS -->
-      </div>
+    <div class="sim-question-area" id="simQuestionArea">
+      <!-- Questions injected here -->
+    </div>
+
+    <div class="sim-nav-row">
+      <button class="btn-ghost" id="simBackBtn" onclick="simBack()" style="display:none">← Back</button>
+      <button class="btn-primary" id="simNextBtn" onclick="simNext()">Continue →</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION: CALCULATING
+═══════════════════════════════════════════════ -->
+<section id="calculatingSection" class="section">
+  <div class="calc-container">
+    <div class="calc-orb"></div>
+    <div class="calc-text-stack">
+      <p class="calc-label" id="calcLabel">Analyzing your inputs...</p>
+      <div class="calc-bar-outer"><div class="calc-bar-fill" id="calcBarFill"></div></div>
     </div>
   </div>
 </section>
 
-<!-- ============================= RESULTS SECTION ============================= -->
-<section id="section-results" class="section">
-  <div class="results-wrapper">
+<!-- ═══════════════════════════════════════════════
+     SECTION: RESULTS
+═══════════════════════════════════════════════ -->
+<section id="resultsSection" class="section">
 
-    <!-- RESULT REVEAL OVERLAY -->
-    <div class="reveal-overlay" id="reveal-overlay">
-      <div class="reveal-content">
-        <div class="reveal-logo"><span class="logo-mark">✦</span> STELARON</div>
-        <div class="reveal-calculating">
-          <div class="reveal-dots">
-            <span></span><span></span><span></span>
-          </div>
-          <p id="reveal-msg">Analyzing your trajectory...</p>
-        </div>
-        <div class="reveal-score-display" id="reveal-score-display" style="display:none">
-          <div class="reveal-score-label">Your Future Potential Score</div>
-          <div class="reveal-score-num" id="reveal-score-num">0</div>
-          <div class="reveal-tier" id="reveal-tier-text"></div>
-        </div>
-      </div>
-    </div>
+  <div class="results-container" id="resultsContainer">
+    <!-- Dynamically filled -->
+  </div>
 
-    <!-- RESULTS NAV -->
-    <nav class="results-nav">
-      <div class="results-nav-inner">
-        <a href="#" class="nav-logo" onclick="showSection('home')">
-          <span class="logo-mark">✦</span>
-          <span class="logo-text">STELARON</span>
-        </a>
-        <div class="results-nav-actions">
-          <button class="btn-ghost btn-sm" onclick="showSection('quiz')">Retake</button>
-          <button class="btn-primary btn-sm" onclick="shareResult()">Share Results</button>
-        </div>
-      </div>
-    </nav>
-
-    <!-- HERO SCORE SECTION -->
-    <div class="results-hero">
-      <div class="results-hero-inner">
-        <div class="results-score-card">
-          <div class="rsc-label">FUTURE POTENTIAL SCORE</div>
-          <div class="rsc-score" id="result-score">—</div>
-          <div class="rsc-tier" id="result-tier">—</div>
-          <div class="rsc-archetype" id="result-archetype">—</div>
-          <div class="score-ring-container">
-            <svg viewBox="0 0 200 200" class="score-ring-svg">
-              <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="12"/>
-              <circle cx="100" cy="100" r="85" fill="none" stroke="url(#scoreGrad)" stroke-width="12" stroke-linecap="round"
-                stroke-dasharray="534" stroke-dashoffset="534" id="score-ring-fill"
-                transform="rotate(-90 100 100)"/>
-              <defs>
-                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#6B21E8"/>
-                  <stop offset="100%" stop-color="#F59E0B"/>
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
-        </div>
-        <div class="results-identity">
-          <div class="ri-archetype-name" id="ri-archetype-name">—</div>
-          <p class="ri-archetype-desc" id="ri-archetype-desc">—</p>
-          <div class="ri-dims">
-            <div class="ri-dim" id="dim-wealth"></div>
-            <div class="ri-dim" id="dim-velocity"></div>
-            <div class="ri-dim" id="dim-discipline"></div>
-            <div class="ri-dim" id="dim-execution"></div>
-            <div class="ri-dim" id="dim-focus"></div>
-            <div class="ri-dim" id="dim-risk"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DETAIL CARDS ROW -->
-    <div class="results-container">
-      <div class="results-detail-grid">
-        <div class="detail-card highlight-card">
-          <div class="dc-label">Biggest Strength</div>
-          <div class="dc-value" id="dc-strength">—</div>
-        </div>
-        <div class="detail-card warning-card">
-          <div class="dc-label">Critical Bottleneck</div>
-          <div class="dc-value" id="dc-bottleneck">—</div>
-        </div>
-        <div class="detail-card">
-          <div class="dc-label">Main Opportunity</div>
-          <div class="dc-value" id="dc-opportunity">—</div>
-        </div>
-        <div class="detail-card">
-          <div class="dc-label">Main Risk</div>
-          <div class="dc-value" id="dc-risk">—</div>
-        </div>
-      </div>
-
-      <!-- CHARTS SECTION -->
-      <div class="charts-section">
-        <h2 class="charts-title">Your Potential Breakdown</h2>
-        <div class="charts-grid">
-          <div class="chart-card">
-            <div class="chart-card-title">Performance Radar</div>
-            <div style="position:relative;height:280px;">
-              <canvas id="radarChart" role="img" aria-label="Radar chart showing performance across 6 dimensions"></canvas>
-            </div>
-          </div>
-          <div class="chart-card">
-            <div class="chart-card-title">Score Breakdown</div>
-            <div id="breakdown-bars"></div>
-          </div>
-        </div>
-        <div class="charts-grid" style="margin-top:20px;">
-          <div class="chart-card">
-            <div class="chart-card-title">Skill Growth Potential</div>
-            <div style="position:relative;height:220px;">
-              <canvas id="skillChart" role="img" aria-label="Bar chart showing skill growth potential"></canvas>
-            </div>
-          </div>
-          <div class="chart-card">
-            <div class="chart-card-title">Income Projection</div>
-            <div style="position:relative;height:220px;">
-              <canvas id="projectionChart" role="img" aria-label="Line chart showing income projection over 5 years"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- OUTLOOK CARDS -->
-      <div class="outlook-section">
-        <h2 class="charts-title">Your Trajectory</h2>
-        <div class="outlook-grid">
-          <div class="outlook-card">
-            <div class="outlook-period">12 Month Outlook</div>
-            <p class="outlook-text" id="outlook-12m">—</p>
-            <div class="outlook-focus">
-              <span class="of-label">Recommended Focus</span>
-              <span class="of-value" id="focus-12m">—</span>
-            </div>
-          </div>
-          <div class="outlook-card">
-            <div class="outlook-period">5 Year Outlook</div>
-            <p class="outlook-text" id="outlook-5y">—</p>
-            <div class="outlook-focus">
-              <span class="of-label">Key Milestone</span>
-              <span class="of-value" id="focus-5y">—</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ROADMAP -->
-      <div class="roadmap-section">
-        <h2 class="charts-title">Your Personalized Roadmap</h2>
-        <div class="roadmap-grid" id="roadmap-grid"></div>
-      </div>
-
-      <!-- HIGHEST LEVERAGE -->
-      <div class="leverage-section">
-        <div class="leverage-card">
-          <div class="leverage-label">⚡ Highest Leverage Action Right Now</div>
-          <div class="leverage-action" id="leverage-action">—</div>
-          <p class="leverage-desc" id="leverage-desc">—</p>
-        </div>
-      </div>
-
-      <!-- RESOURCES -->
-      <div class="resources-section">
-        <div class="section-header" style="text-align:left; padding:0; margin-bottom:24px;">
-          <div class="section-badge">For Your Archetype</div>
-          <h2 class="section-title" style="font-size:2rem;">Recommended Resources</h2>
-        </div>
-        <div class="resources-grid" id="resources-grid"></div>
-      </div>
-
-      <!-- SHARE CARD -->
-      <div class="share-section">
-        <h2 class="charts-title">Share Your Result</h2>
-        <div class="share-card-wrapper">
-          <div class="share-card" id="share-card">
-            <div class="sc-header">
-              <div class="sc-logo"><span>✦</span> STELARON</div>
-              <div class="sc-tag">FUTURE POTENTIAL REPORT</div>
-            </div>
-            <div class="sc-body">
-              <div class="sc-left">
-                <div class="sc-tier-label">TIER</div>
-                <div class="sc-tier-value" id="sc-tier">—</div>
-                <div class="sc-arch-label">ARCHETYPE</div>
-                <div class="sc-arch-value" id="sc-arch">—</div>
-              </div>
-              <div class="sc-right">
-                <div class="sc-score-label">SCORE</div>
-                <div class="sc-score-value" id="sc-score">—</div>
-                <div class="sc-dims" id="sc-dims"></div>
-              </div>
-            </div>
-            <div class="sc-footer">stelaron.com · Take your simulation</div>
-          </div>
-        </div>
-        <div class="share-buttons">
-          <button class="share-btn share-x" onclick="shareOnX()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            Share on X
-          </button>
-          <button class="share-btn share-li" onclick="shareOnLinkedIn()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            LinkedIn
-          </button>
-          <button class="share-btn share-wa" onclick="shareOnWhatsApp()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp
-          </button>
-          <button class="share-btn share-copy" onclick="copyResult()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-            Copy Result
-          </button>
-        </div>
-      </div>
-
-      <!-- RETAKE CTA -->
-      <div class="retake-section">
-        <div class="retake-card">
-          <div class="retake-icon">🔁</div>
-          <h3>Improve Your Score</h3>
-          <p>Return in 30 days after implementing your roadmap to track your progress.</p>
-          <button class="btn-primary" onclick="showSection('quiz')">Retake Simulation</button>
-        </div>
-      </div>
-
-    </div><!-- end results-container -->
-  </div><!-- end results-wrapper -->
 </section>
 
-<div class="toast" id="toast"></div>
+<!-- ═══════════════════════════════════════════════
+     SECTION: LEADERBOARD
+═══════════════════════════════════════════════ -->
+<section id="leaderboardSection" class="section">
+  <div class="leaderboard-container">
+    <p class="section-eyebrow">Global Rankings</p>
+    <h2 class="section-title">The <span class="gradient-text">Leaderboard</span></h2>
+    <p class="leaderboard-desc">Anonymous scores from the last 7 days. Run your simulation to claim your rank.</p>
+
+    <div class="lb-grid">
+      <div class="lb-card">
+        <p class="lb-card-label">Top Scores This Week</p>
+        <div class="lb-list" id="lbTopScores"></div>
+      </div>
+      <div class="lb-card">
+        <p class="lb-card-label">Most Common Archetypes</p>
+        <div class="lb-list" id="lbArchetypes"></div>
+      </div>
+      <div class="lb-card">
+        <p class="lb-card-label">Tier Distribution</p>
+        <div class="lb-list" id="lbTiers"></div>
+      </div>
+    </div>
+
+    <button class="btn-primary" style="margin-top:3rem;" onclick="startSimulator()">Get Your Score →</button>
+  </div>
+</section>
+
+<!-- SHARE MODAL -->
+<div id="shareModal" class="modal-overlay" onclick="closeShareModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeShareModal()">✕</button>
+    <h3 class="modal-title">Share Your Result</h3>
+    <div class="share-card-preview" id="shareCardPreview"></div>
+    <div class="share-buttons">
+      <button class="share-btn share-x" onclick="shareOnX()">Share on X</button>
+      <button class="share-btn share-li" onclick="shareOnLinkedIn()">LinkedIn</button>
+      <button class="share-btn share-wa" onclick="shareOnWhatsApp()">WhatsApp</button>
+      <button class="share-btn share-copy" onclick="copyResult()">Copy Result</button>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
