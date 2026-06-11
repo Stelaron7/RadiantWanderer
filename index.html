@@ -1,601 +1,525 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Stelaron — Build The Future Version Of Yourself</title>
-  <meta name="description" content="AI-powered systems that analyze your life, identify your highest-leverage opportunities, and generate personalized paths toward success. Your life. Optimized."/>
-  <meta property="og:title" content="Stelaron — Build The Future Version Of Yourself"/>
-  <meta property="og:description" content="AI that analyzes your life, designs your future, and builds your path. Not motivational content. A system."/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://stelaron.com"/>
-  <meta property="og:image" content="https://stelaron.com/og.png"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Stelaron — Build The Future Version Of Yourself"/>
-  <meta name="twitter:description" content="AI that analyzes your life, designs your future, and builds your path."/>
-  <meta name="theme-color" content="#080C14"/>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Stelaron","applicationCategory":"LifestyleApplication","description":"AI-powered life operating system for ambitious people","offers":{"@type":"Offer","price":"9.99","priceCurrency":"USD"}}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STELARON — Future Potential Simulator</title>
+  <meta name="description" content="Discover the future you're currently building. In under 60 seconds, find out where your habits, ambition, and discipline are taking you." />
+  <meta property="og:title" content="STELARON — Future Potential Simulator" />
+  <meta property="og:description" content="In under 60 seconds, discover where your current habits, ambition, and discipline are likely to take you." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://stelaron.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="STELARON — Future Potential Simulator" />
+  <meta name="twitter:description" content="Discover the future you're currently building. Take the 60-second simulation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "STELARON",
+    "description": "Future Potential Simulator — discover where your habits and ambition are taking you",
+    "applicationCategory": "LifestyleApplication"
+  }
+  </script>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NAVIGATION -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-logo" aria-label="Stelaron">
-      <svg class="logo-mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <circle cx="14" cy="14" r="13" stroke="url(#lg1)" stroke-width="1.5"/>
-        <circle cx="14" cy="14" r="5" fill="url(#lg2)"/>
-        <line x1="14" y1="1" x2="14" y2="5" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="14" y1="23" x2="14" y2="27" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="1" y1="14" x2="5" y2="14" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="23" y1="14" x2="27" y2="14" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
-        <defs>
-          <linearGradient id="lg1" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#6EE7FF"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
-          <linearGradient id="lg2" x1="9" y1="9" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#6EE7FF"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
-        </defs>
-      </svg>
-      <span>STELARON</span>
+    <a href="#" class="nav-logo" onclick="showSection('home')">
+      <span class="logo-mark">✦</span>
+      <span class="logo-text">STELARON</span>
     </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#system">System</a></li>
-      <li><a href="#modules">Modules</a></li>
-      <li><a href="#future-self">Future Self</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-    </ul>
-    <a href="#pricing" class="nav-cta">Start Free Analysis</a>
-    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav-links">
+      <a href="#how-it-works" class="nav-link">How It Works</a>
+      <a href="#leaderboard" class="nav-link">Leaderboard</a>
+      <button class="btn-nav-cta" onclick="showSection('quiz')">Start Simulation</button>
+    </div>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="hero">
-  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
-  <div class="hero-ambient" aria-hidden="true">
-    <div class="amb-orb orb-1"></div>
-    <div class="amb-orb orb-2"></div>
-    <div class="amb-orb orb-3"></div>
-  </div>
+<!-- ============================= HOME SECTION ============================= -->
+<section id="section-home" class="section active">
 
-  <div class="hero-body">
-    <div class="hero-left">
-      <div class="hero-eyebrow" data-reveal>
-        <span class="eyebrow-dot" aria-hidden="true"></span>
-        AI OPERATING SYSTEM FOR AMBITIOUS PEOPLE
+  <!-- HERO -->
+  <div class="hero" id="hero">
+    <canvas id="particles-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Future Intelligence Engine — v2.0
       </div>
-      <h1 class="hero-headline" data-reveal data-delay="100">
-        Build The Future<br/>
-        <span class="headline-gradient">Version Of Yourself</span>
+      <h1 class="hero-headline">
+        Meet Your<br/>
+        <span class="gradient-text">Future Self</span>
       </h1>
-      <p class="hero-sub" data-reveal data-delay="200">
-        AI-powered systems that analyze your life, identify your highest-leverage opportunities,
-        and generate personalized paths toward the exact future you want.
+      <p class="hero-subheadline">
+        Discover the future you're currently building — and identify the biggest opportunities and risks standing between you and where you want to be.
       </p>
-      <div class="hero-actions" data-reveal data-delay="300">
-        <a href="#modules" class="cta-primary">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.3"/><path d="M6 9l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Analyze My Life
-        </a>
-        <a href="#future-self" class="cta-ghost">
-          See My Future
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5L11.5 7 8 10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+      <div class="hero-ctas">
+        <button class="btn-primary btn-lg" onclick="showSection('quiz')">
+          <span>Start My Simulation</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn-ghost btn-lg" onclick="showExampleReport()">View Example Report</button>
       </div>
-      <div class="hero-trust" data-reveal data-delay="400">
-        <div class="trust-avatars" aria-hidden="true">
-          <span class="ta">A</span><span class="ta">M</span><span class="ta">R</span><span class="ta">K</span>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">847K</span>
+          <span class="hero-stat-label">Simulations Run</span>
         </div>
-        <span class="trust-text">Joined by <strong>12,000+</strong> ambitious people this month</span>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">94%</span>
+          <span class="hero-stat-label">Say It's Accurate</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">60s</span>
+          <span class="hero-stat-label">To Your Result</span>
+        </div>
       </div>
     </div>
-
-    <div class="hero-right" data-reveal data-delay="200" aria-label="Life analysis preview">
-      <div class="hud-frame">
-        <div class="hud-header">
-          <span class="hud-tag">LIFE ANALYSIS — RUNNING</span>
-          <span class="hud-live" aria-hidden="true"><span class="live-dot"></span>LIVE</span>
-        </div>
-        <div class="hud-score-ring" aria-label="Overall life score visualization">
-          <canvas id="scoreRing" width="200" height="200" aria-hidden="true"></canvas>
-          <div class="score-center">
-            <span class="score-num" id="scoreNum">72</span>
-            <span class="score-label">LIFE SCORE</span>
+    <div class="hero-visual">
+      <div class="orbit-container">
+        <div class="orbit-ring orbit-1"></div>
+        <div class="orbit-ring orbit-2"></div>
+        <div class="orbit-ring orbit-3"></div>
+        <div class="orbit-core">
+          <div class="orbit-core-inner">
+            <div class="current-self">
+              <div class="self-label">Current Self</div>
+              <div class="self-score" id="hero-current-score">—</div>
+            </div>
+            <div class="self-arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            </div>
+            <div class="future-self">
+              <div class="self-label gradient-text">Future Self</div>
+              <div class="self-score future-score" id="hero-future-score">?</div>
+            </div>
           </div>
         </div>
-        <div class="hud-metrics" id="hudMetrics" role="list">
-          <div class="metric-row" role="listitem">
-            <span class="metric-name">Health</span>
-            <div class="metric-bar-track"><div class="metric-bar" data-val="65" style="width:0%"></div></div>
-            <span class="metric-val">65</span>
-          </div>
-          <div class="metric-row" role="listitem">
-            <span class="metric-name">Career</span>
-            <div class="metric-bar-track"><div class="metric-bar" data-val="80" style="width:0%"></div></div>
-            <span class="metric-val">80</span>
-          </div>
-          <div class="metric-row" role="listitem">
-            <span class="metric-name">Wealth</span>
-            <div class="metric-bar-track"><div class="metric-bar" data-val="48" style="width:0%"></div></div>
-            <span class="metric-val">48</span>
-          </div>
-          <div class="metric-row" role="listitem">
-            <span class="metric-name">Focus</span>
-            <div class="metric-bar-track"><div class="metric-bar" data-val="71" style="width:0%"></div></div>
-            <span class="metric-val">71</span>
-          </div>
-          <div class="metric-row" role="listitem">
-            <span class="metric-name">Discipline</span>
-            <div class="metric-bar-track"><div class="metric-bar" data-val="59" style="width:0%"></div></div>
-            <span class="metric-val">59</span>
-          </div>
-          <div class="metric-row" role="listitem">
-            <span class="metric-name">Learning</span>
-            <div class="metric-bar-track"><div class="metric-bar" data-val="84" style="width:0%"></div></div>
-            <span class="metric-val">84</span>
-          </div>
+        <div class="orbit-node node-1">
+          <span>Discipline</span>
         </div>
-        <div class="hud-insight">
-          <span class="insight-icon" aria-hidden="true">◈</span>
-          <span id="hudInsight">Wealth gap detected. 3 high-leverage opportunities identified.</span>
+        <div class="orbit-node node-2">
+          <span>Ambition</span>
+        </div>
+        <div class="orbit-node node-3">
+          <span>Skills</span>
+        </div>
+        <div class="orbit-node node-4">
+          <span>Focus</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="hero-scroll-indicator" aria-hidden="true">
-    <div class="scroll-track"><div class="scroll-thumb"></div></div>
-    <span>Scroll to explore</span>
-  </div>
-</section>
-
-<!-- PROBLEM SECTION -->
-<section class="problem-section" id="system" aria-labelledby="problem-heading">
-  <div class="container">
-    <div class="problem-grid">
-      <div class="problem-left" data-reveal>
-        <div class="section-eyebrow">THE PROBLEM</div>
-        <h2 id="problem-heading">You're not failing.<br/>You're <em>flying blind.</em></h2>
-        <p>Most people have real potential they never activate — not because of talent or effort, but because they have no system. No clarity on their actual weaknesses. No roadmap. No leverage.</p>
-        <p>You keep moving. But without a compass, movement is just exhaustion.</p>
-      </div>
-      <div class="problem-right" data-reveal data-delay="150">
-        <div class="chaos-cards">
-          <div class="chaos-card cc-1">
-            <span class="cc-icon" aria-hidden="true">⟳</span>
-            <div>
-              <strong>Stuck in the same loops</strong>
-              <span>Starting over every few months</span>
-            </div>
-          </div>
-          <div class="chaos-card cc-2">
-            <span class="cc-icon" aria-hidden="true">≈</span>
-            <div>
-              <strong>Unclear on what to fix first</strong>
-              <span>Everything feels urgent, nothing gets done</span>
-            </div>
-          </div>
-          <div class="chaos-card cc-3">
-            <span class="cc-icon" aria-hidden="true">∅</span>
-            <div>
-              <strong>No real direction</strong>
-              <span>Consuming content, not building systems</span>
-            </div>
-          </div>
-          <div class="chaos-card cc-4">
-            <span class="cc-icon" aria-hidden="true">△</span>
-            <div>
-              <strong>The gap is growing</strong>
-              <span>Others are accelerating. You feel it.</span>
-            </div>
-          </div>
+  <!-- HOW IT WORKS -->
+  <div class="section-container" id="how-it-works">
+    <div class="section-header">
+      <div class="section-badge">The Process</div>
+      <h2 class="section-title">Your future, calculated.</h2>
+      <p class="section-sub">A proprietary scoring engine analyzes 11 dimensions of your current trajectory to project where you're headed.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <div class="step-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
         </div>
+        <h3>Answer 11 Questions</h3>
+        <p>Share your current habits, ambitions, income, skills, and goals. Takes under 60 seconds.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <div class="step-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Receive Your Score</h3>
+        <p>Our engine calculates your Future Potential Score from 0–100 across 6 dimensions.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">03</div>
+        <div class="step-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h3>Discover Your Archetype</h3>
+        <p>Unlock your personal archetype, tier ranking, and a detailed projection of your 1-year and 5-year outlook.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">04</div>
+        <div class="step-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        </div>
+        <h3>Share &amp; Compare</h3>
+        <p>Share your premium result card. Challenge friends. Track improvement over time.</p>
       </div>
     </div>
-    <div class="transition-line" data-reveal aria-hidden="true">
-      <div class="tl-track"><div class="tl-fill"></div></div>
-      <span class="tl-label">STELARON CHANGES THIS</span>
-      <div class="tl-track"><div class="tl-fill"></div></div>
+  </div>
+
+  <!-- TIER SHOWCASE -->
+  <div class="section-container tier-showcase-section">
+    <div class="section-header">
+      <div class="section-badge">Tier System</div>
+      <h2 class="section-title">Where do you rank?</h2>
+    </div>
+    <div class="tiers-scroll">
+      <div class="tier-pill tier-drifter"><span class="tier-range">0–20</span><span class="tier-name">Drifter</span></div>
+      <div class="tier-pill tier-wanderer"><span class="tier-range">21–40</span><span class="tier-name">Wanderer</span></div>
+      <div class="tier-pill tier-builder"><span class="tier-range">41–60</span><span class="tier-name">Builder</span></div>
+      <div class="tier-pill tier-challenger"><span class="tier-range">61–75</span><span class="tier-name">Challenger</span></div>
+      <div class="tier-pill tier-elite"><span class="tier-range">76–85</span><span class="tier-name">Elite</span></div>
+      <div class="tier-pill tier-visionary"><span class="tier-range">86–95</span><span class="tier-name">Visionary</span></div>
+      <div class="tier-pill tier-legendary"><span class="tier-range">96–100</span><span class="tier-name">Legendary</span></div>
     </div>
   </div>
-</section>
 
-<!-- MODULES -->
-<section class="modules-section" id="modules" aria-labelledby="modules-heading">
-  <div class="container">
-    <div class="section-header" data-reveal>
-      <div class="section-eyebrow">FOUR CORE SYSTEMS</div>
-      <h2 id="modules-heading">Your Complete<br/><span class="gradient-text">Intelligence Stack</span></h2>
-      <p class="section-sub">Not tools. Not templates. AI systems engineered around your specific situation.</p>
+  <!-- LEADERBOARD -->
+  <div class="section-container" id="leaderboard">
+    <div class="section-header">
+      <div class="section-badge">Live Rankings</div>
+      <h2 class="section-title">Global Leaderboard</h2>
+      <p class="section-sub">How do you compare to other builders worldwide?</p>
     </div>
-
-    <div class="modules-layout">
-
-      <!-- MODULE 1: LIFE ANALYZER -->
-      <div class="module-card module-main" data-reveal id="lifeAnalyzer" aria-labelledby="mod1-heading">
-        <div class="module-number" aria-hidden="true">01</div>
-        <div class="module-header">
-          <div class="module-icon-wrap">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          </div>
-          <h3 id="mod1-heading">Life Analyzer</h3>
-        </div>
-        <p class="module-desc">A deep analysis across every dimension of your life. Not a quiz. A system that diagnoses exactly where you're leaking potential.</p>
-        <div class="module-inputs">
-          <span class="input-tag">Health</span>
-          <span class="input-tag">Productivity</span>
-          <span class="input-tag">Learning</span>
-          <span class="input-tag">Wealth</span>
-          <span class="input-tag">Discipline</span>
-          <span class="input-tag">Focus</span>
-          <span class="input-tag">Relationships</span>
-          <span class="input-tag">Career</span>
-        </div>
-        <div class="module-outputs">
-          <div class="output-item">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Overall Life Score with breakdown
-          </div>
-          <div class="output-item">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Weakness detection — ranked by leverage
-          </div>
-          <div class="output-item">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Personalized 90-day improvement roadmap
-          </div>
-        </div>
-        <a href="#pricing" class="module-cta">Run Life Analysis →</a>
-        <div class="module-visual" aria-hidden="true">
-          <div class="mv-radar" id="radarViz"></div>
-        </div>
+    <div class="leaderboard-grid">
+      <div class="leaderboard-card">
+        <div class="lb-card-title">Top Scores This Week</div>
+        <div class="lb-list" id="lb-scores"></div>
       </div>
-
-      <!-- MODULE 2: CAREER ENGINE -->
-      <div class="module-card" data-reveal data-delay="100" aria-labelledby="mod2-heading">
-        <div class="module-number" aria-hidden="true">02</div>
-        <div class="module-header">
-          <div class="module-icon-wrap" style="--icon-color: #A78BFA">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          </div>
-          <h3 id="mod2-heading">Career Intelligence Engine</h3>
-        </div>
-        <p class="module-desc">Input your skills, personality, and goals. Get a career architecture — not generic advice, but a specific path with income projections and an execution plan.</p>
-        <div class="module-outputs">
-          <div class="output-item">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Top 5 career paths matched to you
-          </div>
-          <div class="output-item">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Income potential at 1, 3, and 5 years
-          </div>
-          <div class="output-item">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Skill-by-skill acquisition roadmap
-          </div>
-        </div>
-        <a href="#pricing" class="module-cta" style="--cta-color:#A78BFA">Build Career Plan →</a>
+      <div class="leaderboard-card">
+        <div class="lb-card-title">Most Common Archetypes</div>
+        <div class="lb-list" id="lb-archetypes"></div>
       </div>
-
-      <!-- MODULE 3: STARTUP GENERATOR -->
-      <div class="module-card" data-reveal data-delay="150" aria-labelledby="mod3-heading">
-        <div class="module-number" aria-hidden="true">03</div>
-        <div class="module-header">
-          <div class="module-icon-wrap" style="--icon-color: #FF6B35">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          </div>
-          <h3 id="mod3-heading">Startup Generator</h3>
-        </div>
-        <p class="module-desc">Turn your constraints into a business blueprint. Input your budget, time, and risk tolerance — get a validated startup concept with a real acquisition plan.</p>
-        <div class="module-inputs-small">
-          <span class="input-tag" style="--tag-color:rgba(255,107,53,0.15);--tag-border:rgba(255,107,53,0.3)">Budget</span>
-          <span class="input-tag" style="--tag-color:rgba(255,107,53,0.15);--tag-border:rgba(255,107,53,0.3)">Time Available</span>
-          <span class="input-tag" style="--tag-color:rgba(255,107,53,0.15);--tag-border:rgba(255,107,53,0.3)">Risk Tolerance</span>
-          <span class="input-tag" style="--tag-color:rgba(255,107,53,0.15);--tag-border:rgba(255,107,53,0.3)">Skills</span>
-        </div>
-        <div class="module-outputs">
-          <div class="output-item">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            3 viable startup concepts, ranked
-          </div>
-          <div class="output-item">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Monetization model + first 100 customers
-          </div>
-          <div class="output-item">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            30-day execution roadmap
-          </div>
-        </div>
-        <a href="#pricing" class="module-cta" style="--cta-color:#FF6B35">Generate My Startup →</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- FUTURE SELF SIMULATOR -->
-<section class="future-section" id="future-self" aria-labelledby="future-heading">
-  <div class="future-bg" aria-hidden="true">
-    <div class="future-orb"></div>
-    <div class="future-grid"></div>
-  </div>
-  <div class="container">
-    <div class="future-inner">
-      <div class="future-left" data-reveal>
-        <div class="section-eyebrow" style="--ew-color:#A78BFA;--ew-bg:rgba(167,139,250,0.1);--ew-border:rgba(167,139,250,0.25)">MOST POWERFUL FEATURE</div>
-        <h2 id="future-heading">
-          Meet The Person<br/>
-          <span class="gradient-text-2">You're About To Become</span>
-        </h2>
-        <p>This isn't vision boarding. The Future Self Simulator generates a detailed, specific, AI-crafted scenario of your life at your chosen horizon — with every obstacle mapped, every milestone defined, and every action required to get there.</p>
-        <p style="margin-top:1rem;">Most people have never seen their future made concrete. Once you do, you can't unsee it.</p>
-        <div class="future-features">
-          <div class="ff-item">
-            <div class="ff-icon" style="background:rgba(167,139,250,0.12);color:#A78BFA" aria-hidden="true">◈</div>
-            <div>
-              <strong>Detailed Future Scenario</strong>
-              <span>Your life, career, finances, and relationships — rendered as a specific narrative</span>
-            </div>
-          </div>
-          <div class="ff-item">
-            <div class="ff-icon" style="background:rgba(255,107,53,0.12);color:#FF6B35" aria-hidden="true">⚡</div>
-            <div>
-              <strong>Obstacle Mapping</strong>
-              <span>Every friction point you'll face — exposed before you hit it</span>
-            </div>
-          </div>
-          <div class="ff-item">
-            <div class="ff-icon" style="background:rgba(110,231,255,0.12);color:#6EE7FF" aria-hidden="true">◎</div>
-            <div>
-              <strong>Milestone Architecture</strong>
-              <span>Quarterly checkpoints from now to your desired future</span>
-            </div>
-          </div>
-          <div class="ff-item">
-            <div class="ff-icon" style="background:rgba(74,222,128,0.12);color:#4ade80" aria-hidden="true">→</div>
-            <div>
-              <strong>Daily Action Plan</strong>
-              <span>What to do today, tomorrow, and every week to close the gap</span>
-            </div>
-          </div>
-        </div>
-        <a href="#pricing" class="cta-primary" style="margin-top:2rem;display:inline-flex">Simulate My Future →</a>
-      </div>
-      <div class="future-right" data-reveal data-delay="150">
-        <div class="timeline-vis" aria-label="Future self timeline visualization">
-          <div class="tvis-header">
-            <span class="hud-tag">FUTURE SELF — 3 YEAR PROJECTION</span>
-          </div>
-          <div class="tvis-now">
-            <div class="tvis-dot tvis-dot-now" aria-hidden="true"></div>
-            <div class="tvis-content">
-              <span class="tvis-label">NOW</span>
-              <p class="tvis-desc">Wealth score: 48 &nbsp;·&nbsp; Career clarity: low &nbsp;·&nbsp; Side income: ₹0</p>
-            </div>
-          </div>
-          <div class="tvis-line" aria-hidden="true">
-            <div class="tvis-line-fill" id="timelineFill"></div>
-          </div>
-          <div class="tvis-milestones">
-            <div class="tvis-ms" data-month="3">
-              <div class="tvis-dot" aria-hidden="true"></div>
-              <div>
-                <span class="tvis-m-label">MONTH 3</span>
-                <p>First income stream live. Career direction locked. Weekly system running.</p>
-              </div>
-            </div>
-            <div class="tvis-ms" data-month="12">
-              <div class="tvis-dot" aria-hidden="true"></div>
-              <div>
-                <span class="tvis-m-label">YEAR 1</span>
-                <p>₹3–8L additional annual income. Skills in top 15%. Life score: 82+.</p>
-              </div>
-            </div>
-            <div class="tvis-ms" data-month="36">
-              <div class="tvis-dot" aria-hidden="true"></div>
-              <div>
-                <span class="tvis-m-label">YEAR 3</span>
-                <p>Financial independence path clear. Business or career accelerating. Life by design.</p>
-              </div>
-            </div>
-          </div>
-          <div class="tvis-you">
-            <div class="tvis-dot tvis-dot-future" aria-hidden="true"></div>
-            <div class="tvis-content">
-              <span class="tvis-label" style="color:#A78BFA">FUTURE YOU</span>
-              <p class="tvis-desc">Life score: 91 &nbsp;·&nbsp; Multiple income streams &nbsp;·&nbsp; Full clarity</p>
-            </div>
-          </div>
-          <div class="tvis-cta-note">This is generated for you — specifically — based on your inputs.</div>
+      <div class="leaderboard-card">
+        <div class="lb-card-title">Tier Distribution</div>
+        <div style="position:relative;height:200px;margin-top:12px;">
+          <canvas id="tierChart" role="img" aria-label="Tier distribution bar chart"></canvas>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- SOCIAL PROOF -->
-<section class="proof-section" aria-labelledby="proof-heading">
-  <div class="container">
-    <div class="proof-header" data-reveal>
-      <div class="section-eyebrow">WHAT HAPPENS WHEN PEOPLE USE THIS</div>
-      <h2 id="proof-heading">The System Speaks<br/><span class="gradient-text">For Itself</span></h2>
-    </div>
-    <div class="testimonials" role="list">
-      <div class="testimonial-card" data-reveal role="listitem">
-        <div class="tc-stars" aria-label="5 stars">★★★★★</div>
-        <blockquote>"I've read 50 self-help books. Nothing gave me this kind of clarity. Within an hour of my life analysis I had a roadmap I actually believed in."</blockquote>
-        <div class="tc-author">
-          <div class="tc-avatar" style="background:linear-gradient(135deg,#6EE7FF,#A78BFA)" aria-hidden="true">R</div>
-          <div>
-            <strong>Rohan M.</strong>
-            <span>Software Engineer, Pune</span>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card" data-reveal data-delay="80" role="listitem">
-        <div class="tc-stars" aria-label="5 stars">★★★★★</div>
-        <blockquote>"The Future Self Simulator hit different. It showed me exactly what I was avoiding. I started my freelance business the next morning. Made ₹40K in the first month."</blockquote>
-        <div class="tc-author">
-          <div class="tc-avatar" style="background:linear-gradient(135deg,#FF6B35,#fbbf24)" aria-hidden="true">A</div>
-          <div>
-            <strong>Anika T.</strong>
-            <span>Designer → Freelancer, Mumbai</span>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card" data-reveal data-delay="160" role="listitem">
-        <div class="tc-stars" aria-label="5 stars">★★★★★</div>
-        <blockquote>"The Career Engine told me to pivot from finance to product management. Gave me a skill roadmap. Six months later I landed the role with a 60% salary increase."</blockquote>
-        <div class="tc-author">
-          <div class="tc-avatar" style="background:linear-gradient(135deg,#A78BFA,#6EE7FF)" aria-hidden="true">S</div>
-          <div>
-            <strong>Siddharth P.</strong>
-            <span>Product Manager, Bangalore</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="proof-numbers" data-reveal>
-      <div class="pn-item">
-        <span class="pn-num" data-count="12000">0</span>
-        <span class="pn-label">People analyzed this month</span>
-      </div>
-      <div class="pn-divider" aria-hidden="true"></div>
-      <div class="pn-item">
-        <span class="pn-num" data-count="94">0</span><span class="pn-suffix">%</span>
-        <span class="pn-label">Report immediate clarity</span>
-      </div>
-      <div class="pn-divider" aria-hidden="true"></div>
-      <div class="pn-item">
-        <span class="pn-num" data-count="4.9">0</span><span class="pn-suffix">/5</span>
-        <span class="pn-label">Average rating</span>
-      </div>
+  <!-- CTA SECTION -->
+  <div class="cta-section">
+    <div class="cta-inner">
+      <h2>Ready to meet your future self?</h2>
+      <p>Join 847,000+ people who've already discovered their potential.</p>
+      <button class="btn-primary btn-lg" onclick="showSection('quiz')">
+        <span>Start My Simulation — Free</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
     </div>
   </div>
-</section>
 
-<!-- PRICING -->
-<section class="pricing-section" id="pricing" aria-labelledby="pricing-heading">
-  <div class="container">
-    <div class="pricing-header" data-reveal>
-      <div class="section-eyebrow">ACCESS</div>
-      <h2 id="pricing-heading">One Decision.<br/><span class="gradient-text">Unlimited Leverage.</span></h2>
-      <p class="section-sub">Everything you need to understand your life, design your future, and build toward it. One time.</p>
-    </div>
-    <div class="pricing-layout">
-      <div class="pricing-free" data-reveal>
-        <div class="plan-label">FREE</div>
-        <div class="plan-price-free">₹0</div>
-        <ul class="plan-features" role="list">
-          <li role="listitem"><span class="pf-check pf-check-dim" aria-hidden="true">✓</span> Basic Life Score</li>
-          <li role="listitem"><span class="pf-check pf-check-dim" aria-hidden="true">✓</span> Top 3 weaknesses identified</li>
-          <li role="listitem"><span class="pf-check pf-check-dim" aria-hidden="true">✓</span> 1 Career path suggestion</li>
-          <li role="listitem"><span class="pf-lock" aria-label="Locked">🔒</span> Future Self Simulator</li>
-          <li role="listitem"><span class="pf-lock" aria-label="Locked">🔒</span> Full breakdown reports</li>
-          <li role="listitem"><span class="pf-lock" aria-label="Locked">🔒</span> Startup Generator</li>
-          <li role="listitem"><span class="pf-lock" aria-label="Locked">🔒</span> Personalized roadmaps</li>
+  <!-- EMAIL SECTION -->
+  <div class="section-container email-section">
+    <div class="email-card">
+      <div class="email-left">
+        <div class="section-badge">Newsletter</div>
+        <h2>Join Future Builders</h2>
+        <p>Weekly insights on AI, careers, business, growth, leverage, and productivity — curated for high-potential people.</p>
+        <ul class="email-benefits">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Career velocity frameworks</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> AI tools for leverage</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Score improvement strategies</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Exclusive archetype deep-dives</li>
         </ul>
-        <a href="#" class="plan-cta-free">Start Free</a>
       </div>
-
-      <div class="pricing-premium" data-reveal data-delay="100">
-        <div class="premium-glow" aria-hidden="true"></div>
-        <div class="plan-badge">MOST POPULAR</div>
-        <div class="plan-label">PREMIUM ACCESS</div>
-        <div class="plan-price-wrap">
-          <span class="plan-price">$9.99</span>
-          <span class="plan-price-note">One-time · No subscription</span>
+      <div class="email-right">
+        <div class="email-form-group">
+          <input type="text" placeholder="Your name" id="email-name" class="email-input" />
         </div>
-        <ul class="plan-features" role="list">
-          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Advanced Life Analysis</strong> — all 8 dimensions</li>
-          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Future Self Simulator</strong> — 3 timeline scenarios</li>
-          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Career Intelligence Report</strong> — with income projections</li>
-          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Startup Blueprint</strong> — built for your situation</li>
-          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Personalized Growth Plans</strong> — 90-day + 1-year</li>
-          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Exclusive Systems Library</strong> — updated monthly</li>
-          <li role="listitem"><span class="pf-check" aria-hidden="true">✓</span> <strong>Lifetime updates</strong> — forever</li>
-        </ul>
-        <a href="#" class="plan-cta-premium" id="unlockBtn">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M13 8V6a4 4 0 0 0-8 0v2M4 8h10a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          Unlock Full Access — $9.99
-        </a>
-        <p class="plan-guarantee">✓ 7-day refund guarantee &nbsp;·&nbsp; ✓ Instant access</p>
+        <div class="email-form-group">
+          <input type="email" placeholder="Your email address" id="email-addr" class="email-input" />
+        </div>
+        <button class="btn-primary" style="width:100%" onclick="handleEmailSubmit()">Join 12,400+ Future Builders</button>
+        <p class="email-note">No spam. Unsubscribe anytime. Free forever.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span class="logo-mark">✦</span>
+        <span class="logo-text">STELARON</span>
+      </div>
+      <p class="footer-tagline">The Future Potential Simulator</p>
+      <p class="footer-copy">© 2025 Stelaron. Built for builders.</p>
+    </div>
+  </footer>
+
+</section>
+
+<!-- ============================= QUIZ SECTION ============================= -->
+<section id="section-quiz" class="section">
+  <div class="quiz-wrapper">
+    <div class="quiz-header">
+      <button class="quiz-back" onclick="showSection('home')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+      </button>
+      <div class="quiz-logo">
+        <span class="logo-mark">✦</span> STELARON
+      </div>
+      <div class="quiz-progress-wrap">
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+        </div>
+        <span class="quiz-progress-label" id="quiz-progress-label">1 of 11</span>
+      </div>
+    </div>
+
+    <div class="quiz-content">
+      <div class="quiz-card" id="quiz-card">
+        <!-- Questions rendered by JS -->
       </div>
     </div>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="final-cta" aria-label="Final call to action">
-  <div class="fcta-bg" aria-hidden="true">
-    <div class="fcta-orb fcta-orb-1"></div>
-    <div class="fcta-orb fcta-orb-2"></div>
-  </div>
-  <div class="container">
-    <div class="fcta-inner" data-reveal>
-      <h2 class="fcta-headline">The gap between who you are<br/>and who you could be<br/><span class="gradient-text">has a name now.</span></h2>
-      <p class="fcta-sub">12,000 people this month decided to close theirs.<br/>Your analysis takes under 5 minutes.</p>
-      <div class="fcta-actions">
-        <a href="#modules" class="cta-primary cta-large">
-          Begin My Analysis
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9h12M11 5l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+<!-- ============================= RESULTS SECTION ============================= -->
+<section id="section-results" class="section">
+  <div class="results-wrapper">
+
+    <!-- RESULT REVEAL OVERLAY -->
+    <div class="reveal-overlay" id="reveal-overlay">
+      <div class="reveal-content">
+        <div class="reveal-logo"><span class="logo-mark">✦</span> STELARON</div>
+        <div class="reveal-calculating">
+          <div class="reveal-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <p id="reveal-msg">Analyzing your trajectory...</p>
+        </div>
+        <div class="reveal-score-display" id="reveal-score-display" style="display:none">
+          <div class="reveal-score-label">Your Future Potential Score</div>
+          <div class="reveal-score-num" id="reveal-score-num">0</div>
+          <div class="reveal-tier" id="reveal-tier-text"></div>
+        </div>
       </div>
     </div>
-  </div>
+
+    <!-- RESULTS NAV -->
+    <nav class="results-nav">
+      <div class="results-nav-inner">
+        <a href="#" class="nav-logo" onclick="showSection('home')">
+          <span class="logo-mark">✦</span>
+          <span class="logo-text">STELARON</span>
+        </a>
+        <div class="results-nav-actions">
+          <button class="btn-ghost btn-sm" onclick="showSection('quiz')">Retake</button>
+          <button class="btn-primary btn-sm" onclick="shareResult()">Share Results</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO SCORE SECTION -->
+    <div class="results-hero">
+      <div class="results-hero-inner">
+        <div class="results-score-card">
+          <div class="rsc-label">FUTURE POTENTIAL SCORE</div>
+          <div class="rsc-score" id="result-score">—</div>
+          <div class="rsc-tier" id="result-tier">—</div>
+          <div class="rsc-archetype" id="result-archetype">—</div>
+          <div class="score-ring-container">
+            <svg viewBox="0 0 200 200" class="score-ring-svg">
+              <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="12"/>
+              <circle cx="100" cy="100" r="85" fill="none" stroke="url(#scoreGrad)" stroke-width="12" stroke-linecap="round"
+                stroke-dasharray="534" stroke-dashoffset="534" id="score-ring-fill"
+                transform="rotate(-90 100 100)"/>
+              <defs>
+                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#6B21E8"/>
+                  <stop offset="100%" stop-color="#F59E0B"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        <div class="results-identity">
+          <div class="ri-archetype-name" id="ri-archetype-name">—</div>
+          <p class="ri-archetype-desc" id="ri-archetype-desc">—</p>
+          <div class="ri-dims">
+            <div class="ri-dim" id="dim-wealth"></div>
+            <div class="ri-dim" id="dim-velocity"></div>
+            <div class="ri-dim" id="dim-discipline"></div>
+            <div class="ri-dim" id="dim-execution"></div>
+            <div class="ri-dim" id="dim-focus"></div>
+            <div class="ri-dim" id="dim-risk"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL CARDS ROW -->
+    <div class="results-container">
+      <div class="results-detail-grid">
+        <div class="detail-card highlight-card">
+          <div class="dc-label">Biggest Strength</div>
+          <div class="dc-value" id="dc-strength">—</div>
+        </div>
+        <div class="detail-card warning-card">
+          <div class="dc-label">Critical Bottleneck</div>
+          <div class="dc-value" id="dc-bottleneck">—</div>
+        </div>
+        <div class="detail-card">
+          <div class="dc-label">Main Opportunity</div>
+          <div class="dc-value" id="dc-opportunity">—</div>
+        </div>
+        <div class="detail-card">
+          <div class="dc-label">Main Risk</div>
+          <div class="dc-value" id="dc-risk">—</div>
+        </div>
+      </div>
+
+      <!-- CHARTS SECTION -->
+      <div class="charts-section">
+        <h2 class="charts-title">Your Potential Breakdown</h2>
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-card-title">Performance Radar</div>
+            <div style="position:relative;height:280px;">
+              <canvas id="radarChart" role="img" aria-label="Radar chart showing performance across 6 dimensions"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">Score Breakdown</div>
+            <div id="breakdown-bars"></div>
+          </div>
+        </div>
+        <div class="charts-grid" style="margin-top:20px;">
+          <div class="chart-card">
+            <div class="chart-card-title">Skill Growth Potential</div>
+            <div style="position:relative;height:220px;">
+              <canvas id="skillChart" role="img" aria-label="Bar chart showing skill growth potential"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">Income Projection</div>
+            <div style="position:relative;height:220px;">
+              <canvas id="projectionChart" role="img" aria-label="Line chart showing income projection over 5 years"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OUTLOOK CARDS -->
+      <div class="outlook-section">
+        <h2 class="charts-title">Your Trajectory</h2>
+        <div class="outlook-grid">
+          <div class="outlook-card">
+            <div class="outlook-period">12 Month Outlook</div>
+            <p class="outlook-text" id="outlook-12m">—</p>
+            <div class="outlook-focus">
+              <span class="of-label">Recommended Focus</span>
+              <span class="of-value" id="focus-12m">—</span>
+            </div>
+          </div>
+          <div class="outlook-card">
+            <div class="outlook-period">5 Year Outlook</div>
+            <p class="outlook-text" id="outlook-5y">—</p>
+            <div class="outlook-focus">
+              <span class="of-label">Key Milestone</span>
+              <span class="of-value" id="focus-5y">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROADMAP -->
+      <div class="roadmap-section">
+        <h2 class="charts-title">Your Personalized Roadmap</h2>
+        <div class="roadmap-grid" id="roadmap-grid"></div>
+      </div>
+
+      <!-- HIGHEST LEVERAGE -->
+      <div class="leverage-section">
+        <div class="leverage-card">
+          <div class="leverage-label">⚡ Highest Leverage Action Right Now</div>
+          <div class="leverage-action" id="leverage-action">—</div>
+          <p class="leverage-desc" id="leverage-desc">—</p>
+        </div>
+      </div>
+
+      <!-- RESOURCES -->
+      <div class="resources-section">
+        <div class="section-header" style="text-align:left; padding:0; margin-bottom:24px;">
+          <div class="section-badge">For Your Archetype</div>
+          <h2 class="section-title" style="font-size:2rem;">Recommended Resources</h2>
+        </div>
+        <div class="resources-grid" id="resources-grid"></div>
+      </div>
+
+      <!-- SHARE CARD -->
+      <div class="share-section">
+        <h2 class="charts-title">Share Your Result</h2>
+        <div class="share-card-wrapper">
+          <div class="share-card" id="share-card">
+            <div class="sc-header">
+              <div class="sc-logo"><span>✦</span> STELARON</div>
+              <div class="sc-tag">FUTURE POTENTIAL REPORT</div>
+            </div>
+            <div class="sc-body">
+              <div class="sc-left">
+                <div class="sc-tier-label">TIER</div>
+                <div class="sc-tier-value" id="sc-tier">—</div>
+                <div class="sc-arch-label">ARCHETYPE</div>
+                <div class="sc-arch-value" id="sc-arch">—</div>
+              </div>
+              <div class="sc-right">
+                <div class="sc-score-label">SCORE</div>
+                <div class="sc-score-value" id="sc-score">—</div>
+                <div class="sc-dims" id="sc-dims"></div>
+              </div>
+            </div>
+            <div class="sc-footer">stelaron.com · Take your simulation</div>
+          </div>
+        </div>
+        <div class="share-buttons">
+          <button class="share-btn share-x" onclick="shareOnX()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Share on X
+          </button>
+          <button class="share-btn share-li" onclick="shareOnLinkedIn()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </button>
+          <button class="share-btn share-wa" onclick="shareOnWhatsApp()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </button>
+          <button class="share-btn share-copy" onclick="copyResult()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copy Result
+          </button>
+        </div>
+      </div>
+
+      <!-- RETAKE CTA -->
+      <div class="retake-section">
+        <div class="retake-card">
+          <div class="retake-icon">🔁</div>
+          <h3>Improve Your Score</h3>
+          <p>Return in 30 days after implementing your roadmap to track your progress.</p>
+          <button class="btn-primary" onclick="showSection('quiz')">Retake Simulation</button>
+        </div>
+      </div>
+
+    </div><!-- end results-container -->
+  </div><!-- end results-wrapper -->
 </section>
 
-<!-- FOOTER -->
-<footer class="footer" role="contentinfo">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="#" class="nav-logo" aria-label="Stelaron Home">
-          <svg class="logo-mark" width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-            <circle cx="14" cy="14" r="13" stroke="url(#lg3)" stroke-width="1.5"/>
-            <circle cx="14" cy="14" r="5" fill="url(#lg4)"/>
-            <line x1="14" y1="1" x2="14" y2="5" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="14" y1="23" x2="14" y2="27" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="1" y1="14" x2="5" y2="14" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="23" y1="14" x2="27" y2="14" stroke="#6EE7FF" stroke-width="1.5" stroke-linecap="round"/>
-            <defs>
-              <linearGradient id="lg3" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#6EE7FF"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
-              <linearGradient id="lg4" x1="9" y1="9" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#6EE7FF"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
-            </defs>
-          </svg>
-          <span>STELARON</span>
-        </a>
-        <p>The AI operating system for ambitious people. Clarity. Direction. Leverage.</p>
-      </div>
-      <div class="footer-links">
-        <div class="fc">
-          <h4>Platform</h4>
-          <a href="#modules">Life Analyzer</a>
-          <a href="#modules">Career Engine</a>
-          <a href="#modules">Startup Generator</a>
-          <a href="#future-self">Future Self Simulator</a>
-        </div>
-        <div class="fc">
-          <h4>Company</h4>
-          <a href="#">About</a>
-          <a href="#">Contact</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2025 Stelaron. All rights reserved.</span>
-      <span>Built to change what's possible for you.</span>
-    </div>
-  </div>
-</footer>
+<div class="toast" id="toast"></div>
 
 <script src="script.js"></script>
 </body>
