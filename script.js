@@ -1,1193 +1,1135 @@
 /* ═══════════════════════════════════════════
-   STELARON — styles.css
-   Deep space luxury dark theme
+   STELARON — script.js
+   Full simulator engine, scoring, results
 ═══════════════════════════════════════════ */
 
-/* ── TOKENS ── */
-:root {
-  --bg-void: #07070F;
-  --bg-deep: #0C0C1A;
-  --bg-card: #111128;
-  --bg-card-hover: #161630;
-  --bg-glass: rgba(17,17,40,0.7);
-  --border: rgba(123,92,240,0.18);
-  --border-bright: rgba(123,92,240,0.45);
-
-  --purple: #7B5CF0;
-  --purple-light: #9D84F5;
-  --gold: #F0A500;
-  --gold-light: #FFD166;
-  --teal: #00D4C8;
-  --star-white: #F0F0FF;
-  --muted: #6B6B90;
-  --muted-light: #9090B8;
-
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
-  --radius-xl: 32px;
-
-  --shadow-card: 0 8px 40px rgba(0,0,0,0.5);
-  --shadow-glow-purple: 0 0 40px rgba(123,92,240,0.25);
-  --shadow-glow-gold: 0 0 40px rgba(240,165,0,0.2);
-
-  --transition-fast: 0.18s ease;
-  --transition-med: 0.35s cubic-bezier(0.4,0,0.2,1);
-  --transition-slow: 0.6s cubic-bezier(0.4,0,0.2,1);
-}
-
-/* ── RESET ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg-void);
-  color: var(--star-white);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-a { color: inherit; text-decoration: none; }
-img { max-width: 100%; }
-button { cursor: pointer; border: none; font-family: var(--font-body); }
-
 /* ── STAR CANVAS ── */
-#starCanvas {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+(function initStars() {
+  const canvas = document.getElementById('starCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [], mouse = { x: 0, y: 0 };
+  const STAR_COUNT = 180;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function createStar() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.4 + 0.2,
+      speed: Math.random() * 0.15 + 0.03,
+      opacity: Math.random() * 0.7 + 0.1,
+      twinkle: Math.random() * Math.PI * 2,
+      twinkleSpeed: Math.random() * 0.02 + 0.005,
+    };
+  }
+
+  function init() {
+    resize();
+    stars = Array.from({ length: STAR_COUNT }, createStar);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+      s.twinkle += s.twinkleSpeed;
+      const alpha = s.opacity * (0.6 + 0.4 * Math.sin(s.twinkle));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(190,180,255,${alpha})`;
+      ctx.fill();
+      s.y -= s.speed;
+      if (s.y < -2) { Object.assign(s, createStar(), { y: H + 2 }); }
+    });
+    // subtle mouse nebula
+    const grd = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 220);
+    grd.addColorStop(0, 'rgba(123,92,240,0.03)');
+    grd.addColorStop(1, 'transparent');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, W, H);
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  init();
+  draw();
+})();
+
+/* ── SECTION NAVIGATION ── */
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(name + 'Section').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (name === 'leaderboard') populateLeaderboard();
 }
 
-/* ── NAV ── */
-#mainNav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.1rem 2.5rem;
-  background: rgba(7,7,15,0.8);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  transition: var(--transition-med);
-}
-.nav-logo {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.2rem;
-  letter-spacing: 0.2em;
-  background: linear-gradient(135deg, var(--purple-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-.nav-links a {
-  font-size: 0.875rem;
-  color: var(--muted-light);
-  transition: color var(--transition-fast);
-  font-weight: 500;
-}
-.nav-links a:hover { color: var(--star-white); }
-.nav-cta {
-  background: linear-gradient(135deg, var(--purple), #5B3DD0);
-  color: #fff;
-  padding: 0.55rem 1.4rem;
-  border-radius: 50px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  transition: all var(--transition-fast);
-  box-shadow: 0 0 20px rgba(123,92,240,0.3);
-}
-.nav-cta:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 30px rgba(123,92,240,0.5);
+/* ── TOAST ── */
+function showToast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add('visible');
+  setTimeout(() => t.classList.remove('visible'), 2800);
 }
 
-/* ── SECTIONS ── */
-.section {
-  position: relative;
-  z-index: 1;
-  display: none;
-  min-height: 100vh;
-  padding-top: 80px;
-}
-.section.active { display: block; }
+/* ══════════════════════════════════════════
+   SIMULATOR ENGINE
+══════════════════════════════════════════ */
 
-/* ── BUTTONS ── */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: linear-gradient(135deg, var(--purple), #5B3DD0);
-  color: #fff;
-  padding: 0.85rem 2rem;
-  border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  transition: all var(--transition-fast);
-  box-shadow: 0 0 30px rgba(123,92,240,0.3);
-  border: 1px solid rgba(123,92,240,0.4);
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 45px rgba(123,92,240,0.55);
-}
-.btn-primary:active { transform: translateY(0); }
+const QUESTIONS = [
+  {
+    id: 'age',
+    label: 'About You',
+    title: 'How old are you?',
+    sub: 'Your stage of life shapes your potential trajectory.',
+    type: 'options',
+    cols: 2,
+    options: [
+      { value: 'under18',  icon: '🌱', label: 'Under 18',    desc: 'Early stage' },
+      { value: '18_24',    icon: '⚡', label: '18–24',       desc: 'Launch window' },
+      { value: '25_34',    icon: '🔥', label: '25–34',       desc: 'Prime decade' },
+      { value: '35_44',    icon: '🏗️', label: '35–44',       desc: 'Building years' },
+      { value: '45_54',    icon: '🎯', label: '45–54',       desc: 'Leverage phase' },
+      { value: '55plus',   icon: '👑', label: '55+',         desc: 'Wisdom tier' },
+    ],
+  },
+  {
+    id: 'status',
+    label: 'Current Status',
+    title: 'What's your primary role right now?',
+    sub: 'Your current environment shapes your growth runway.',
+    type: 'options',
+    cols: 2,
+    options: [
+      { value: 'student',     icon: '📚', label: 'Student',         desc: 'Learning mode' },
+      { value: 'employed',    icon: '💼', label: 'Employed',        desc: 'Working for others' },
+      { value: 'founder',     icon: '🚀', label: 'Founder / Self-employed', desc: 'Building your own' },
+      { value: 'freelancer',  icon: '🎯', label: 'Freelancer',      desc: 'Independent operator' },
+      { value: 'between',     icon: '🌀', label: 'Between things',  desc: 'In transition' },
+    ],
+  },
+  {
+    id: 'income',
+    label: 'Current Reality',
+    title: 'What is your approximate annual income?',
+    sub: 'This helps calibrate your current position.',
+    type: 'options',
+    cols: 2,
+    options: [
+      { value: 'none',    icon: '—',  label: 'None / Student',  desc: 'Pre-income' },
+      { value: 'low',     icon: '📈', label: 'Under $20K',      desc: 'Starting out' },
+      { value: 'mid_low', icon: '💰', label: '$20K–$50K',       desc: 'Building base' },
+      { value: 'mid',     icon: '💵', label: '$50K–$100K',      desc: 'Solid foundation' },
+      { value: 'high',    icon: '🔥', label: '$100K–$250K',     desc: 'High performer' },
+      { value: 'elite',   icon: '👑', label: '$250K+',          desc: 'Top earner' },
+    ],
+  },
+  {
+    id: 'desiredIncome',
+    label: 'Ambition',
+    title: 'What income level do you aspire to reach?',
+    sub: 'Your ceiling ambition directly impacts your trajectory score.',
+    type: 'options',
+    cols: 2,
+    options: [
+      { value: 'comfortable',   icon: '🏡', label: '$50K–$100K',    desc: 'Comfortable life' },
+      { value: 'professional',  icon: '🏆', label: '$100K–$250K',   desc: 'High professional' },
+      { value: 'affluent',      icon: '💎', label: '$250K–$1M',     desc: 'Affluent tier' },
+      { value: 'millionaire',   icon: '🚀', label: '$1M–$10M',      desc: 'Millionaire track' },
+      { value: 'multi_millionaire', icon: '🌍', label: '$10M+',     desc: 'Wealth builder' },
+    ],
+  },
+  {
+    id: 'screenTime',
+    label: 'Time Audit',
+    title: 'How many hours per day do you spend on mindless screen time?',
+    sub: 'Social media, news, passive entertainment.',
+    type: 'slider',
+    min: 0, max: 12, step: 0.5, defaultVal: 4,
+    unit: 'hrs/day',
+    minLabel: '0h', maxLabel: '12h+',
+  },
+  {
+    id: 'learningHours',
+    label: 'Growth Investment',
+    title: 'How many hours per week do you spend actively learning?',
+    sub: 'Reading, courses, skill development, studying.',
+    type: 'slider',
+    min: 0, max: 40, step: 1, defaultVal: 5,
+    unit: 'hrs/week',
+    minLabel: '0h', maxLabel: '40h',
+  },
+  {
+    id: 'ambition',
+    label: 'Mindset',
+    title: 'How would you rate your raw ambition?',
+    sub: 'Your honest desire to achieve something significant.',
+    type: 'options',
+    cols: 2,
+    options: [
+      { value: 1, icon: '😴', label: 'Low',      desc: 'Content with average' },
+      { value: 2, icon: '😐', label: 'Moderate', desc: 'Some desire to grow' },
+      { value: 3, icon: '💪', label: 'High',      desc: 'Strong drive to succeed' },
+      { value: 4, icon: '🔥', label: 'Extreme',  desc: 'Obsessive about achieving' },
+    ],
+  },
+  {
+    id: 'discipline',
+    label: 'Execution',
+    title: 'How disciplined are you with your habits?',
+    sub: 'Your ability to do hard things consistently when you don't feel like it.',
+    type: 'options',
+    cols: 2,
+    options: [
+      { value: 1, icon: '🌀', label: 'Inconsistent', desc: 'Often breaks routines' },
+      { value: 2, icon: '🎯', label: 'Developing',   desc: 'Working on it' },
+      { value: 3, icon: '⚡', label: 'Solid',        desc: 'Usually follows through' },
+      { value: 4, icon: '🏆', label: 'Elite',        desc: 'Rarely breaks commitments' },
+    ],
+  },
+  {
+    id: 'bigGoal',
+    label: 'Vision',
+    title: 'What is your biggest goal right now?',
+    sub: 'The one thing you're most actively building toward.',
+    type: 'text',
+    placeholder: 'e.g. Build a SaaS to $10K MRR, become a senior engineer, write a book...',
+  },
+  {
+    id: 'primarySkill',
+    label: 'Core Asset',
+    title: 'What is your most developed skill or domain?',
+    sub: 'Your primary vehicle for creating value in the world.',
+    type: 'options',
+    cols: 2,
+    options: [
+      { value: 'tech',       icon: '💻', label: 'Tech / Engineering', desc: 'Code, systems, data' },
+      { value: 'business',   icon: '📊', label: 'Business / Strategy', desc: 'Ops, growth, finance' },
+      { value: 'creative',   icon: '🎨', label: 'Creative / Design',  desc: 'Art, content, UX' },
+      { value: 'sales',      icon: '🤝', label: 'Sales / Marketing',  desc: 'Persuasion, growth' },
+      { value: 'leadership', icon: '🏛️', label: 'Leadership / People', desc: 'Managing, building teams' },
+      { value: 'science',    icon: '🔬', label: 'Science / Research',  desc: 'Analysis, discovery' },
+    ],
+  },
+  {
+    id: 'timeHorizon',
+    label: 'Time Perspective',
+    title: 'How far into the future do you actively plan?',
+    sub: 'Long-range thinking compounds your probability of success.',
+    type: 'options',
+    cols: 2,
+    options: [
+      { value: 'days',    icon: '📅', label: 'Days',    desc: 'Living in the present' },
+      { value: 'months',  icon: '🗓️', label: 'Months',  desc: 'Short-term planner' },
+      { value: 'year',    icon: '🎯', label: '1 Year',  desc: 'Annual thinker' },
+      { value: 'years3',  icon: '🗺️', label: '3 Years', desc: 'Medium-term strategist' },
+      { value: 'years5',  icon: '🔭', label: '5+ Years',desc: 'Long-range visionary' },
+    ],
+  },
+];
 
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: transparent;
-  color: var(--muted-light);
-  padding: 0.85rem 2rem;
-  border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border: 1px solid var(--border);
-  transition: all var(--transition-fast);
-}
-.btn-ghost:hover {
-  color: var(--star-white);
-  border-color: var(--border-bright);
-  background: rgba(123,92,240,0.08);
+let simStep = 0;
+let simAnswers = {};
+let simSliderVal = null;
+
+function startSimulator() {
+  simStep = 0;
+  simAnswers = {};
+  showSection('simulator');
+  renderQuestion();
 }
 
-/* ── COMMON TYPOGRAPHY ── */
-.gradient-text {
-  background: linear-gradient(135deg, var(--purple-light) 0%, var(--gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.section-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--purple-light);
-  margin-bottom: 0.75rem;
-}
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 800;
-  line-height: 1.1;
-  color: var(--star-white);
-  margin-bottom: 1rem;
+function renderQuestion() {
+  const q = QUESTIONS[simStep];
+  const area = document.getElementById('simQuestionArea');
+  const progress = ((simStep) / QUESTIONS.length) * 100;
+  document.getElementById('simProgressBar').style.width = progress + '%';
+  document.getElementById('simStepLabel').textContent = `Step ${simStep + 1} of ${QUESTIONS.length}`;
+  document.getElementById('simBackBtn').style.display = simStep > 0 ? 'inline-flex' : 'none';
+
+  let html = `<div class="sim-q-label">${q.label}</div>
+              <h2 class="sim-q-title">${q.title}</h2>
+              <p class="sim-q-sub">${q.sub}</p>`;
+
+  if (q.type === 'options') {
+    const cols = (q.options.length <= 3 || q.cols === 1) ? 'single-col' : '';
+    html += `<div class="sim-options ${cols}">`;
+    q.options.forEach(opt => {
+      const sel = simAnswers[q.id] === opt.value ? 'selected' : '';
+      html += `<button class="sim-option ${sel}" data-val="${opt.value}" onclick="selectOption('${q.id}', '${opt.value}', this)">
+                 <span class="opt-icon">${opt.icon}</span>
+                 <span class="opt-label">${opt.label}</span>
+                 <span class="opt-desc">${opt.desc}</span>
+               </button>`;
+    });
+    html += `</div>`;
+  } else if (q.type === 'slider') {
+    const current = simAnswers[q.id] !== undefined ? simAnswers[q.id] : q.defaultVal;
+    simSliderVal = current;
+    html += `<div class="sim-slider-wrap">
+               <div class="slider-val" id="sliderDisplay">${current} ${q.unit}</div>
+               <input type="range" class="sim-slider" id="simSlider"
+                      min="${q.min}" max="${q.max}" step="${q.step}" value="${current}"
+                      oninput="updateSlider(this.value, '${q.unit}')" />
+               <div class="slider-labels"><span>${q.minLabel}</span><span>${q.maxLabel}</span></div>
+             </div>`;
+  } else if (q.type === 'text') {
+    const val = simAnswers[q.id] || '';
+    html += `<input type="text" class="sim-text-input" id="textInput"
+                    placeholder="${q.placeholder}" value="${val}"
+                    oninput="simAnswers['${q.id}']=this.value" />`;
+  }
+
+  area.innerHTML = html;
+  area.style.animation = 'none';
+  void area.offsetWidth;
+  area.style.animation = 'fadeSlide 0.4s ease';
 }
 
-/* ═══════════════════════
-   HOME SECTION
-═══════════════════════ */
-.hero-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 5rem 2rem 2rem;
-  text-align: center;
-}
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: var(--bg-glass);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 0.4rem 1.2rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--purple-light);
-  margin-bottom: 2rem;
-  backdrop-filter: blur(10px);
-}
-.pulse-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--teal);
-  box-shadow: 0 0 8px var(--teal);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%,100% { opacity:1; transform:scale(1); }
-  50% { opacity:0.5; transform:scale(1.4); }
-}
-.hero-headline {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 8vw, 6.5rem);
-  font-weight: 800;
-  line-height: 1.0;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
-}
-.hero-sub {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: var(--muted-light);
-  line-height: 1.7;
-  max-width: 600px;
-  margin: 0 auto 2.5rem;
-}
-.hero-ctas {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 4rem;
+function selectOption(qId, val, el) {
+  simAnswers[qId] = typeof val === 'string' && !isNaN(val) ? Number(val) : val;
+  document.querySelectorAll('.sim-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
 }
 
-/* ── HERO VISUAL ── */
-.hero-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 4rem;
-  flex-wrap: wrap;
+function updateSlider(val, unit) {
+  simSliderVal = parseFloat(val);
+  document.getElementById('sliderDisplay').textContent = `${val} ${unit}`;
 }
-.hero-card {
-  position: relative;
-  width: 220px;
-  height: 240px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-  transition: transform var(--transition-med), border-color var(--transition-med);
-}
-.hero-card:hover { transform: translateY(-6px); }
-.hero-card-future { border-color: rgba(123,92,240,0.4); box-shadow: var(--shadow-glow-purple); }
-.card-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.card-orbit {
-  position: absolute;
-  width: 160px; height: 160px;
-  border: 1px dashed rgba(107,107,144,0.25);
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-55%);
-  animation: spin 18s linear infinite;
-}
-.future-orbit {
-  border-color: rgba(123,92,240,0.3);
-  animation: spin 12s linear infinite;
-}
-@keyframes spin { to { transform: translate(-50%,-55%) rotate(360deg); } }
-.card-score {
-  font-family: var(--font-display);
-  font-size: 3.5rem;
-  font-weight: 800;
-  line-height: 1;
-  color: var(--muted-light);
-  position: relative;
-  z-index: 1;
-}
-.card-sublabel {
-  font-size: 0.75rem;
-  color: var(--muted);
-  position: relative;
-  z-index: 1;
-}
-.hero-arrow-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-.hero-arrow-line {
-  width: 1px;
-  height: 60px;
-  background: linear-gradient(to bottom, transparent, var(--purple), var(--gold), transparent);
-  opacity: 0.6;
-}
-.hero-arrow-chevron { opacity: 0.8; animation: bounce 2s ease-in-out infinite; }
-@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
 
-/* ── STATS ── */
-.stats-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3rem;
-  flex-wrap: wrap;
-  padding: 2rem 0 3rem;
-  border-top: 1px solid var(--border);
+function simBack() {
+  if (simStep > 0) { simStep--; renderQuestion(); }
 }
-.stat-item { text-align: center; }
-.stat-num {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--purple-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
-.stat-divider { width: 1px; height: 40px; background: var(--border); }
 
-/* ── FEATURES ── */
-.features-section {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 5rem 2rem;
-  text-align: center;
-}
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-top: 3rem;
-  text-align: left;
-}
-.feature-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  transition: all var(--transition-med);
-  box-shadow: var(--shadow-card);
-}
-.feature-card:hover {
-  border-color: var(--border-bright);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-glow-purple);
-}
-.feature-icon {
-  font-size: 1.5rem;
-  color: var(--purple-light);
-  margin-bottom: 1rem;
-  display: block;
-}
-.feature-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-  color: var(--star-white);
-}
-.feature-card p { font-size: 0.875rem; color: var(--muted-light); line-height: 1.6; }
+function simNext() {
+  const q = QUESTIONS[simStep];
 
-/* ── TIERS ── */
-.tiers-section {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 5rem 2rem;
-  text-align: center;
-  border-top: 1px solid var(--border);
+  // Save slider
+  if (q.type === 'slider') {
+    const el = document.getElementById('simSlider');
+    simAnswers[q.id] = el ? parseFloat(el.value) : q.defaultVal;
+  }
+  // Validate text
+  if (q.type === 'text') {
+    const el = document.getElementById('textInput');
+    if (el) simAnswers[q.id] = el.value.trim() || 'Build something meaningful';
+  }
+  // Validate options
+  if (q.type === 'options' && simAnswers[q.id] === undefined) {
+    showToast('Please choose an option to continue');
+    return;
+  }
+
+  simStep++;
+  if (simStep >= QUESTIONS.length) {
+    startCalculation();
+  } else {
+    renderQuestion();
+  }
 }
-.tiers-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-top: 2.5rem;
+
+/* ══════════════════════════════════════════
+   CALCULATION PHASE
+══════════════════════════════════════════ */
+const CALC_MESSAGES = [
+  'Mapping your input patterns...',
+  'Calculating discipline coefficient...',
+  'Projecting 5-year trajectory...',
+  'Identifying leverage opportunities...',
+  'Assigning your archetype...',
+  'Generating your Future Report...',
+];
+
+function startCalculation() {
+  showSection('calculating');
+  let progress = 0;
+  let msgIdx = 0;
+  const bar = document.getElementById('calcBarFill');
+  const label = document.getElementById('calcLabel');
+
+  const interval = setInterval(() => {
+    progress += Math.random() * 18 + 4;
+    if (progress > 100) progress = 100;
+    bar.style.width = progress + '%';
+    if (msgIdx < CALC_MESSAGES.length - 1 && progress > (msgIdx + 1) * 16) {
+      msgIdx++;
+      label.style.opacity = '0';
+      setTimeout(() => {
+        label.textContent = CALC_MESSAGES[msgIdx];
+        label.style.opacity = '1';
+      }, 200);
+    }
+    if (progress >= 100) {
+      clearInterval(interval);
+      setTimeout(() => {
+        const result = computeResult(simAnswers);
+        renderResults(result);
+        showSection('results');
+      }, 600);
+    }
+  }, 260);
 }
-.tier-pill {
-  padding: 0.55rem 1.3rem;
-  border-radius: 50px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  border: 1px solid currentColor;
-  display: flex; align-items: center; gap: 0.5rem;
+
+/* ══════════════════════════════════════════
+   SCORING ENGINE
+══════════════════════════════════════════ */
+function computeResult(a) {
+  let score = 0;
+
+  // Age modifier (peak building years score higher)
+  const ageMap = { under18: 5, '18_24': 10, '25_34': 9, '35_44': 7, '45_54': 6, '55plus': 5 };
+  score += (ageMap[a.age] || 7);
+
+  // Status modifier
+  const statusMap = { student: 7, employed: 6, founder: 10, freelancer: 9, between: 4 };
+  score += (statusMap[a.status] || 6);
+
+  // Income gap (high aspirations + current income relative gap)
+  const incomeScore = { none: 1, low: 2, mid_low: 4, mid: 6, high: 8, elite: 10 };
+  const desiredScore = { comfortable: 4, professional: 6, affluent: 8, millionaire: 9, multi_millionaire: 10 };
+  const iScore = incomeScore[a.income] || 3;
+  const dScore = desiredScore[a.desiredIncome] || 6;
+  // Gap penalty/boost: high ambition beyond current reality = good
+  const gap = dScore - iScore;
+  score += iScore * 0.8 + Math.max(0, gap) * 0.9;
+
+  // Screen time penalty (0h = no penalty, 12h = max penalty)
+  const screenPenalty = Math.min(a.screenTime || 0, 12) * 0.9;
+  score -= screenPenalty;
+
+  // Learning hours bonus
+  const learnBonus = Math.min(a.learningHours || 0, 40) * 0.55;
+  score += learnBonus;
+
+  // Ambition (1–4 → linear scale)
+  score += (a.ambition || 1) * 3.5;
+
+  // Discipline (1–4 → heavier weight)
+  score += (a.discipline || 1) * 5;
+
+  // Time horizon
+  const horizonMap = { days: 0, months: 2, year: 4, years3: 7, years5: 10 };
+  score += (horizonMap[a.timeHorizon] || 3);
+
+  // Skill bonus
+  const skillBonus = { tech: 8, business: 8, sales: 7, creative: 6, leadership: 7, science: 7 };
+  score += (skillBonus[a.primarySkill] || 6);
+
+  // Normalize 0–100
+  const RAW_MIN = 0;
+  const RAW_MAX = 110;
+  score = Math.max(0, Math.min(100, Math.round(((score - RAW_MIN) / (RAW_MAX - RAW_MIN)) * 100)));
+
+  // Sub-scores
+  const disciplineRating = Math.min(100, Math.round((a.discipline || 1) / 4 * 100));
+  const ambitionRating   = Math.min(100, Math.round((a.ambition || 1) / 4 * 100));
+  const focusRating      = Math.min(100, Math.round(Math.max(0, 100 - (a.screenTime || 0) * 7)));
+  const executionRating  = Math.min(100, Math.round(
+    (((a.discipline || 1) / 4 * 0.5) + ((a.learningHours || 0) / 40 * 0.5)) * 100
+  ));
+  const skillGrowth      = Math.min(100, Math.round((a.learningHours || 0) / 40 * 100));
+  const wealthPotential  = Math.min(100, Math.round(
+    (dScore / 10 * 60) + (iScore / 10 * 20) + ((a.ambition || 1) / 4 * 20)
+  ));
+
+  const tier        = getTier(score);
+  const archetype   = getArchetype(a, score);
+  const riskLevel   = getRiskLevel(a);
+  const careerVel   = getCareerVelocity(a, score);
+  const wealthLabel = getWealthLabel(wealthPotential);
+  const topAction   = getTopAction(a, score);
+
+  return {
+    score, tier, archetype, disciplineRating, ambitionRating,
+    focusRating, executionRating, skillGrowth, wealthPotential,
+    riskLevel, careerVel, wealthLabel, topAction,
+    answers: a,
+    outlook12: get12MonthOutlook(a, score, tier),
+    outlook5: get5YearOutlook(a, score, tier),
+    strengths: getStrengths(a, score, tier),
+    weakness: getWeakness(a, score),
+    opportunity: getOpportunity(a, score),
+    risk: getRisk(a, score),
+    bottleneck: getBottleneck(a, score),
+    roadmap: getRoadmap(a, score, tier),
+    resources: getResources(a),
+  };
 }
-.tier-pill span { opacity: 0.6; font-weight: 400; }
-.tier-drifter    { color:#6B6B90; border-color:rgba(107,107,144,0.4); background:rgba(107,107,144,0.08); }
-.tier-wanderer   { color:#7EC8E3; border-color:rgba(126,200,227,0.4); background:rgba(126,200,227,0.08); }
-.tier-builder    { color:#68D391; border-color:rgba(104,211,145,0.4); background:rgba(104,211,145,0.08); }
-.tier-challenger { color:#F6AD55; border-color:rgba(246,173,85,0.4); background:rgba(246,173,85,0.08); }
-.tier-elite      { color:#F687B3; border-color:rgba(246,135,179,0.4); background:rgba(246,135,179,0.08); }
-.tier-visionary  { color:#9D84F5; border-color:rgba(157,132,245,0.4); background:rgba(157,132,245,0.08); }
-.tier-legendary  { color:#F0A500; border-color:rgba(240,165,0,0.5); background:rgba(240,165,0,0.1); box-shadow:0 0 20px rgba(240,165,0,0.15); }
+
+function getTier(score) {
+  if (score <= 20) return { name: 'DRIFTER',    color: '#6B6B90', meaning: 'You\'re moving without clear direction. Your potential is largely untapped and patterns need to change.' };
+  if (score <= 40) return { name: 'WANDERER',   color: '#7EC8E3', meaning: 'You have ambition but lack consistency. You\'re searching for the right system.' };
+  if (score <= 60) return { name: 'BUILDER',    color: '#68D391', meaning: 'You\'re laying foundations. The habits and skills you\'re building now will compound.' };
+  if (score <= 75) return { name: 'CHALLENGER', color: '#F6AD55', meaning: 'You\'re actively competing and growing. A few critical upgrades will accelerate you.' };
+  if (score <= 85) return { name: 'ELITE',      color: '#F687B3', meaning: 'You\'re in the top tier of focused individuals. Execution and leverage are your next frontiers.' };
+  if (score <= 95) return { name: 'VISIONARY',  color: '#9D84F5', meaning: 'You operate at a level most people never reach. Your consistency and thinking set you apart.' };
+  return              { name: 'LEGENDARY',   color: '#F0A500', meaning: 'You have an extraordinary profile. The question is no longer if — it\'s how big.' };
+}
+
+function getArchetype(a, score) {
+  const skill = a.primarySkill;
+  const status = a.status;
+  const ambition = a.ambition || 1;
+  const discipline = a.discipline || 1;
+
+  if (status === 'founder' && ambition >= 3)            return archetypeData('The Founder');
+  if (skill === 'tech' && discipline >= 3)              return archetypeData('The Architect');
+  if (skill === 'business' && ambition >= 3)            return archetypeData('The Strategist');
+  if (skill === 'leadership' && score >= 65)            return archetypeData('The Commander');
+  if (status === 'employed' && discipline >= 3)         return archetypeData('The Operator');
+  if (skill === 'creative' && ambition >= 3)            return archetypeData('The Creator');
+  if (skill === 'science' && discipline >= 3)           return archetypeData('The Innovator');
+  if (score >= 80 && ambition >= 4)                     return archetypeData('The Visionary');
+  if (score >= 90)                                      return archetypeData('The Titan');
+  if (skill === 'sales')                                return archetypeData('The Builder');
+  return archetypeData('The Explorer');
+}
+
+function archetypeData(name) {
+  const map = {
+    'The Founder': {
+      name, desc: 'You are wired to build from scratch. You see gaps others ignore and have the nerve to fill them.',
+      strengths: 'Vision, risk tolerance, problem-solving under pressure.',
+      weakness: 'Can neglect execution details and burn out from doing everything.',
+      path: 'Focus on leverage: hire before you\'re ready, systematize before you scale.',
+    },
+    'The Architect': {
+      name, desc: 'You build systems that outlast your direct involvement. Code, infrastructure, and elegant design are your medium.',
+      strengths: 'Deep thinking, precision, scalable output.',
+      weakness: 'May undervalue communication and overvalue perfect solutions.',
+      path: 'Move from individual contributor to technical leader. Your leverage multiplies with every person you enable.',
+    },
+    'The Strategist': {
+      name, desc: 'You see the chess board five moves ahead. You optimize, allocate, and architect decisions.',
+      strengths: 'Analytical thinking, resource allocation, pattern recognition.',
+      weakness: 'Tendency to plan without executing. Analysis paralysis is your nemesis.',
+      path: 'Partner with high-execution operators. Your value compounds when your strategy gets implemented.',
+    },
+    'The Commander': {
+      name, desc: 'You multiply through others. Your leadership turns potential into performance.',
+      strengths: 'Influence, clarity under pressure, inspiring action.',
+      weakness: 'Can over-rely on authority and neglect technical depth.',
+      path: 'Build your own organization or division. Your ceiling is set by the quality of people you attract.',
+    },
+    'The Operator': {
+      name, desc: 'You are the engine inside the machine. Systems run better because of you.',
+      strengths: 'Reliability, process mastery, high-quality output.',
+      weakness: 'Can become invisible — doing excellent work that others take credit for.',
+      path: 'Document your impact quantitatively. Make your value undeniable, then negotiate aggressively.',
+    },
+    'The Creator': {
+      name, desc: 'You produce work that resonates, moves, and sticks. The world needs your output.',
+      strengths: 'Originality, audience connection, emotional intelligence.',
+      weakness: 'May resist monetization or undervalue your own work commercially.',
+      path: 'Build an owned audience. Creators with distribution have unlimited leverage.',
+    },
+    'The Innovator': {
+      name, desc: 'You operate at the frontier of what\'s known. Curiosity is your competitive advantage.',
+      strengths: 'First-principles thinking, discovery, solving novel problems.',
+      weakness: 'May pursue novelty at the expense of completion.',
+      path: 'Find the applied context where your research meets real demand. That intersection is worth enormous value.',
+    },
+    'The Explorer': {
+      name, desc: 'You are in the most important phase: discovering what you\'re truly built for.',
+      strengths: 'Adaptability, breadth of exposure, unconventional thinking.',
+      weakness: 'Lack of compounding in a single domain. Breadth without depth is expensive.',
+      path: 'Run 90-day experiments in high-leverage domains. The goal is to find your one thing — then go all in.',
+    },
+    'The Builder': {
+      name, desc: 'You create tangible things — pipelines, relationships, products, and revenue.',
+      strengths: 'Execution, persuasion, relationship capital.',
+      weakness: 'May optimize for visible wins over long-term compounding value.',
+      path: 'Build equity, not just income. Every dollar you earn should be building something that pays without you.',
+    },
+    'The Visionary': {
+      name, desc: 'You see what\'s coming before others do, and you have the discipline to position accordingly.',
+      strengths: 'Long-range thinking, pattern spotting, inspiring others toward a future.',
+      weakness: 'Can struggle communicating vision to those who need concrete steps.',
+      path: 'Build the platform — company, fund, movement — that makes your vision real at scale.',
+    },
+    'The Titan': {
+      name, desc: 'You have the rare combination: clarity of vision, iron discipline, and relentless execution.',
+      strengths: 'Almost everything. Your edge is compounding mastery.',
+      weakness: 'Risk of isolation at the top. Systems and people need to scale with you.',
+      path: 'Your next level is institutional. Build legacy systems, organizations, or ideas that outlive your direct involvement.',
+    },
+  };
+  return map[name] || map['The Explorer'];
+}
+
+function getRiskLevel(a) {
+  const screenDrain = (a.screenTime || 0) > 5;
+  const lowLearn = (a.learningHours || 0) < 3;
+  const lowDiscipline = (a.discipline || 1) <= 1;
+  const shortSight = a.timeHorizon === 'days' || a.timeHorizon === 'months';
+  const risks = [screenDrain, lowLearn, lowDiscipline, shortSight].filter(Boolean).length;
+  if (risks >= 3) return 'HIGH';
+  if (risks === 2) return 'MODERATE';
+  if (risks === 1) return 'LOW';
+  return 'MINIMAL';
+}
+
+function getCareerVelocity(a, score) {
+  if (score >= 85) return 'VERY HIGH';
+  if (score >= 70) return 'HIGH';
+  if (score >= 50) return 'MODERATE';
+  if (score >= 30) return 'LOW';
+  return 'STALLED';
+}
+
+function getWealthLabel(wp) {
+  if (wp >= 85) return 'VERY HIGH';
+  if (wp >= 65) return 'HIGH';
+  if (wp >= 45) return 'MODERATE';
+  if (wp >= 25) return 'DEVELOPING';
+  return 'EARLY STAGE';
+}
+
+function getTopAction(a, score) {
+  if ((a.screenTime || 0) > 5) return 'Cut passive screen time by 60% — this single change will free cognitive bandwidth immediately.';
+  if ((a.learningHours || 0) < 5) return 'Commit to 1 hour of deep learning daily — this compounds faster than almost any other action.';
+  if ((a.discipline || 1) <= 2) return 'Install a non-negotiable morning system — your discipline is your most underdeveloped asset.';
+  if (a.timeHorizon === 'days' || a.timeHorizon === 'months') return 'Write a 3-year vision document — upgrading your time horizon will immediately change your decisions.';
+  if (score < 50) return 'Identify your one highest-leverage skill and commit to 6 months of focused development.';
+  if (score < 70) return 'Find a mentor operating 5 years ahead of where you want to be — proximity is the fastest accelerant.';
+  if (score < 85) return 'Build an income stream that doesn\'t require your direct time — your next level requires passive leverage.';
+  return 'Document and systematize everything you do well — your job now is to multiply your impact through others.';
+}
+
+function get12MonthOutlook(a, score, tier) {
+  const name = tier.name;
+  const paths = {
+    DRIFTER:    'Without change, 12 months looks similar to today. With change — specifically screen time reduction and 1 new skill commitment — you could reach Builder tier.',
+    WANDERER:   'If you install one consistent weekly system and raise learning hours to 7+, you\'re likely to see your first meaningful compounding results.',
+    BUILDER:    'You\'re approaching an inflection point. In 12 months, if you increase discipline and raise your ceiling ambition, you\'ll enter Challenger tier with real momentum.',
+    CHALLENGER: 'Your fundamentals are solid. The next 12 months hinge on one big bet — a project, role, or skill that separates you from the 60-75 range permanently.',
+    ELITE:      'You\'re poised for a major output year. One focused project could generate exceptional results. Prioritize ruthlessly — your ceiling is leverage, not effort.',
+    VISIONARY:  'Your next 12 months should create assets, not just income. If you\'re not building something that compounds, you\'re underutilizing your profile.',
+    LEGENDARY:  'You\'re in rare territory. The question is scale and legacy. 12 months of focused institutional building could create lasting impact beyond yourself.',
+  };
+  return paths[name] || paths['BUILDER'];
+}
+
+function get5YearOutlook(a, score, tier) {
+  const desired = a.desiredIncome;
+  const name = tier.name;
+  const paths = {
+    DRIFTER:    'Five years from now, path diverges sharply based on the choices made in the next 6 months. The gap between who you could be and who you are will either close or widen dramatically.',
+    WANDERER:   'If you find your direction in the next 12 months, five years is enough time to reach the top 20% of your field. The compounding math works in your favor if you start now.',
+    BUILDER:    'At your current trajectory with consistent growth, five years puts you in a genuinely strong position — financial, professional, and personal. You will look back on this period as the foundation.',
+    CHALLENGER: 'Five years of Challenger momentum builds significant leverage. You\'re likely to be in senior leadership, running your own thing, or deeply specialized in a high-demand domain.',
+    ELITE:      'Five years in Elite tier — with intentional moves — typically produces top 5% outcomes. The question is what you\'re optimizing for. Your profile supports almost any destination.',
+    VISIONARY:  'Five-year Visionaries typically cross into generational wealth or influence territory. Your profile suggests you\'ll be building something institutional.',
+    LEGENDARY:  'Your five-year outlook is about magnitude and meaning. The fundamentals are in place. What gets built now could outlast the builder.',
+  };
+  return paths[name] || paths['BUILDER'];
+}
+
+function getStrengths(a, score, tier) {
+  const strengths = [];
+  if ((a.discipline || 1) >= 3) strengths.push('High Discipline');
+  if ((a.ambition || 1) >= 3)   strengths.push('Strong Ambition');
+  if ((a.learningHours || 0) >= 10) strengths.push('Active Learner');
+  if (a.status === 'founder') strengths.push('Entrepreneurial Mindset');
+  if (a.timeHorizon === 'years5' || a.timeHorizon === 'years3') strengths.push('Long-Range Thinking');
+  if ((a.screenTime || 0) <= 2) strengths.push('Deep Focus Capacity');
+  if (score >= 70) strengths.push('High Execution Profile');
+  return strengths.length > 0 ? strengths.join(', ') : 'Potential for growth in multiple dimensions';
+}
+
+function getWeakness(a, score) {
+  if ((a.screenTime || 0) > 6) return 'Excessive passive screen time is draining your cognitive fuel.';
+  if ((a.learningHours || 0) < 3) return 'Insufficient learning investment — skills stagnate without active growth.';
+  if ((a.discipline || 1) <= 1) return 'Low discipline means strong ideas rarely become consistent results.';
+  if (a.timeHorizon === 'days') return 'Living in the short term prevents you from making the decisions that matter most.';
+  if (score < 40) return 'Multiple patterns working against compounding simultaneously — priority is to stabilize one domain.';
+  return 'Consistency between ambition and daily actions — the gap is closeable but requires intention.';
+}
+
+function getOpportunity(a, score) {
+  if (a.status === 'student' && score > 50) return 'You have time leverage most professionals would pay anything for. Use it to build skills, reputation, or projects now.';
+  if (a.primarySkill === 'tech' && score > 50) return 'AI-era technical skills are the highest-ROI investment. Double down on systems thinking and applied AI.';
+  if (a.primarySkill === 'creative' && score > 50) return 'Distribution is now free. Build an owned audience around your work — the leverage is asymmetric.';
+  if ((a.learningHours || 0) > 10) return 'Your learning investment gives you compounding knowledge advantage. Pair it with high-visibility projects.';
+  if (score > 70) return 'Your profile qualifies for top-tier mentors, opportunities, and networks. Actively seek proximity to the best people in your domain.';
+  return 'Identifying one skill to go deep on for 12 months will create an asymmetric advantage in a world of shallow generalists.';
+}
+
+function getRisk(a, score) {
+  if ((a.screenTime || 0) > 7) return 'Attention fragmentation is compounding silently — every hour of passive consumption delays the version of yourself you\'re trying to become.';
+  if ((a.discipline || 1) <= 1 && (a.ambition || 1) >= 3) return 'High ambition without discipline is motivation without an engine — most promising trajectories stall here.';
+  if (a.timeHorizon === 'days' || a.timeHorizon === 'months') return 'Short time horizons create short decisions. You will optimize for now at the cost of later.';
+  if (score > 70 && (a.learningHours || 0) < 5) return 'High performers who stop learning rapidly lose their edge in a fast-moving world. Your growth rate must match your ambition.';
+  return 'Complacency is the silent threat at every tier — the habits that got you here will not get you to the next level.';
+}
+
+function getBottleneck(a, score) {
+  const issues = [];
+  if ((a.screenTime || 0) > 5)       issues.push({ weight: 3, msg: 'Screen time is consuming your highest-value cognitive hours' });
+  if ((a.learningHours || 0) < 5)    issues.push({ weight: 2.5, msg: 'Learning rate is below the threshold needed for meaningful skill compounding' });
+  if ((a.discipline || 1) <= 2)      issues.push({ weight: 3.5, msg: 'Inconsistent discipline makes all other strengths unreliable' });
+  if (a.timeHorizon === 'days')      issues.push({ weight: 2, msg: 'Short time horizon leads to tactical decisions at the cost of strategic positioning' });
+  if (issues.length === 0) return 'Your biggest bottleneck is scale — you\'ve built strong fundamentals, now execution speed and leverage become the constraint.';
+  issues.sort((a, b) => b.weight - a.weight);
+  return issues[0].msg;
+}
+
+function getRoadmap(a, score, tier) {
+  const items = [];
+  if ((a.screenTime || 0) > 4) {
+    items.push({ title: 'Reclaim your attention', body: 'Cap daily passive screen time to 90 minutes. Install app blockers during deep work hours. This single change raises your effective cognitive capacity.' });
+  }
+  if ((a.learningHours || 0) < 7) {
+    items.push({ title: 'Install a learning system', body: 'Commit to 1 focused hour daily on your primary skill domain. Books, courses, projects — deliberate practice, not passive consumption.' });
+  }
+  if ((a.discipline || 1) <= 2) {
+    items.push({ title: 'Build your discipline stack', body: 'Start with one non-negotiable daily anchor habit. Morning pages, exercise, or a deep work block. Compound from there.' });
+  }
+  if (a.timeHorizon === 'days' || a.timeHorizon === 'months') {
+    items.push({ title: 'Write your 3-year vision', body: 'Spend 2 hours writing exactly where you want to be in 36 months — financially, professionally, personally. Clarity of future direction changes daily decisions.' });
+  }
+  if (a.status !== 'founder' && score > 55) {
+    items.push({ title: 'Build a parallel asset', body: 'Start building something outside your primary income: a side project, audience, or skill that creates equity, not just salary.' });
+  }
+  items.push({ title: 'Find your accelerant environment', body: 'Join or build a peer group operating 1 tier above your current level. Proximity to higher standards is the fastest upgrade money can\'t directly buy.' });
+  items.push({ title: 'Retake in 30 days', body: 'Return to STELARON after implementing changes. Watch your score evolve. Track evidence of your own growth compounding.' });
+  return items.slice(0, 5);
+}
+
+function getResources(a) {
+  const skill = a.primarySkill;
+  const base = [
+    { type: 'Book', title: 'Atomic Habits', desc: 'The foundational framework for building systems that make discipline automatic.' },
+    { type: 'Concept', title: 'The Leverage Equation', desc: 'Code, media, capital, and labor — the four mechanisms of infinite leverage in the modern economy.' },
+    { type: 'Practice', title: 'Weekly Review System', desc: 'A structured Sunday session to audit your week, reset your priorities, and keep score of your own growth.' },
+  ];
+  const skillRes = {
+    tech:       { type: 'Skill', title: 'Systems Thinking + AI', desc: 'The highest-leverage technical skill combination for the next decade. Think in systems, build with AI.' },
+    business:   { type: 'Skill', title: 'Unit Economics Mastery', desc: 'Understanding LTV, CAC, and margins at a deep level separates great operators from everyone else.' },
+    creative:   { type: 'Skill', title: 'Audience Architecture', desc: 'Building a distribution channel you own — newsletter, social graph, community — is the creative leverage multiplier.' },
+    sales:      { type: 'Skill', title: 'Value Articulation', desc: 'The ability to explain exactly why you create value, in the buyer\'s language, is the highest-leverage sales skill.' },
+    leadership: { type: 'Skill', title: 'Delegation + Trust Systems', desc: 'Leaders who can\'t delegate are limited to what they can personally do. Build systems for trusting others.' },
+    science:    { type: 'Skill', title: 'Applied Research', desc: 'The gap between pure research and commercial application is enormous — and immensely valuable.' },
+  };
+  if (skillRes[skill]) base.unshift(skillRes[skill]);
+  return base.slice(0, 4);
+}
+
+/* ══════════════════════════════════════════
+   RENDER RESULTS
+══════════════════════════════════════════ */
+let resultData = null;
+let radarChart = null, pieChart = null;
+
+function renderResults(r) {
+  resultData = r;
+  const container = document.getElementById('resultsContainer');
+
+  const tierStyle = `background: ${r.tier.color}20; border-color: ${r.tier.color}60; color: ${r.tier.color};`;
+
+  container.innerHTML = `
+    <!-- SCORE HERO -->
+    <div class="result-score-hero">
+      <p class="result-eyebrow">STELARON · FUTURE POTENTIAL REPORT</p>
+      <div class="result-big-score">${r.score}</div>
+      <div class="result-tier-badge" style="${tierStyle}">${r.tier.name}</div>
+      <div class="result-archetype-label">${r.archetype.name}</div>
+      <p class="result-archetype-desc">${r.archetype.desc}</p>
+    </div>
+
+    <!-- KEY INSIGHTS -->
+    <div class="insight-row">
+      <div class="insight-cell highlight">
+        <div class="insight-type">Biggest Strength</div>
+        <div class="insight-value">${r.strengths.split(',')[0]}</div>
+      </div>
+      <div class="insight-cell danger">
+        <div class="insight-type">Critical Bottleneck</div>
+        <div class="insight-value">${r.bottleneck.split(' ').slice(0,8).join(' ')}...</div>
+      </div>
+      <div class="insight-cell">
+        <div class="insight-type">Career Velocity</div>
+        <div class="insight-value">${r.careerVel}</div>
+      </div>
+      <div class="insight-cell">
+        <div class="insight-type">Risk Level</div>
+        <div class="insight-value">${r.riskLevel}</div>
+      </div>
+    </div>
+
+    <!-- METRICS + BARS -->
+    <div class="result-grid">
+      <div class="result-card">
+        <p class="result-card-title">Performance Metrics</p>
+        ${renderBar('Discipline',      r.disciplineRating, 'bar-purple')}
+        ${renderBar('Ambition',        r.ambitionRating,   'bar-gold')}
+        ${renderBar('Focus',           r.focusRating,      'bar-teal')}
+        ${renderBar('Execution',       r.executionRating,  'bar-pink')}
+        ${renderBar('Skill Growth',    r.skillGrowth,      'bar-purple')}
+        ${renderBar('Wealth Potential',r.wealthPotential,  'bar-gold')}
+      </div>
+      <div class="result-card">
+        <p class="result-card-title">Radar Analysis</p>
+        <div class="chart-wrap">
+          <canvas id="radarChart" class="result-chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHETYPE DETAIL + PIE -->
+    <div class="result-grid">
+      <div class="result-card">
+        <p class="result-card-title">Your Archetype · ${r.archetype.name}</p>
+        <div class="metric-row"><span class="metric-name">Natural Strengths</span><span class="metric-val" style="font-family:var(--font-body);font-size:0.8rem;text-align:right;max-width:55%">${r.archetype.strengths}</span></div>
+        <div class="metric-row"><span class="metric-name">Core Weakness</span><span class="metric-val" style="font-family:var(--font-body);font-size:0.8rem;text-align:right;max-width:55%">${r.archetype.weakness}</span></div>
+        <div style="margin-top:1rem;padding:1rem;background:rgba(123,92,240,0.06);border-radius:10px;border:1px solid rgba(123,92,240,0.15)">
+          <p style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--purple-light);margin-bottom:.5rem">Recommended Path</p>
+          <p style="font-size:.875rem;color:var(--muted-light);line-height:1.6">${r.archetype.path}</p>
+        </div>
+        <div style="margin-top:1rem">
+          <div class="metric-row"><span class="metric-name">Wealth Potential</span><span class="metric-val">${r.wealthLabel}</span></div>
+          <div class="metric-row"><span class="metric-name">Career Velocity</span><span class="metric-val">${r.careerVel}</span></div>
+          <div class="metric-row"><span class="metric-name">Risk Level</span><span class="metric-val">${r.riskLevel}</span></div>
+        </div>
+      </div>
+      <div class="result-card">
+        <p class="result-card-title">Score Breakdown</p>
+        <div class="chart-wrap">
+          <canvas id="pieChart" class="result-chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTLOOK -->
+    <div class="result-card result-card-full">
+      <p class="result-card-title">Future Projections</p>
+      <div class="outlook-grid">
+        <div class="outlook-card">
+          <p class="outlook-label">12 Month Outlook</p>
+          <p class="outlook-text">${r.outlook12}</p>
+        </div>
+        <div class="outlook-card">
+          <p class="outlook-label">5 Year Outlook</p>
+          <p class="outlook-text">${r.outlook5}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSIGHTS -->
+    <div class="result-card result-card-full">
+      <p class="result-card-title">Key Findings</p>
+      <div class="metric-row"><span class="metric-name">Main Opportunity</span><span class="metric-val" style="font-family:var(--font-body);font-size:0.82rem;text-align:right;max-width:60%">${r.opportunity}</span></div>
+      <div class="metric-row"><span class="metric-name">Main Risk</span><span class="metric-val" style="font-family:var(--font-body);font-size:0.82rem;text-align:right;max-width:60%">${r.risk}</span></div>
+      <div class="metric-row"><span class="metric-name">Highest Leverage Action</span><span class="metric-val" style="font-family:var(--font-body);font-size:0.82rem;text-align:right;max-width:60%">${r.topAction}</span></div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="result-card result-card-full">
+      <p class="result-card-title">Your Personal Roadmap</p>
+      <ul class="roadmap-list">
+        ${r.roadmap.map((item, i) => `
+          <li class="roadmap-item">
+            <div class="roadmap-num">${String(i+1).padStart(2,'0')}</div>
+            <div class="roadmap-text"><strong>${item.title}</strong><br/>${item.body}</div>
+          </li>
+        `).join('')}
+      </ul>
+    </div>
+
+    <!-- TIER INFO -->
+    <div class="result-card result-card-full">
+      <p class="result-card-title">Tier · ${r.tier.name}</p>
+      <p style="color:var(--muted-light);line-height:1.7;font-size:.9rem;margin-bottom:1rem">${r.tier.meaning}</p>
+      <div class="metric-row"><span class="metric-name">Your Score</span><span class="metric-val">${r.score} / 100</span></div>
+      <div class="metric-row"><span class="metric-name">Global Percentile</span><span class="metric-val">Top ${getPercentile(r.score)}%</span></div>
+      <div class="metric-row"><span class="metric-name">Next Tier</span><span class="metric-val">${getNextTier(r.score)}</span></div>
+    </div>
+
+    <!-- RESOURCES -->
+    <div class="result-card result-card-full">
+      <p class="result-card-title">Recommended Resources for ${r.archetype.name}</p>
+      <div class="resources-grid">
+        ${r.resources.map(res => `
+          <div class="resource-card">
+            <p class="resource-type">${res.type}</p>
+            <p class="resource-title">${res.title}</p>
+            <p class="resource-desc">${res.desc}</p>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- CTA ROW -->
+    <div class="result-cta-row">
+      <button class="btn-primary" onclick="openShareModal()">Share My Result</button>
+      <button class="btn-ghost" onclick="showSection('leaderboard')">View Leaderboard</button>
+      <button class="btn-ghost" onclick="startSimulator()">Retake Simulation</button>
+    </div>
+  `;
+
+  // Render charts after DOM is ready
+  setTimeout(() => {
+    renderRadarChart(r);
+    renderPieChart(r);
+  }, 100);
+
+  // Log to leaderboard store
+  saveToLeaderboard(r);
+}
+
+function renderBar(label, val, cls) {
+  return `<div class="result-bar-wrap">
+    <div class="result-bar-label"><span>${label}</span><span>${val}%</span></div>
+    <div class="result-bar-outer">
+      <div class="result-bar-fill ${cls}" style="--target-width:${val}%"></div>
+    </div>
+  </div>`;
+}
+
+function getPercentile(score) {
+  if (score >= 96) return 1;
+  if (score >= 86) return 5;
+  if (score >= 76) return 12;
+  if (score >= 61) return 25;
+  if (score >= 41) return 45;
+  if (score >= 21) return 70;
+  return 90;
+}
+
+function getNextTier(score) {
+  if (score >= 96) return '—  You\'re already Legendary';
+  if (score >= 86) return 'LEGENDARY (96+)';
+  if (score >= 76) return 'VISIONARY (86+)';
+  if (score >= 61) return 'ELITE (76+)';
+  if (score >= 41) return 'CHALLENGER (61+)';
+  if (score >= 21) return 'BUILDER (41+)';
+  return 'WANDERER (21+)';
+}
+
+/* ── CHARTS ── */
+function renderRadarChart(r) {
+  const ctx = document.getElementById('radarChart');
+  if (!ctx) return;
+  if (radarChart) { radarChart.destroy(); }
+  radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['Discipline', 'Ambition', 'Focus', 'Execution', 'Skill Growth', 'Wealth Potential'],
+      datasets: [{
+        data: [r.disciplineRating, r.ambitionRating, r.focusRating, r.executionRating, r.skillGrowth, r.wealthPotential],
+        backgroundColor: 'rgba(123,92,240,0.15)',
+        borderColor: 'rgba(157,132,245,0.8)',
+        pointBackgroundColor: 'rgba(240,165,0,0.9)',
+        pointBorderColor: 'transparent',
+        pointRadius: 4,
+        borderWidth: 1.5,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          min: 0, max: 100,
+          ticks: { display: false },
+          grid: { color: 'rgba(123,92,240,0.15)' },
+          angleLines: { color: 'rgba(123,92,240,0.12)' },
+          pointLabels: { color: 'rgba(176,176,210,0.8)', font: { size: 10, family: "'JetBrains Mono'" } },
+        },
+      },
+      plugins: { legend: { display: false } },
+    },
+  });
+}
+
+function renderPieChart(r) {
+  const ctx = document.getElementById('pieChart');
+  if (!ctx) return;
+  if (pieChart) { pieChart.destroy(); }
+  pieChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Discipline', 'Ambition', 'Focus', 'Execution', 'Learning'],
+      datasets: [{
+        data: [r.disciplineRating, r.ambitionRating, r.focusRating, r.executionRating, r.skillGrowth],
+        backgroundColor: [
+          'rgba(123,92,240,0.8)',
+          'rgba(240,165,0,0.8)',
+          'rgba(0,212,200,0.7)',
+          'rgba(246,135,179,0.7)',
+          'rgba(104,211,145,0.7)',
+        ],
+        borderColor: 'transparent',
+        borderWidth: 0,
+        hoverOffset: 6,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: 'rgba(176,176,210,0.7)', font: { size: 10, family: "'JetBrains Mono'" }, padding: 12, boxWidth: 10 },
+        },
+      },
+    },
+  });
+}
+
+/* ── LEADERBOARD DATA ── */
+const MOCK_LEADERBOARD = [
+  { name: 'Anonymous #1', score: 97, tier: 'LEGENDARY',  archetype: 'The Titan' },
+  { name: 'Anonymous #2', score: 94, tier: 'VISIONARY',  archetype: 'The Visionary' },
+  { name: 'Anonymous #3', score: 91, tier: 'VISIONARY',  archetype: 'The Founder' },
+  { name: 'Anonymous #4', score: 89, tier: 'VISIONARY',  archetype: 'The Strategist' },
+  { name: 'Anonymous #5', score: 86, tier: 'VISIONARY',  archetype: 'The Architect' },
+  { name: 'Anonymous #6', score: 83, tier: 'ELITE',      archetype: 'The Commander' },
+  { name: 'Anonymous #7', score: 79, tier: 'ELITE',      archetype: 'The Innovator' },
+  { name: 'Anonymous #8', score: 74, tier: 'CHALLENGER', archetype: 'The Creator' },
+  { name: 'Anonymous #9', score: 71, tier: 'CHALLENGER', archetype: 'The Operator' },
+  { name: 'Anonymous #10',score: 68, tier: 'CHALLENGER', archetype: 'The Builder' },
+];
+
+function saveToLeaderboard(r) {
+  let lb = JSON.parse(localStorage.getItem('stelaron_lb') || '[]');
+  lb.push({ score: r.score, tier: r.tier.name, archetype: r.archetype.name, ts: Date.now() });
+  lb = lb.slice(-50);
+  try { localStorage.setItem('stelaron_lb', JSON.stringify(lb)); } catch(e){}
+}
+
+function populateLeaderboard() {
+  let userEntries = [];
+  try { userEntries = JSON.parse(localStorage.getItem('stelaron_lb') || '[]'); } catch(e){}
+  const allEntries = [...MOCK_LEADERBOARD];
+  userEntries.forEach((e, i) => {
+    allEntries.push({ name: `Your Score #${i+1}`, score: e.score, tier: e.tier, archetype: e.archetype, isYours: true });
+  });
+  allEntries.sort((a,b) => b.score - a.score);
+
+  const topEl = document.getElementById('lbTopScores');
+  topEl.innerHTML = allEntries.slice(0,10).map((e,i) => `
+    <div class="lb-row">
+      <span class="lb-rank ${i<3?'top3':''}">${i+1}</span>
+      <span class="lb-name" style="${e.isYours?'color:var(--gold)':''}">${e.name}${e.isYours?' ★':''}</span>
+      <span class="lb-val">${e.score}</span>
+    </div>
+  `).join('');
+
+  // Archetype distribution
+  const archMap = {};
+  allEntries.forEach(e => { archMap[e.archetype] = (archMap[e.archetype]||0)+1; });
+  const archs = Object.entries(archMap).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const total = allEntries.length || 1;
+  document.getElementById('lbArchetypes').innerHTML = archs.map(([name,count]) => `
+    <div class="lb-row">
+      <span class="lb-rank"></span>
+      <span class="lb-name">${name}</span>
+      <span class="lb-val">${Math.round(count/total*100)}%</span>
+    </div>
+  `).join('');
+
+  // Tier distribution
+  const tierMap = {};
+  allEntries.forEach(e => { tierMap[e.tier] = (tierMap[e.tier]||0)+1; });
+  const tierOrder = ['LEGENDARY','VISIONARY','ELITE','CHALLENGER','BUILDER','WANDERER','DRIFTER'];
+  document.getElementById('lbTiers').innerHTML = tierOrder.filter(t=>tierMap[t]).map(t => `
+    <div class="lb-row">
+      <span class="lb-rank"></span>
+      <span class="lb-name">${t}</span>
+      <span class="lb-val">${Math.round((tierMap[t]||0)/total*100)}%</span>
+    </div>
+  `).join('');
+}
+
+/* ── SHARE MODAL ── */
+function openShareModal() {
+  if (!resultData) return;
+  const r = resultData;
+  document.getElementById('shareCardPreview').innerHTML = `
+    <div class="share-card-logo">STELARON · FUTURE POTENTIAL REPORT</div>
+    <div class="share-card-score-num">${r.score}</div>
+    <div class="share-card-tier-text">${r.tier.name}</div>
+    <div class="share-card-arch">${r.archetype.name}</div>
+    <div class="share-card-stats">
+      <div class="share-stat">WEALTH <span>${r.wealthLabel}</span></div>
+      <div class="share-stat">VELOCITY <span>${r.careerVel}</span></div>
+      <div class="share-stat">DISCIPLINE <span>${r.disciplineRating}%</span></div>
+      <div class="share-stat">RISK <span>${r.riskLevel}</span></div>
+    </div>
+    <div class="share-card-url">stelaron.app</div>
+  `;
+  document.getElementById('shareModal').classList.add('open');
+}
+
+function closeShareModal(e) {
+  if (!e || e.target === document.getElementById('shareModal') || e.currentTarget?.classList?.contains('modal-close')) {
+    document.getElementById('shareModal').classList.remove('open');
+  }
+}
+
+function getShareText() {
+  const r = resultData;
+  return `I just ran my Future Potential Simulation on STELARON.\n\n🌌 Score: ${r.score}/100\n🏆 Tier: ${r.tier.name}\n⚡ Archetype: ${r.archetype.name}\n💰 Wealth Potential: ${r.wealthLabel}\n🚀 Career Velocity: ${r.careerVel}\n\nDiscover your future potential at stelaron.app`;
+}
+
+function shareOnX() {
+  const text = encodeURIComponent(getShareText());
+  window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+}
+
+function shareOnLinkedIn() {
+  const url = encodeURIComponent('https://stelaron.app');
+  const summary = encodeURIComponent(getShareText());
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}&summary=${summary}`, '_blank');
+}
+
+function shareOnWhatsApp() {
+  const text = encodeURIComponent(getShareText());
+  window.open(`https://wa.me/?text=${text}`, '_blank');
+}
+
+function copyResult() {
+  navigator.clipboard?.writeText(getShareText()).then(() => {
+    showToast('Result copied to clipboard!');
+  }).catch(() => {
+    showToast('Unable to copy — try manually selecting the text.');
+  });
+}
 
 /* ── EMAIL ── */
-.email-section {
-  background: linear-gradient(135deg, rgba(123,92,240,0.06), rgba(0,212,200,0.04));
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 6rem 2rem;
-}
-.email-inner {
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
-.email-desc { color: var(--muted-light); margin-bottom: 2rem; line-height: 1.7; }
-.email-form {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.email-input {
-  flex: 1;
-  min-width: 240px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 0.85rem 1.5rem;
-  color: var(--star-white);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color var(--transition-fast);
-}
-.email-input:focus { border-color: var(--purple); }
-.email-input::placeholder { color: var(--muted); }
-.email-fine { font-size: 0.75rem; color: var(--muted); margin-top: 1rem; }
-
-/* ═══════════════════════
-   SIMULATOR
-═══════════════════════ */
-.sim-container {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 3rem 2rem 4rem;
-  min-height: calc(100vh - 80px);
-  display: flex;
-  flex-direction: column;
-}
-.sim-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-.sim-logo {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 0.9rem;
-  letter-spacing: 0.25em;
-  background: linear-gradient(135deg, var(--purple-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 1.5rem;
-}
-.sim-progress-wrap {
-  height: 3px;
-  background: rgba(123,92,240,0.15);
-  border-radius: 50px;
-  overflow: hidden;
-  margin-bottom: 0.75rem;
-}
-.sim-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--purple), var(--gold));
-  border-radius: 50px;
-  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-  width: 0%;
-}
-.sim-step-label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  color: var(--muted);
+function handleEmailSubmit(e) {
+  e.preventDefault();
+  showToast('You\'re in. Welcome to Future Builders. 🚀');
+  e.target.reset();
 }
 
-.sim-question-area {
-  flex: 1;
-  animation: fadeSlide 0.4s ease;
-}
-@keyframes fadeSlide {
-  from { opacity:0; transform:translateY(18px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-.sim-q-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  color: var(--purple-light);
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.sim-q-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 4vw, 2.2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--star-white);
-  margin-bottom: 0.5rem;
-}
-.sim-q-sub {
-  font-size: 0.9rem;
-  color: var(--muted-light);
-  margin-bottom: 2.5rem;
+/* ── EXAMPLE REPORT ── */
+function showExampleReport() {
+  const exampleAnswers = {
+    age: '25_34', status: 'employed', income: 'mid',
+    desiredIncome: 'millionaire', screenTime: 3, learningHours: 12,
+    ambition: 4, discipline: 3, bigGoal: 'Build a SaaS company to $1M ARR',
+    primarySkill: 'tech', timeHorizon: 'years5',
+  };
+  const result = computeResult(exampleAnswers);
+  renderResults(result);
+  showSection('results');
 }
 
-/* Option Grid */
-.sim-options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-.sim-options.single-col { grid-template-columns: 1fr; }
-.sim-option {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 1.1rem 1.4rem;
-  color: var(--muted-light);
-  font-size: 0.9rem;
-  text-align: left;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  position: relative;
-  overflow: hidden;
-}
-.sim-option::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--purple), transparent);
-  opacity: 0;
-  transition: opacity var(--transition-fast);
-}
-.sim-option:hover {
-  border-color: var(--border-bright);
-  color: var(--star-white);
-}
-.sim-option.selected {
-  border-color: var(--purple);
-  color: var(--star-white);
-  background: rgba(123,92,240,0.15);
-  box-shadow: 0 0 20px rgba(123,92,240,0.2);
-}
-.sim-option.selected::before { opacity: 0.05; }
-.opt-icon { font-size: 1.2rem; margin-bottom: 0.4rem; display: block; }
-.opt-label { font-weight: 600; display: block; }
-.opt-desc { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; display: block; }
-
-/* Slider */
-.sim-slider-wrap { margin: 2rem 0; }
-.sim-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 4px;
-  border-radius: 50px;
-  background: rgba(123,92,240,0.15);
-  outline: none;
-  margin-bottom: 1rem;
-}
-.sim-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--purple), var(--gold));
-  cursor: pointer;
-  box-shadow: 0 0 12px rgba(123,92,240,0.5);
-  border: 2px solid #fff;
-}
-.slider-labels {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--muted);
-}
-.slider-val {
-  text-align: center;
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--purple-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Text Input */
-.sim-text-input {
-  width: 100%;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 1.1rem 1.4rem;
-  color: var(--star-white);
-  font-family: var(--font-body);
-  font-size: 1rem;
-  outline: none;
-  transition: border-color var(--transition-fast);
-  margin-bottom: 0.5rem;
-}
-.sim-text-input:focus { border-color: var(--purple); box-shadow: 0 0 20px rgba(123,92,240,0.15); }
-
-.sim-nav-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  padding-top: 2rem;
-  align-items: center;
-}
-
-/* ═══════════════════════
-   CALCULATING
-═══════════════════════ */
-.calc-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 80px);
-  gap: 3rem;
-  padding: 2rem;
-}
-.calc-orb {
-  width: 180px; height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--purple-light), var(--purple), #2A0A8A);
-  box-shadow: 0 0 80px rgba(123,92,240,0.6), 0 0 160px rgba(123,92,240,0.2);
-  animation: orbPulse 2s ease-in-out infinite;
-}
-@keyframes orbPulse {
-  0%,100% { transform:scale(1); box-shadow:0 0 80px rgba(123,92,240,0.6),0 0 160px rgba(123,92,240,0.2); }
-  50% { transform:scale(1.08); box-shadow:0 0 120px rgba(123,92,240,0.8),0 0 200px rgba(123,92,240,0.3); }
-}
-.calc-text-stack { width: 100%; max-width: 420px; text-align: center; }
-.calc-label {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
-  color: var(--muted-light);
-  margin-bottom: 1.5rem;
-  transition: all 0.4s ease;
-}
-.calc-bar-outer {
-  height: 4px;
-  background: rgba(123,92,240,0.15);
-  border-radius: 50px;
-  overflow: hidden;
-}
-.calc-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--purple), var(--gold), var(--teal));
-  border-radius: 50px;
-  transition: width 0.3s ease;
-}
-
-/* ═══════════════════════
-   RESULTS
-═══════════════════════ */
-.results-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 3rem 2rem 6rem;
-}
-
-/* Score Hero */
-.result-score-hero {
-  text-align: center;
-  padding: 4rem 2rem 3rem;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 3rem;
-}
-.result-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--purple-light);
-  margin-bottom: 1rem;
-}
-.result-big-score {
-  font-family: var(--font-display);
-  font-size: clamp(5rem, 15vw, 10rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--purple-light) 0%, var(--gold) 60%, var(--teal) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: scoreReveal 1s cubic-bezier(0.4,0,0.2,1) forwards;
-}
-@keyframes scoreReveal {
-  from { opacity:0; transform:scale(0.7) translateY(20px); filter:blur(8px); }
-  to   { opacity:1; transform:scale(1) translateY(0); filter:blur(0); }
-}
-.result-tier-badge {
-  display: inline-block;
-  padding: 0.5rem 2rem;
-  border-radius: 50px;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin: 1rem 0;
-}
-.result-archetype-label {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--star-white);
-  margin-bottom: 0.5rem;
-}
-.result-archetype-desc {
-  font-size: 0.95rem;
-  color: var(--muted-light);
-  max-width: 500px;
-  margin: 0 auto;
-  line-height: 1.7;
-}
-
-/* Result Grid */
-.result-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-.result-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  box-shadow: var(--shadow-card);
-  transition: transform var(--transition-med), border-color var(--transition-med);
-}
-.result-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-bright);
-}
-.result-card-title {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--purple-light);
-  margin-bottom: 1.2rem;
-}
-.result-card-full { grid-column: 1 / -1; }
-
-/* Metric Rows */
-.metric-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(123,92,240,0.08);
-}
-.metric-row:last-child { border-bottom: none; }
-.metric-name { font-size: 0.875rem; color: var(--muted-light); }
-.metric-val {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--star-white);
-}
-
-/* Progress bars in results */
-.result-bar-wrap { margin: 0.8rem 0; }
-.result-bar-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  color: var(--muted-light);
-  margin-bottom: 0.4rem;
-}
-.result-bar-label span:last-child {
-  font-family: var(--font-mono);
-  color: var(--star-white);
-  font-weight: 600;
-}
-.result-bar-outer {
-  height: 5px;
-  background: rgba(123,92,240,0.1);
-  border-radius: 50px;
-  overflow: hidden;
-}
-.result-bar-fill {
-  height: 100%;
-  border-radius: 50px;
-  width: 0;
-  animation: barGrow 1.2s cubic-bezier(0.4,0,0.2,1) forwards;
-  animation-delay: 0.3s;
-}
-@keyframes barGrow { to { width: var(--target-width, 0%); } }
-.bar-purple { background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
-.bar-gold   { background: linear-gradient(90deg, #C07A00, var(--gold)); }
-.bar-teal   { background: linear-gradient(90deg, #007C78, var(--teal)); }
-.bar-pink   { background: linear-gradient(90deg, #C0186A, #F687B3); }
-
-/* Charts */
-.chart-wrap { position: relative; height: 280px; }
-canvas.result-chart { max-width: 100%; }
-
-/* Outlook Cards */
-.outlook-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.2rem;
-  margin-top: 1.2rem;
-}
-.outlook-card {
-  background: rgba(123,92,240,0.06);
-  border: 1px solid rgba(123,92,240,0.18);
-  border-radius: var(--radius-md);
-  padding: 1.4rem;
-}
-.outlook-label {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  color: var(--purple-light);
-  text-transform: uppercase;
-  margin-bottom: 0.6rem;
-}
-.outlook-text { font-size: 0.875rem; color: var(--muted-light); line-height: 1.6; }
-
-/* Roadmap */
-.roadmap-list { list-style: none; }
-.roadmap-item {
-  display: flex;
-  gap: 1.2rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(123,92,240,0.08);
-}
-.roadmap-item:last-child { border-bottom: none; }
-.roadmap-num {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--purple), var(--gold));
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  flex-shrink: 0;
-  color: #fff;
-}
-.roadmap-text { font-size: 0.875rem; color: var(--muted-light); line-height: 1.6; }
-.roadmap-text strong { color: var(--star-white); font-weight: 600; }
-
-/* Highlight Insights */
-.insight-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-.insight-cell {
-  background: rgba(0,0,0,0.3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 1.3rem;
-}
-.insight-cell.highlight { border-color: rgba(240,165,0,0.35); background: rgba(240,165,0,0.05); }
-.insight-cell.danger    { border-color: rgba(248,113,113,0.35); background: rgba(248,113,113,0.05); }
-.insight-type {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.4rem;
-}
-.insight-value { font-size: 0.95rem; font-weight: 600; color: var(--star-white); line-height: 1.4; }
-
-/* Resources */
-.resources-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.2rem;
-  margin-top: 1.2rem;
-}
-.resource-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 1.4rem;
-  transition: all var(--transition-fast);
-}
-.resource-card:hover {
-  border-color: var(--border-bright);
-  transform: translateY(-2px);
-}
-.resource-type {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--teal);
-  margin-bottom: 0.5rem;
-}
-.resource-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.35rem; }
-.resource-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
-
-/* CTA Row */
-.result-cta-row {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 3rem;
-  justify-content: center;
-  padding-top: 3rem;
-  border-top: 1px solid var(--border);
-}
-
-/* ═══════════════════════
-   LEADERBOARD
-═══════════════════════ */
-.leaderboard-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 4rem 2rem 6rem;
-  text-align: center;
-}
-.leaderboard-desc { color: var(--muted-light); margin-bottom: 3rem; }
-.lb-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  text-align: left;
-}
-.lb-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-}
-.lb-card-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--purple-light);
-  margin-bottom: 1.5rem;
-}
-.lb-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(123,92,240,0.08);
-}
-.lb-row:last-child { border-bottom: none; }
-.lb-rank {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--muted);
-  width: 24px;
-  text-align: right;
-  flex-shrink: 0;
-}
-.lb-rank.top3 {
-  color: var(--gold);
-  font-weight: 700;
-}
-.lb-name { flex: 1; font-size: 0.9rem; color: var(--star-white); }
-.lb-val {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--purple-light);
-}
-
-/* ═══════════════════════
-   SHARE MODAL
-═══════════════════════ */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  backdrop-filter: blur(8px);
-  z-index: 999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-.modal-overlay.open { display: flex; }
-.modal-box {
-  background: var(--bg-deep);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: 2.5rem;
-  max-width: 500px;
-  width: 100%;
-  position: relative;
-  box-shadow: 0 20px 80px rgba(0,0,0,0.8), var(--shadow-glow-purple);
-  animation: modalIn 0.35s cubic-bezier(0.4,0,0.2,1);
-}
-@keyframes modalIn {
-  from { opacity:0; transform:scale(0.9) translateY(20px); }
-  to   { opacity:1; transform:scale(1) translateY(0); }
-}
-.modal-close {
-  position: absolute;
-  top: 1.2rem; right: 1.2rem;
-  background: transparent;
-  color: var(--muted);
-  font-size: 1rem;
-  transition: color var(--transition-fast);
-}
-.modal-close:hover { color: var(--star-white); }
-.modal-title {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-/* Share Card */
-.share-card-preview {
-  background: linear-gradient(135deg, var(--bg-void) 0%, #120D2A 50%, #0A1A1A 100%);
-  border: 1px solid rgba(123,92,240,0.35);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.share-card-preview::before {
-  content: '';
-  position: absolute;
-  top: -50px; right: -50px;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(123,92,240,0.15), transparent 70%);
-  border-radius: 50%;
-}
-.share-card-logo {
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  color: var(--muted);
-  margin-bottom: 1.2rem;
-}
-.share-card-score-num {
-  font-family: var(--font-display);
-  font-size: 4rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--purple-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-  margin-bottom: 0.3rem;
-}
-.share-card-tier-text {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
-  color: var(--purple-light);
-  margin-bottom: 0.5rem;
-}
-.share-card-arch {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--star-white);
-  margin-bottom: 1.2rem;
-}
-.share-card-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-}
-.share-stat { color: var(--muted-light); }
-.share-stat span { color: var(--star-white); font-weight: 700; }
-.share-card-url {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--muted);
-  margin-top: 1rem;
-  letter-spacing: 0.08em;
-}
-
-/* Share Buttons */
-.share-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-.share-btn {
-  padding: 0.75rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: all var(--transition-fast);
-  border: 1px solid transparent;
-}
-.share-x  { background: rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.15); color: #fff; }
-.share-li { background: rgba(0,119,181,0.2); border-color: rgba(0,119,181,0.4); color: #60B3E6; }
-.share-wa { background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.3); color: #25D366; }
-.share-copy{ background: rgba(123,92,240,0.15); border-color: rgba(123,92,240,0.4); color: var(--purple-light); }
-.share-btn:hover { transform: translateY(-2px); filter: brightness(1.15); }
-
-/* ═══════════════════════
-   TOAST
-═══════════════════════ */
-#toast {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: var(--bg-card);
-  border: 1px solid var(--border-bright);
-  border-radius: 50px;
-  padding: 0.75rem 1.8rem;
-  font-size: 0.875rem;
-  color: var(--star-white);
-  z-index: 9999;
-  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-  white-space: nowrap;
-  box-shadow: var(--shadow-glow-purple);
-}
-#toast.visible { transform: translateX(-50%) translateY(0); }
-
-/* ═══════════════════════
-   RESPONSIVE
-═══════════════════════ */
-@media (max-width: 768px) {
-  #mainNav { padding: 1rem 1.25rem; }
-  .nav-links a { display: none; }
-  .hero-visual { gap: 1rem; }
-  .hero-card { width: 160px; height: 180px; }
-  .card-score { font-size: 2.5rem; }
-  .hero-arrow-line { height: 40px; }
-  .stats-row { gap: 1.5rem; }
-  .stat-divider { display: none; }
-  .sim-options { grid-template-columns: 1fr; }
-  .outlook-grid { grid-template-columns: 1fr; }
-  .share-buttons { grid-template-columns: 1fr 1fr; }
-  .result-cta-row { justify-content: stretch; }
-  .result-cta-row button { flex: 1; justify-content: center; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-}
-
-.hide-mobile { display: inline; }
-@media (max-width: 600px) { .hide-mobile { display: none; } }
+/* ── KEYBOARD NAVIGATION ── */
+document.addEventListener('keydown', e => {
+  const simActive = document.getElementById('simulatorSection')?.classList.contains('active');
+  if (!simActive) return;
+  if (e.key === 'Enter') simNext();
+  if (e.key === 'ArrowLeft' || e.key === 'Backspace') simBack();
+});
