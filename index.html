@@ -1,269 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STELARON — Future Potential Simulator</title>
-  <meta name="description" content="Discover the future you're currently building. In under 60 seconds, find out where your habits, ambition, and decisions are taking you." />
-  <meta property="og:title" content="STELARON — Future Potential Simulator" />
-  <meta property="og:description" content="Discover the future you're currently building. Get your Future Potential Score, Tier, and Archetype." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://stelaron.app/og-image.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="STELARON — Future Potential Simulator" />
-  <meta name="twitter:description" content="Discover the future you're currently building in under 60 seconds." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="styles.css" />
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "STELARON",
-    "description": "Future Potential Simulator — discover the future you are currently building",
-    "applicationCategory": "LifestyleApplication",
-    "offers": { "@type": "Offer", "price": "0" }
-  }
-  </script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>STELARON — Discover Your Future Potential in 60 Seconds</title>
+<meta name="description" content="In 60 seconds, discover the future you're currently building. Get your Future Score, Tier, and Archetype — then challenge a friend."/>
+<meta property="og:title" content="I scored on STELARON — what's your Future Potential?"/>
+<meta property="og:description" content="Find out exactly where your habits and ambition are taking you. Takes 60 seconds."/>
+<meta property="og:image" content="https://stelaron.app/og.png"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="I just got my Future Potential Score on STELARON"/>
+<meta name="twitter:description" content="Discover the future you're currently building. Takes 60 seconds."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 
-<!-- STAR CANVAS BACKGROUND -->
 <canvas id="starCanvas"></canvas>
+<canvas id="confettiCanvas"></canvas>
 
 <!-- NAV -->
-<nav id="mainNav">
-  <a href="#" class="nav-logo" onclick="showSection('home')">STELARON</a>
-  <div class="nav-links">
-    <a href="#" onclick="showSection('home')">Home</a>
-    <a href="#" onclick="showSection('leaderboard')">Leaderboard</a>
-    <a href="#emailSection">Community</a>
-    <button class="nav-cta" onclick="startSimulator()">Start Simulation</button>
+<nav id="nav">
+  <button class="nav-logo" onclick="goHome()">STELARON</button>
+  <div class="nav-r">
+    <div class="live-pill"><span class="ldot"></span><span id="liveNum">12,847</span>&nbsp;running now</div>
+    <button class="ghost-btn" onclick="showSection('leaderboard')">Leaderboard</button>
+    <button class="cta-btn" onclick="startSim()">Start Free →</button>
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════
-     SECTION: HOME
-═══════════════════════════════════════════════ -->
-<section id="homeSection" class="section active">
+<!-- ══════════════════ HOME ══════════════════ -->
+<section id="homeSection" class="sec active">
 
-  <div class="hero-container">
-    <div class="hero-eyebrow">
-      <span class="pulse-dot"></span>
-      <span>Future Intelligence Engine</span>
+  <div class="hero">
+    <div class="hero-live-badge"><span class="ldot"></span><span id="heroLive">12,847</span> people simulating right now</div>
+    <h1 class="hero-h1">Discover the future<br/><em class="grad-text">you're currently building</em></h1>
+    <p class="hero-p">11 questions. 60 seconds. You'll get a Future Score, Tier, Archetype, a personalized roadmap — and find out the one thing holding you back most.</p>
+    <div class="hero-btns">
+      <button class="cta-btn big-cta" onclick="startSim()">Start My Simulation — Free →</button>
+      <button class="ghost-btn" onclick="showExample()">See an example report</button>
     </div>
+    <p class="hero-fine">No sign-up · 60 seconds · 247,000+ reports generated</p>
 
-    <h1 class="hero-headline">
-      Meet Your<br /><span class="gradient-text">Future Self</span>
-    </h1>
-    <p class="hero-sub">
-      Discover the future you're currently building — and identify<br class="hide-mobile" />
-      the biggest opportunities and risks standing in your way.
-    </p>
-
-    <div class="hero-ctas">
-      <button class="btn-primary" onclick="startSimulator()">
-        <span>Start My Simulation</span>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="btn-ghost" onclick="showExampleReport()">View Example Report</button>
-    </div>
-
-    <!-- HERO VISUAL: Current → Future -->
-    <div class="hero-visual">
-      <div class="hero-card hero-card-current">
-        <div class="card-label">Current Self</div>
-        <div class="card-orbit"></div>
-        <div class="card-score">—</div>
-        <div class="card-sublabel">Uncharted Potential</div>
+    <!-- ICONIC SAMPLE CARD — the screenshot bait -->
+    <div class="sample-card-scene">
+      <div class="sample-card" id="sampleCard">
+        <div class="scard-top">
+          <span class="scard-logo">STELARON</span>
+          <span class="scard-tag">FUTURE POTENTIAL REPORT</span>
+        </div>
+        <div class="scard-score-row">
+          <div class="scard-score grad-text">89</div>
+          <div class="scard-meta">
+            <div class="scard-tier" style="color:#9D84F5">VISIONARY</div>
+            <div class="scard-arch">The Founder</div>
+            <div class="scard-wealth">WEALTH POTENTIAL: HIGH</div>
+          </div>
+        </div>
+        <div class="scard-metrics">
+          <div class="scard-m"><span>Discipline</span><div class="sm-bar"><div style="width:82%;background:linear-gradient(90deg,#7B5CF0,#9D84F5)"></div></div><span>82</span></div>
+          <div class="scard-m"><span>Focus</span><div class="sm-bar"><div style="width:91%;background:linear-gradient(90deg,#00D4C8,#7B5CF0)"></div></div><span>91</span></div>
+          <div class="scard-m"><span>Execution</span><div class="sm-bar"><div style="width:77%;background:linear-gradient(90deg,#F0A500,#F0A50088)"></div></div><span>77</span></div>
+          <div class="scard-m"><span>Ambition</span><div class="sm-bar"><div style="width:95%;background:linear-gradient(90deg,#F687B3,#9D84F5)"></div></div><span>95</span></div>
+        </div>
+        <div class="scard-insight">"Your screen time is the only thing between you and LEGENDARY tier."</div>
+        <div class="scard-foot">stelaron.app · Top 8% globally · Challenge me →</div>
       </div>
-      <div class="hero-arrow-column">
-        <div class="hero-arrow-line"></div>
-        <svg class="hero-arrow-chevron" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M12 5v14M5 12l7 7 7-7" stroke="url(#ag)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          <defs><linearGradient id="ag" x1="12" y1="5" x2="12" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#7B5CF0"/><stop offset="1" stop-color="#F0A500"/></linearGradient></defs>
-        </svg>
-      </div>
-      <div class="hero-card hero-card-future">
-        <div class="card-label">Future Self</div>
-        <div class="card-orbit future-orbit"></div>
-        <div class="card-score gradient-text">?</div>
-        <div class="card-sublabel">Awaiting Discovery</div>
-      </div>
-    </div>
-
-    <!-- STATS ROW -->
-    <div class="stats-row">
-      <div class="stat-item">
-        <span class="stat-num">247K+</span>
-        <span class="stat-label">Simulations Run</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num">7 Tiers</span>
-        <span class="stat-label">From Drifter to Legendary</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num">60 sec</span>
-        <span class="stat-label">Time to Your Report</span>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- FEATURES -->
-  <div class="features-section">
-    <p class="section-eyebrow">Why Stelaron</p>
-    <h2 class="section-title">Self-discovery at <span class="gradient-text">the speed of thought</span></h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">◈</div>
-        <h3>Logic-Driven Results</h3>
-        <p>No random outputs. Your score is calculated from a real weighting engine built on behavioral science and outcome data.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">◉</div>
-        <h3>Identity, Not Just Numbers</h3>
-        <p>Your Archetype and Tier reveal who you're becoming — giving you something worth sharing, not just a score.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">◇</div>
-        <h3>Actionable Roadmap</h3>
-        <p>Every result includes a 12-month and 5-year outlook with your highest-leverage action to change your trajectory.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⬡</div>
-        <h3>Track Your Growth</h3>
-        <p>Retake every 30 days. Watch your score evolve. Compete on the leaderboard. Build evidence of your progress.</p>
-      </div>
+      <div class="card-aura"></div>
     </div>
   </div>
 
-  <!-- TIER PREVIEW -->
-  <div class="tiers-section">
-    <p class="section-eyebrow">The Seven Tiers</p>
-    <h2 class="section-title">Where do you <span class="gradient-text">rank?</span></h2>
-    <div class="tiers-row">
-      <div class="tier-pill tier-drifter">DRIFTER <span>0–20</span></div>
-      <div class="tier-pill tier-wanderer">WANDERER <span>21–40</span></div>
-      <div class="tier-pill tier-builder">BUILDER <span>41–60</span></div>
-      <div class="tier-pill tier-challenger">CHALLENGER <span>61–75</span></div>
-      <div class="tier-pill tier-elite">ELITE <span>76–85</span></div>
-      <div class="tier-pill tier-visionary">VISIONARY <span>86–95</span></div>
-      <div class="tier-pill tier-legendary">LEGENDARY <span>96–100</span></div>
+  <!-- TICKER -->
+  <div class="ticker-strip">
+    <div class="ticker-inner" id="ticker">
+      <span class="tick">⚡ <b>Alex K.</b> just scored <b>91</b> — VISIONARY</span>
+      <span class="tsep">·</span>
+      <span class="tick">🔥 <b>Maya R.</b> unlocked <b>The Founder</b> archetype</span>
+      <span class="tsep">·</span>
+      <span class="tick">🎯 <b>Jordan T.</b> scored <b>78</b> — ELITE tier</span>
+      <span class="tsep">·</span>
+      <span class="tick">🚀 <b>Sam W.</b> challenged 3 friends to beat her score</span>
+      <span class="tsep">·</span>
+      <span class="tick">💎 <b>Riley M.</b> improved from <b>54 → 71</b> in 30 days</span>
+      <span class="tsep">·</span>
+      <span class="tick">⚡ <b>Chris P.</b> scored <b>96</b> — LEGENDARY</span>
+      <span class="tsep">·</span>
+      <span class="tick">🏆 <b>Priya S.</b> unlocked <b>The Strategist</b> archetype</span>
+      <span class="tsep">·</span>
     </div>
-    <button class="btn-primary" style="margin-top:2.5rem;" onclick="startSimulator()">Discover Your Tier →</button>
   </div>
 
-  <!-- EMAIL CAPTURE -->
-  <div id="emailSection" class="email-section">
-    <div class="email-inner">
-      <p class="section-eyebrow">Community</p>
-      <h2 class="section-title">Join <span class="gradient-text">Future Builders</span></h2>
-      <p class="email-desc">Weekly insights on AI, careers, leverage, and how the highest-potential people are building their futures.</p>
-      <form class="email-form" onsubmit="handleEmailSubmit(event)">
-        <input type="email" placeholder="your@email.com" class="email-input" required />
-        <button type="submit" class="btn-primary">Join Free</button>
-      </form>
-      <p class="email-fine">No spam. Unsubscribe anytime.</p>
+  <!-- TIERS -->
+  <div class="block">
+    <p class="eyebrow">The Seven Tiers</p>
+    <h2 class="block-h2">Where does your trajectory lead?</h2>
+    <div class="tier-row">
+      <div class="tier-chip" style="--tc:#6B6B90"><span class="tc-range">0–20</span><span class="tc-name">DRIFTER</span></div>
+      <div class="tier-chip" style="--tc:#7EC8E3"><span class="tc-range">21–40</span><span class="tc-name">WANDERER</span></div>
+      <div class="tier-chip" style="--tc:#68D391"><span class="tc-range">41–60</span><span class="tc-name">BUILDER</span></div>
+      <div class="tier-chip" style="--tc:#F6AD55"><span class="tc-range">61–75</span><span class="tc-name">CHALLENGER</span></div>
+      <div class="tier-chip" style="--tc:#F687B3"><span class="tc-range">76–85</span><span class="tc-name">ELITE</span></div>
+      <div class="tier-chip" style="--tc:#9D84F5"><span class="tc-range">86–95</span><span class="tc-name">VISIONARY</span></div>
+      <div class="tier-chip legendary-chip" style="--tc:#F0A500"><span class="tc-range">96–100</span><span class="tc-name">LEGENDARY</span></div>
     </div>
+    <div style="text-align:center;margin-top:2rem">
+      <button class="cta-btn" onclick="startSim()">Find My Tier →</button>
+    </div>
+  </div>
+
+  <!-- CHALLENGE BANNER -->
+  <div class="challenge-banner">
+    <div class="cb-inner">
+      <div>
+        <p class="eyebrow" style="color:#F0A500;margin-bottom:.4rem">New · Challenge Mode</p>
+        <h2 class="block-h2" style="margin-bottom:.5rem;font-size:clamp(1.4rem,3vw,2rem)">Who scores higher — you or your friends?</h2>
+        <p style="color:#9090B8;font-size:.9rem;max-width:480px">Share your result and challenge anyone to beat your score. See a side-by-side comparison of where you align and differ.</p>
+      </div>
+      <button class="cta-btn" onclick="startSim()">Accept Challenge →</button>
+    </div>
+  </div>
+
+  <!-- EMAIL -->
+  <div id="emailSection" class="email-block">
+    <p class="eyebrow">Weekly Intelligence</p>
+    <h2 class="block-h2">Join <span class="grad-text">Future Builders</span></h2>
+    <p class="email-sub">7,400+ people getting weekly insights on AI, leverage, wealth-building, and how top performers think.</p>
+    <form class="email-form" onsubmit="handleEmail(event)">
+      <input type="email" class="email-inp" placeholder="your@email.com" required/>
+      <button type="submit" class="cta-btn">Join Free</button>
+    </form>
+    <p class="email-fine">No spam. Unsubscribe anytime.</p>
   </div>
 
 </section>
 
-<!-- ═══════════════════════════════════════════════
-     SECTION: SIMULATOR
-═══════════════════════════════════════════════ -->
-<section id="simulatorSection" class="section">
-
-  <div class="sim-container">
-    <div class="sim-header">
-      <div class="sim-logo">STELARON</div>
-      <div class="sim-progress-wrap">
-        <div class="sim-progress-bar" id="simProgressBar"></div>
-      </div>
-      <div class="sim-step-label" id="simStepLabel">Step 1 of 11</div>
+<!-- ══════════════════ SIMULATOR ══════════════════ -->
+<section id="simulatorSection" class="sec">
+  <div class="sim-shell">
+    <div class="sim-head">
+      <button class="nav-logo" onclick="goHome()" style="font-size:.8rem">STELARON</button>
+      <div class="sim-prog-track"><div class="sim-prog-bar" id="simProg"></div></div>
+      <div class="sim-step-lbl" id="simStepLbl">1 of 11</div>
     </div>
-
-    <div class="sim-question-area" id="simQuestionArea">
-      <!-- Questions injected here -->
-    </div>
-
-    <div class="sim-nav-row">
-      <button class="btn-ghost" id="simBackBtn" onclick="simBack()" style="display:none">← Back</button>
-      <button class="btn-primary" id="simNextBtn" onclick="simNext()">Continue →</button>
+    <div class="sim-body" id="simBody"></div>
+    <div class="sim-footer">
+      <button class="ghost-btn" id="backBtn" onclick="simBack()" style="visibility:hidden">← Back</button>
+      <button class="cta-btn" id="nextBtn" onclick="simNext()">Continue →</button>
     </div>
   </div>
-
 </section>
 
-<!-- ═══════════════════════════════════════════════
-     SECTION: CALCULATING
-═══════════════════════════════════════════════ -->
-<section id="calculatingSection" class="section">
-  <div class="calc-container">
+<!-- ══════════════════ CALCULATING ══════════════════ -->
+<section id="calcSection" class="sec">
+  <div class="calc-center">
     <div class="calc-orb"></div>
-    <div class="calc-text-stack">
-      <p class="calc-label" id="calcLabel">Analyzing your inputs...</p>
-      <div class="calc-bar-outer"><div class="calc-bar-fill" id="calcBarFill"></div></div>
-    </div>
+    <p class="calc-msg" id="calcMsg">Analyzing your inputs...</p>
+    <div class="calc-track"><div class="calc-fill" id="calcBar"></div></div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════
-     SECTION: RESULTS
-═══════════════════════════════════════════════ -->
-<section id="resultsSection" class="section">
-
-  <div class="results-container" id="resultsContainer">
-    <!-- Dynamically filled -->
-  </div>
-
+<!-- ══════════════════ RESULTS ══════════════════ -->
+<section id="resultsSection" class="sec">
+  <div id="resultsWrap"></div>
 </section>
 
-<!-- ═══════════════════════════════════════════════
-     SECTION: LEADERBOARD
-═══════════════════════════════════════════════ -->
-<section id="leaderboardSection" class="section">
-  <div class="leaderboard-container">
-    <p class="section-eyebrow">Global Rankings</p>
-    <h2 class="section-title">The <span class="gradient-text">Leaderboard</span></h2>
-    <p class="leaderboard-desc">Anonymous scores from the last 7 days. Run your simulation to claim your rank.</p>
-
+<!-- ══════════════════ LEADERBOARD ══════════════════ -->
+<section id="leaderboardSection" class="sec">
+  <div class="lb-shell">
+    <p class="eyebrow" style="text-align:center">Global Rankings</p>
+    <h2 class="block-h2" style="text-align:center;margin-bottom:.5rem">The <span class="grad-text">Leaderboard</span></h2>
+    <p class="lb-desc">Anonymous scores updated in real time. Run your simulation to claim your rank.</p>
     <div class="lb-grid">
-      <div class="lb-card">
-        <p class="lb-card-label">Top Scores This Week</p>
-        <div class="lb-list" id="lbTopScores"></div>
-      </div>
-      <div class="lb-card">
-        <p class="lb-card-label">Most Common Archetypes</p>
-        <div class="lb-list" id="lbArchetypes"></div>
-      </div>
-      <div class="lb-card">
-        <p class="lb-card-label">Tier Distribution</p>
-        <div class="lb-list" id="lbTiers"></div>
-      </div>
+      <div class="lb-card"><p class="lb-lbl">Top Scores This Week</p><div id="lbTop"></div></div>
+      <div class="lb-card"><p class="lb-lbl">Most Common Archetypes</p><div id="lbArch"></div></div>
+      <div class="lb-card"><p class="lb-lbl">Tier Distribution</p><div id="lbTiers"></div></div>
     </div>
-
-    <button class="btn-primary" style="margin-top:3rem;" onclick="startSimulator()">Get Your Score →</button>
+    <div style="text-align:center;margin-top:2.5rem">
+      <button class="cta-btn" onclick="startSim()">Get Your Score →</button>
+    </div>
   </div>
 </section>
+
+<div id="toast"></div>
 
 <!-- SHARE MODAL -->
-<div id="shareModal" class="modal-overlay" onclick="closeShareModal(event)">
+<div id="shareModal" class="modal-bg" onclick="closeModal(event)">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeShareModal()">✕</button>
+    <button class="modal-x" onclick="closeModal()">✕</button>
     <h3 class="modal-title">Share Your Result</h3>
-    <div class="share-card-preview" id="shareCardPreview"></div>
-    <div class="share-buttons">
-      <button class="share-btn share-x" onclick="shareOnX()">Share on X</button>
-      <button class="share-btn share-li" onclick="shareOnLinkedIn()">LinkedIn</button>
-      <button class="share-btn share-wa" onclick="shareOnWhatsApp()">WhatsApp</button>
-      <button class="share-btn share-copy" onclick="copyResult()">Copy Result</button>
+    <div id="shareCardInner"></div>
+    <div class="share-grid">
+      <button class="share-btn sx" onclick="shareX()">Share on X</button>
+      <button class="share-btn sli" onclick="shareLinkedIn()">LinkedIn</button>
+      <button class="share-btn swa" onclick="shareWhatsApp()">WhatsApp</button>
+      <button class="share-btn scp" onclick="copyResult()">Copy Link</button>
+    </div>
+    <div class="challenge-box">
+      <p class="challenge-label">⚡ Challenge a Friend</p>
+      <p class="challenge-desc">Send them your unique challenge link. They take the test, you both see who scored higher.</p>
+      <div class="challenge-link-row">
+        <input type="text" class="challenge-inp" id="challengeLink" readonly/>
+        <button class="cta-btn" onclick="copyChallenge()" style="padding:.6rem 1.2rem;font-size:.85rem">Copy</button>
+      </div>
     </div>
   </div>
 </div>
