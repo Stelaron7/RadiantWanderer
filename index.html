@@ -1,214 +1,2151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>STELARON — Discover Your Future Potential in 60 Seconds</title>
-<meta name="description" content="In 60 seconds, discover the future you're currently building. Get your Future Score, Tier, and Archetype — then challenge a friend."/>
-<meta property="og:title" content="I scored on STELARON — what's your Future Potential?"/>
-<meta property="og:description" content="Find out exactly where your habits and ambition are taking you. Takes 60 seconds."/>
-<meta property="og:image" content="https://stelaron.app/og.png"/>
-<meta property="og:type" content="website"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="I just got my Future Potential Score on STELARON"/>
-<meta name="twitter:description" content="Discover the future you're currently building. Takes 60 seconds."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="styles.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>STELARON — Last Signal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; height: 100%; overflow: hidden;
+  background: #060608;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #e0e0f0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   CSS VARIABLES
+   ============================================================ */
+:root {
+  --bg: #060608;
+  --node-alive: #1a1a2e;
+  --node-alive2: #16213e;
+  --player: #00FFB2;
+  --hunter: #FF6B00;
+  --unstable: #FF4444;
+  --dead: #0a0a0a;
+  --accent: #7C3AED;
+  --accent-light: #9d5df5;
+  --ui-text: #e0e0f0;
+  --ui-dim: #4a4a6a;
+  --coin: #FFD700;
+}
+
+/* ============================================================
+   SCREENS — show/hide
+   ============================================================ */
+.screen { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; transition: opacity 0.3s ease; }
+.screen.hidden { opacity: 0; pointer-events: none; }
+
+/* ============================================================
+   SCREEN: LANDING
+   ============================================================ */
+#screen-landing {
+  background: #060608;
+  gap: 0;
+}
+.landing-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, #1a0a3a 0%, #060608 70%);
+  overflow: hidden;
+}
+.landing-grid-preview {
+  position: absolute; inset: 0;
+  opacity: 0.12;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 3px;
+  padding: 20%;
+}
+.landing-node {
+  border-radius: 4px;
+  background: #1a1a2e;
+  animation: nodePulse 3s ease-in-out infinite;
+}
+.landing-node:nth-child(3n) { animation-delay: -1s; background: #16213e; }
+.landing-node:nth-child(5n) { animation-delay: -2s; }
+.landing-node.dead { background: #0a0a0a; animation: none; }
+
+@keyframes nodePulse {
+  0%, 100% { background: #1a1a2e; }
+  50% { background: #232350; }
+}
+
+.landing-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 20px; padding: 20px;
+  text-align: center;
+}
+.logo {
+  font-size: clamp(42px, 10vw, 80px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  text-shadow: 0 0 30px #7C3AED, 0 0 60px #7C3AED44, 0 0 100px #7C3AED22;
+  animation: logoGlow 2s ease-in-out infinite;
+}
+@keyframes logoGlow {
+  0%, 100% { text-shadow: 0 0 30px #7C3AED, 0 0 60px #7C3AED44; }
+  50% { text-shadow: 0 0 40px #9d5df5, 0 0 80px #7C3AED88, 0 0 120px #7C3AED33; }
+}
+.tagline {
+  font-size: clamp(14px, 3.5vw, 18px);
+  color: #7070a0;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+}
+.survivors-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #FF4444;
+  letter-spacing: 0.05em;
+  background: #FF444411;
+  border: 1px solid #FF444433;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.btn-play {
+  margin-top: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(16px, 4vw, 20px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #060608;
+  background: #00FFB2;
+  border: none; border-radius: 8px;
+  padding: 16px 48px;
+  cursor: pointer;
+  box-shadow: 0 0 30px #00FFB266;
+  transition: transform 0.15s, box-shadow 0.15s;
+  text-transform: uppercase;
+}
+.btn-play:hover { transform: translateY(-2px); box-shadow: 0 0 40px #00FFB299; }
+.btn-play:active { transform: translateY(1px); }
+
+.landing-btns-row {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+}
+.btn-secondary {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #7070a0;
+  background: transparent;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  text-transform: uppercase;
+}
+.btn-secondary:hover { color: #e0e0f0; border-color: #7C3AED; }
+
+.coin-display-landing {
+  position: fixed; top: 16px; right: 16px;
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px; font-weight: 700;
+  color: var(--coin);
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 20px;
+  padding: 8px 14px;
+  cursor: pointer;
+  z-index: 100;
+  transition: border-color 0.2s;
+}
+.coin-display-landing:hover { border-color: var(--coin); }
+.coin-icon { font-size: 16px; }
+
+/* ============================================================
+   SCREEN: CHALLENGE INTRO
+   ============================================================ */
+#screen-challenge {
+  background: #060608;
+  gap: 24px;
+  padding: 24px;
+  text-align: center;
+}
+.challenge-label {
+  font-size: 11px; letter-spacing: 0.15em; color: #7C3AED;
+  text-transform: uppercase; font-weight: 600;
+}
+.challenge-name { font-size: clamp(22px, 5vw, 32px); font-weight: 700; color: #ffffff; }
+.challenge-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(36px, 9vw, 64px);
+  font-weight: 700;
+  color: #00FFB2;
+  text-shadow: 0 0 20px #00FFB266;
+}
+.challenge-sub { font-size: 14px; color: #5a5a8a; }
+.challenge-ghost-note {
+  font-size: 12px; color: #4a7aaa;
+  background: #001833;
+  border: 1px solid #003366;
+  border-radius: 8px;
+  padding: 10px 18px;
+  max-width: 300px;
+}
+
+/* ============================================================
+   SCREEN: GAME
+   ============================================================ */
+#screen-game {
+  background: #060608;
+  justify-content: flex-start;
+  padding: 0;
+}
+.game-hud {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  z-index: 20;
+  background: linear-gradient(to bottom, #060608ee 0%, transparent 100%);
+}
+.timer-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(24px, 6vw, 36px);
+  font-weight: 700;
+  color: #00FFB2;
+  text-shadow: 0 0 20px #00FFB244;
+  letter-spacing: 0.05em;
+}
+.hud-right {
+  display: flex; align-items: center; gap: 12px;
+}
+.hud-coins {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 700;
+  color: var(--coin);
+  display: flex; align-items: center; gap: 4px;
+}
+.hunter-warning {
+  font-size: 11px; letter-spacing: 0.1em;
+  color: #FF6B00;
+  background: #FF6B0011;
+  border: 1px solid #FF6B0033;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-weight: 600;
+  animation: warningBlink 0.5s ease-in-out infinite;
+  display: none;
+}
+.hunter-warning.active { display: block; }
+@keyframes warningBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.game-canvas-wrap {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+#gameCanvas {
+  display: block;
+  image-rendering: pixelated;
+}
+
+.game-bottom-hud {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  padding: 12px 16px 20px;
+  z-index: 20;
+  background: linear-gradient(to top, #060608ee 0%, transparent 100%);
+  display: flex; align-items: flex-end; gap: 12px;
+}
+.pulse-bar-wrap {
+  flex: 1;
+}
+.pulse-label {
+  font-size: 10px; letter-spacing: 0.1em; color: #7070a0;
+  margin-bottom: 4px; text-transform: uppercase; font-weight: 600;
+}
+.pulse-bar-bg {
+  height: 6px; background: #1a1a2e; border-radius: 3px; overflow: hidden;
+  position: relative;
+}
+.pulse-bar-fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, #7C3AED, #00FFB2);
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px #7C3AED66;
+}
+.pulse-ready-indicator {
+  font-size: 10px; color: #00FFB2; margin-top: 3px;
+  font-weight: 600; letter-spacing: 0.05em;
+  height: 14px;
+}
+.btn-pulse {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #060608;
+  background: #7C3AED;
+  border: none; border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 0 16px #7C3AED44;
+  transition: opacity 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.btn-pulse:disabled { opacity: 0.35; box-shadow: none; cursor: default; }
+.btn-pulse:not(:disabled):active { transform: scale(0.97); }
+
+.still-alive-flash {
+  position: fixed; inset: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+}
+.still-alive-flash.show {
+  animation: stillAlive 1.2s ease forwards;
+}
+@keyframes stillAlive {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.still-alive-text {
+  font-size: clamp(24px, 7vw, 48px);
+  font-weight: 700; letter-spacing: 0.2em;
+  color: #ffffff;
+  text-shadow: 0 0 40px #00FFB2, 0 0 80px #00FFB244;
+  text-transform: uppercase;
+}
+
+/* Death flash */
+.death-flash {
+  position: fixed; inset: 0; z-index: 40;
+  background: #FF0000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.05s;
+}
+.death-flash.show { opacity: 0.4; transition: opacity 0.05s; }
+
+/* ============================================================
+   SCREEN: DEATH
+   ============================================================ */
+#screen-death {
+  background: #060608;
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding: 20px;
+  gap: 0;
+}
+.death-inner {
+  width: 100%; max-width: 420px;
+  margin: auto;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 16px;
+  padding: 16px 0 40px;
+}
+.death-label {
+  font-size: 11px; letter-spacing: 0.2em;
+  color: #FF4444; font-weight: 600;
+  text-transform: uppercase;
+}
+.death-time-big {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(40px, 12vw, 72px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+}
+.death-pb-row {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: #5a5a8a;
+}
+.death-pb-row .new-record {
+  color: #00FFB2; font-weight: 700;
+  background: #00FFB211; border: 1px solid #00FFB233;
+  border-radius: 4px; padding: 2px 8px; font-size: 11px;
+  letter-spacing: 0.05em;
+}
+.death-rank {
+  font-size: 13px; color: #7C3AED; font-weight: 600;
+}
+.death-cause {
+  font-size: 12px; color: #5a5a8a;
+  text-align: center; max-width: 260px;
+  line-height: 1.6;
+}
+.death-cause span { color: #FF4444; font-weight: 600; }
+
+/* Share card */
+.share-card {
+  width: 100%; max-width: 340px;
+  background: #0d0d1a;
+  border: 1px solid #2a2a4a;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.share-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, #1a0a3a44 0%, transparent 70%);
+}
+.share-card-inner { position: relative; z-index: 1; }
+.share-card-logo {
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 0.15em; color: #7C3AED;
+  margin-bottom: 8px;
+}
+.share-card-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 36px; font-weight: 700;
+  color: #00FFB2;
+  text-shadow: 0 0 20px #00FFB244;
+  line-height: 1;
+}
+.share-card-sub {
+  font-size: 12px; color: #5a5a8a; margin-top: 4px;
+}
+.share-card-grid {
+  margin-top: 14px;
+}
+#shareGridCanvas { border-radius: 6px; display: block; }
+
+.death-actions {
+  display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 340px;
+}
+.btn-restart {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px; font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #060608;
+  background: #00FFB2;
+  border: none; border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  box-shadow: 0 0 30px #00FFB244;
+  transition: transform 0.1s, box-shadow 0.15s;
+  text-transform: uppercase;
+  width: 100%;
+}
+.btn-restart:hover { box-shadow: 0 0 40px #00FFB266; }
+.btn-restart:active { transform: scale(0.98); }
+.btn-challenge {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #7C3AED;
+  background: #7C3AED11;
+  border: 1px solid #7C3AED44;
+  border-radius: 8px;
+  padding: 13px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  text-transform: uppercase;
+  width: 100%;
+}
+.btn-challenge:hover { background: #7C3AED22; border-color: #7C3AED88; }
+.btn-share-img {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #5a5a8a;
+  background: transparent;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 13px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  text-transform: uppercase;
+  width: 100%;
+}
+.btn-share-img:hover { color: #e0e0f0; border-color: #5a5a8a; }
+
+/* ============================================================
+   SCREEN: LEADERBOARD
+   ============================================================ */
+#screen-leaderboard {
+  background: #060608dd;
+  backdrop-filter: blur(12px);
+  padding: 24px;
+}
+.modal-box {
+  width: 100%; max-width: 400px;
+  background: #0d0d1a;
+  border: 1px solid #2a2a4a;
+  border-radius: 16px;
+  padding: 24px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-title {
+  font-size: 18px; font-weight: 700;
+  letter-spacing: 0.1em; color: #ffffff;
+  margin-bottom: 4px; text-transform: uppercase;
+}
+.modal-sub {
+  font-size: 12px; color: #5a5a8a;
+  margin-bottom: 20px;
+}
+.lb-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background: #111122;
+  transition: background 0.2s;
+  animation: lbEntry 0.3s ease both;
+}
+.lb-row:hover { background: #1a1a30; }
+@keyframes lbEntry {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.lb-rank {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 700;
+  width: 24px; text-align: center;
+  color: #5a5a8a;
+}
+.lb-row:nth-child(1) .lb-rank { color: #FFD700; }
+.lb-row:nth-child(2) .lb-rank { color: #C0C0C0; }
+.lb-row:nth-child(3) .lb-rank { color: #CD7F32; }
+.lb-name { flex: 1; font-size: 14px; font-weight: 500; }
+.lb-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px; font-weight: 700;
+  color: #00FFB2;
+}
+.lb-you-badge {
+  font-size: 9px; color: #7C3AED;
+  background: #7C3AED22; border: 1px solid #7C3AED44;
+  border-radius: 3px; padding: 2px 5px;
+  font-weight: 600; letter-spacing: 0.05em;
+}
+.lb-empty {
+  text-align: center; color: #3a3a5a;
+  font-size: 13px; padding: 20px;
+}
+
+/* ============================================================
+   SCREEN: SHOP
+   ============================================================ */
+#screen-shop {
+  background: #060608dd;
+  backdrop-filter: blur(12px);
+  padding: 24px;
+  overflow-y: auto;
+}
+.shop-coins-hero {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-bottom: 20px;
+}
+.shop-coins-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 32px; font-weight: 700;
+  color: var(--coin);
+}
+.shop-section-label {
+  font-size: 10px; letter-spacing: 0.15em;
+  color: #5a5a8a; font-weight: 600;
+  text-transform: uppercase; margin-bottom: 10px; margin-top: 16px;
+}
+.powerup-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 4px;
+}
+.powerup-card {
+  background: #111122; border: 1px solid #2a2a4a;
+  border-radius: 10px; padding: 14px 12px;
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+  text-align: center;
+}
+.powerup-card:hover { border-color: #7C3AED66; background: #1a1a2e; }
+.powerup-card.owned { border-color: #00FFB244; }
+.powerup-icon { font-size: 22px; margin-bottom: 6px; }
+.powerup-name { font-size: 12px; font-weight: 600; color: #e0e0f0; margin-bottom: 3px; }
+.powerup-desc { font-size: 10px; color: #5a5a8a; margin-bottom: 8px; line-height: 1.4; }
+.powerup-cost {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; font-weight: 700; color: var(--coin);
+}
+.powerup-cost.owned { color: #00FFB2; }
+.skins-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.skin-card {
+  background: #111122; border: 1px solid #2a2a4a;
+  border-radius: 10px; padding: 12px 8px;
+  cursor: pointer; transition: border-color 0.2s;
+  text-align: center;
+}
+.skin-card:hover { border-color: #7C3AED66; }
+.skin-card.active { border-color: #00FFB2; }
+.skin-swatch {
+  width: 32px; height: 32px; border-radius: 50%;
+  margin: 0 auto 6px;
+  box-shadow: 0 0 12px currentColor;
+}
+.skin-name { font-size: 11px; font-weight: 600; color: #e0e0f0; margin-bottom: 3px; }
+.skin-cost { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--coin); }
+.skin-cost.owned { color: #00FFB2; }
+.buy-coins-section { margin-top: 4px; }
+.buy-coins-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 8px;
+}
+.buy-coin-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #111122; border: 1px solid #2a2a4a;
+  border-radius: 10px; padding: 14px 16px;
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+}
+.buy-coin-row:hover { border-color: var(--coin); background: #1a1a1a; }
+.buy-coin-amount {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px; font-weight: 700; color: var(--coin);
+  display: flex; align-items: center; gap: 6px;
+}
+.buy-coin-bonus { font-size: 10px; color: #00FFB2; font-weight: 600; margin-left: 6px; }
+.buy-coin-price {
+  font-size: 14px; font-weight: 700; color: #e0e0f0;
+  background: #7C3AED;
+  border-radius: 6px; padding: 6px 14px;
+}
+.btn-close-modal {
+  width: 100%; margin-top: 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: #5a5a8a; background: transparent;
+  border: 1px solid #2a2a4a; border-radius: 8px;
+  padding: 12px; cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.btn-close-modal:hover { color: #e0e0f0; border-color: #5a5a8a; }
+
+/* ============================================================
+   WELCOME OVERLAY
+   ============================================================ */
+#welcome-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: #060608;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px; padding: 24px; text-align: center;
+  animation: welcomeOut 0.5s ease 3.5s forwards;
+}
+#welcome-overlay.hidden { display: none; }
+@keyframes welcomeOut {
+  to { opacity: 0; pointer-events: none; }
+}
+.welcome-logo {
+  font-size: clamp(36px, 9vw, 64px);
+  font-weight: 700; letter-spacing: 0.18em;
+  color: #ffffff;
+  animation: welcomeLogo 0.8s ease 0.3s both;
+}
+@keyframes welcomeLogo {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.welcome-coins {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 48px; font-weight: 700;
+  color: var(--coin);
+  text-shadow: 0 0 30px #FFD70066;
+  animation: welcomeCoins 0.8s ease 1.2s both;
+}
+@keyframes welcomeCoins {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+.welcome-label {
+  font-size: 14px; color: #7070a0;
+  animation: welcomeCoins 0.8s ease 1.8s both;
+}
+.welcome-free { font-size: 12px; color: #00FFB2; font-weight: 600; letter-spacing: 0.05em; animation: welcomeCoins 0.8s ease 2.2s both; }
+
+/* ============================================================
+   RETURN BONUS OVERLAY
+   ============================================================ */
+#return-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: #060608cc;
+  backdrop-filter: blur(8px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px; padding: 24px; text-align: center;
+}
+#return-overlay.hidden { display: none; }
+.return-box {
+  background: #0d0d1a; border: 1px solid #2a2a4a;
+  border-radius: 16px; padding: 32px 28px;
+  max-width: 320px; width: 100%;
+  text-align: center;
+}
+.return-icon { font-size: 40px; margin-bottom: 12px; }
+.return-title { font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
+.return-coins {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 40px; font-weight: 700; color: var(--coin);
+  text-shadow: 0 0 20px #FFD70066;
+  margin-bottom: 4px;
+}
+.return-sub { font-size: 13px; color: #5a5a8a; margin-bottom: 20px; }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+#toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #1a1a2e; border: 1px solid #2a2a4a;
+  border-radius: 10px; padding: 12px 20px;
+  font-size: 13px; color: #e0e0f0; font-weight: 500;
+  z-index: 300; white-space: nowrap;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  white-space: normal;
+}
+#toast.show { opacity: 1; pointer-events: auto; }
+
+/* ============================================================
+   PULSE FREEZE OVERLAY
+   ============================================================ */
+#pulse-freeze-overlay {
+  position: fixed; inset: 0; z-index: 15;
+  border: 2px solid #7C3AED44;
+  box-shadow: inset 0 0 40px #7C3AED22;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+#pulse-freeze-overlay.active { opacity: 1; }
+
+/* ============================================================
+   CHALLENGE COPY TOAST
+   ============================================================ */
+.challenge-copied {
+  font-size: 12px; color: #00FFB2; margin-top: -8px;
+  height: 16px;
+}
+
+/* ============================================================
+   MISC UTILITY
+   ============================================================ */
+.hidden { display: none !important; }
+.mt4 { margin-top: 4px; }
+.flex-center { display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+@media (max-width: 380px) {
+  .powerup-grid { grid-template-columns: 1fr; }
+  .skins-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
 </head>
 <body>
 
-<canvas id="starCanvas"></canvas>
-<canvas id="confettiCanvas"></canvas>
+<!-- ============================================================
+     SCREENS
+     ============================================================ -->
 
-<!-- NAV -->
-<nav id="nav">
-  <button class="nav-logo" onclick="goHome()">STELARON</button>
-  <div class="nav-r">
-    <div class="live-pill"><span class="ldot"></span><span id="liveNum">12,847</span>&nbsp;running now</div>
-    <button class="ghost-btn" onclick="showSection('leaderboard')">Leaderboard</button>
-    <button class="cta-btn" onclick="startSim()">Start Free →</button>
+<!-- WELCOME OVERLAY (first visit) -->
+<div id="welcome-overlay" class="hidden">
+  <div style="font-size:11px;letter-spacing:0.2em;color:#7C3AED;text-transform:uppercase;font-weight:600;" class="welcome-logo-sub">WELCOME TO</div>
+  <div class="welcome-logo">STELARON</div>
+  <div class="welcome-coins">+15</div>
+  <div class="welcome-label" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#FFD700;">COINS</div>
+  <div class="welcome-free">🎁 FREE STARTER BONUS</div>
+</div>
+
+<!-- RETURN BONUS OVERLAY -->
+<div id="return-overlay" class="hidden">
+  <div class="return-box">
+    <div class="return-icon">⚡</div>
+    <div class="return-title">Welcome Back</div>
+    <div class="return-coins">+8</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#FFD700;margin-bottom:4px;">COINS</div>
+    <div class="return-sub">Daily return bonus — see you tomorrow for more</div>
+    <button class="btn-play" style="font-size:14px;padding:12px 28px;" onclick="closeReturnOverlay()">COLLECT & PLAY</button>
   </div>
-</nav>
+</div>
 
-<!-- ══════════════════ HOME ══════════════════ -->
-<section id="homeSection" class="sec active">
-
-  <div class="hero">
-    <div class="hero-live-badge"><span class="ldot"></span><span id="heroLive">12,847</span> people simulating right now</div>
-    <h1 class="hero-h1">Discover the future<br/><em class="grad-text">you're currently building</em></h1>
-    <p class="hero-p">11 questions. 60 seconds. You'll get a Future Score, Tier, Archetype, a personalized roadmap — and find out the one thing holding you back most.</p>
-    <div class="hero-btns">
-      <button class="cta-btn big-cta" onclick="startSim()">Start My Simulation — Free →</button>
-      <button class="ghost-btn" onclick="showExample()">See an example report</button>
+<!-- LANDING SCREEN -->
+<div id="screen-landing" class="screen">
+  <div class="landing-bg">
+    <div class="landing-grid-preview" id="landingGridPreview"></div>
+  </div>
+  <div class="coin-display-landing" onclick="showScreen('shop')">
+    <span class="coin-icon">💰</span>
+    <span id="coinCountLanding">15</span>
+  </div>
+  <div class="landing-content">
+    <div style="font-size:11px;letter-spacing:0.2em;color:#7C3AED;text-transform:uppercase;font-weight:600;margin-bottom:-12px;">YOU ARE THE</div>
+    <div class="logo">STELARON</div>
+    <div class="tagline">How long can you survive?</div>
+    <div class="survivors-badge" id="survivorsBadge">⬤ 2,847 signals lost today</div>
+    <button class="btn-play" onclick="startGame()">PLAY NOW</button>
+    <div class="landing-btns-row">
+      <button class="btn-secondary" onclick="showScreen('leaderboard')">🏆 Leaderboard</button>
+      <button class="btn-secondary" onclick="showScreen('shop')">💰 Shop</button>
+      <button class="btn-secondary" onclick="showHowToPlay()">? How to Play</button>
     </div>
-    <p class="hero-fine">No sign-up · 60 seconds · 247,000+ reports generated</p>
+    <div style="font-size:11px;color:#3a3a5a;margin-top:8px;letter-spacing:0.05em;">Arrow keys / WASD / Swipe · Space = Pulse</div>
+  </div>
+</div>
 
-    <!-- ICONIC SAMPLE CARD — the screenshot bait -->
-    <div class="sample-card-scene">
-      <div class="sample-card" id="sampleCard">
-        <div class="scard-top">
-          <span class="scard-logo">STELARON</span>
-          <span class="scard-tag">FUTURE POTENTIAL REPORT</span>
-        </div>
-        <div class="scard-score-row">
-          <div class="scard-score grad-text">89</div>
-          <div class="scard-meta">
-            <div class="scard-tier" style="color:#9D84F5">VISIONARY</div>
-            <div class="scard-arch">The Founder</div>
-            <div class="scard-wealth">WEALTH POTENTIAL: HIGH</div>
-          </div>
-        </div>
-        <div class="scard-metrics">
-          <div class="scard-m"><span>Discipline</span><div class="sm-bar"><div style="width:82%;background:linear-gradient(90deg,#7B5CF0,#9D84F5)"></div></div><span>82</span></div>
-          <div class="scard-m"><span>Focus</span><div class="sm-bar"><div style="width:91%;background:linear-gradient(90deg,#00D4C8,#7B5CF0)"></div></div><span>91</span></div>
-          <div class="scard-m"><span>Execution</span><div class="sm-bar"><div style="width:77%;background:linear-gradient(90deg,#F0A500,#F0A50088)"></div></div><span>77</span></div>
-          <div class="scard-m"><span>Ambition</span><div class="sm-bar"><div style="width:95%;background:linear-gradient(90deg,#F687B3,#9D84F5)"></div></div><span>95</span></div>
-        </div>
-        <div class="scard-insight">"Your screen time is the only thing between you and LEGENDARY tier."</div>
-        <div class="scard-foot">stelaron.app · Top 8% globally · Challenge me →</div>
+<!-- CHALLENGE INTRO SCREEN -->
+<div id="screen-challenge" class="screen hidden">
+  <div style="background:radial-gradient(ellipse at 50% 0%,#1a0a3a 0%,transparent 70%);position:absolute;inset:0;pointer-events:none;"></div>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px;text-align:center;max-width:400px;">
+    <div class="challenge-label">INCOMING CHALLENGE</div>
+    <div class="challenge-name" id="challengerName">Rahul</div>
+    <div style="font-size:13px;color:#5a5a8a;">survived for</div>
+    <div class="challenge-time" id="challengerTime">1:47.332</div>
+    <div class="challenge-sub">Can you beat them?</div>
+    <div class="challenge-ghost-note">👻 Their path will appear as a ghost trail on your grid</div>
+    <button class="btn-play" style="font-size:16px;padding:14px 40px;" onclick="startGame(true)">BEGIN</button>
+    <button class="btn-secondary" onclick="showScreen('landing')">← Back</button>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="screen-game" class="screen hidden">
+  <div class="game-hud">
+    <div class="timer-display" id="timerDisplay">0:00.000</div>
+    <div class="hud-right">
+      <div class="hunter-warning" id="hunterWarning">⚠ HUNTER</div>
+      <div class="hud-coins">💰 <span id="coinCountGame">15</span></div>
+    </div>
+  </div>
+  <div class="game-canvas-wrap">
+    <canvas id="gameCanvas"></canvas>
+  </div>
+  <div class="game-bottom-hud">
+    <div class="pulse-bar-wrap">
+      <div class="pulse-label">PULSE COOLDOWN</div>
+      <div class="pulse-bar-bg">
+        <div class="pulse-bar-fill" id="pulseBarFill" style="width:100%"></div>
       </div>
-      <div class="card-aura"></div>
+      <div class="pulse-ready-indicator" id="pulseReadyLabel">READY</div>
     </div>
+    <button class="btn-pulse" id="btnPulse" onclick="activatePulse()">PULSE</button>
   </div>
-
-  <!-- TICKER -->
-  <div class="ticker-strip">
-    <div class="ticker-inner" id="ticker">
-      <span class="tick">⚡ <b>Alex K.</b> just scored <b>91</b> — VISIONARY</span>
-      <span class="tsep">·</span>
-      <span class="tick">🔥 <b>Maya R.</b> unlocked <b>The Founder</b> archetype</span>
-      <span class="tsep">·</span>
-      <span class="tick">🎯 <b>Jordan T.</b> scored <b>78</b> — ELITE tier</span>
-      <span class="tsep">·</span>
-      <span class="tick">🚀 <b>Sam W.</b> challenged 3 friends to beat her score</span>
-      <span class="tsep">·</span>
-      <span class="tick">💎 <b>Riley M.</b> improved from <b>54 → 71</b> in 30 days</span>
-      <span class="tsep">·</span>
-      <span class="tick">⚡ <b>Chris P.</b> scored <b>96</b> — LEGENDARY</span>
-      <span class="tsep">·</span>
-      <span class="tick">🏆 <b>Priya S.</b> unlocked <b>The Strategist</b> archetype</span>
-      <span class="tsep">·</span>
-    </div>
+  <div class="still-alive-flash" id="stillAliveFlash">
+    <div class="still-alive-text">STILL ALIVE</div>
   </div>
+</div>
 
-  <!-- TIERS -->
-  <div class="block">
-    <p class="eyebrow">The Seven Tiers</p>
-    <h2 class="block-h2">Where does your trajectory lead?</h2>
-    <div class="tier-row">
-      <div class="tier-chip" style="--tc:#6B6B90"><span class="tc-range">0–20</span><span class="tc-name">DRIFTER</span></div>
-      <div class="tier-chip" style="--tc:#7EC8E3"><span class="tc-range">21–40</span><span class="tc-name">WANDERER</span></div>
-      <div class="tier-chip" style="--tc:#68D391"><span class="tc-range">41–60</span><span class="tc-name">BUILDER</span></div>
-      <div class="tier-chip" style="--tc:#F6AD55"><span class="tc-range">61–75</span><span class="tc-name">CHALLENGER</span></div>
-      <div class="tier-chip" style="--tc:#F687B3"><span class="tc-range">76–85</span><span class="tc-name">ELITE</span></div>
-      <div class="tier-chip" style="--tc:#9D84F5"><span class="tc-range">86–95</span><span class="tc-name">VISIONARY</span></div>
-      <div class="tier-chip legendary-chip" style="--tc:#F0A500"><span class="tc-range">96–100</span><span class="tc-name">LEGENDARY</span></div>
+<!-- DEATH SCREEN -->
+<div id="screen-death" class="screen hidden">
+  <div class="death-inner">
+    <div class="death-label">SIGNAL LOST</div>
+    <div class="death-time-big" id="deathTimeBig">0:00.000</div>
+    <div class="death-pb-row">
+      <span id="deathPBLabel">Personal Best: 0:00.000</span>
+      <span class="new-record hidden" id="newRecordBadge">NEW RECORD</span>
     </div>
-    <div style="text-align:center;margin-top:2rem">
-      <button class="cta-btn" onclick="startSim()">Find My Tier →</button>
-    </div>
-  </div>
+    <div class="death-rank" id="deathRank">Global Rank: #—</div>
+    <div class="death-cause" id="deathCause">Eliminated by <span>dark node</span></div>
 
-  <!-- CHALLENGE BANNER -->
-  <div class="challenge-banner">
-    <div class="cb-inner">
-      <div>
-        <p class="eyebrow" style="color:#F0A500;margin-bottom:.4rem">New · Challenge Mode</p>
-        <h2 class="block-h2" style="margin-bottom:.5rem;font-size:clamp(1.4rem,3vw,2rem)">Who scores higher — you or your friends?</h2>
-        <p style="color:#9090B8;font-size:.9rem;max-width:480px">Share your result and challenge anyone to beat your score. See a side-by-side comparison of where you align and differ.</p>
+    <div class="share-card" id="shareCard">
+      <div class="share-card-inner">
+        <div class="share-card-logo">STELARON</div>
+        <div class="share-card-time" id="shareCardTime">0:00.000</div>
+        <div class="share-card-sub" id="shareCardSub">Survived · stelaron.com</div>
+        <div class="share-card-grid">
+          <canvas id="shareGridCanvas" width="300" height="300"></canvas>
+        </div>
       </div>
-      <button class="cta-btn" onclick="startSim()">Accept Challenge →</button>
     </div>
-  </div>
 
-  <!-- EMAIL -->
-  <div id="emailSection" class="email-block">
-    <p class="eyebrow">Weekly Intelligence</p>
-    <h2 class="block-h2">Join <span class="grad-text">Future Builders</span></h2>
-    <p class="email-sub">7,400+ people getting weekly insights on AI, leverage, wealth-building, and how top performers think.</p>
-    <form class="email-form" onsubmit="handleEmail(event)">
-      <input type="email" class="email-inp" placeholder="your@email.com" required/>
-      <button type="submit" class="cta-btn">Join Free</button>
-    </form>
-    <p class="email-fine">No spam. Unsubscribe anytime.</p>
-  </div>
-
-</section>
-
-<!-- ══════════════════ SIMULATOR ══════════════════ -->
-<section id="simulatorSection" class="sec">
-  <div class="sim-shell">
-    <div class="sim-head">
-      <button class="nav-logo" onclick="goHome()" style="font-size:.8rem">STELARON</button>
-      <div class="sim-prog-track"><div class="sim-prog-bar" id="simProg"></div></div>
-      <div class="sim-step-lbl" id="simStepLbl">1 of 11</div>
-    </div>
-    <div class="sim-body" id="simBody"></div>
-    <div class="sim-footer">
-      <button class="ghost-btn" id="backBtn" onclick="simBack()" style="visibility:hidden">← Back</button>
-      <button class="cta-btn" id="nextBtn" onclick="simNext()">Continue →</button>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════ CALCULATING ══════════════════ -->
-<section id="calcSection" class="sec">
-  <div class="calc-center">
-    <div class="calc-orb"></div>
-    <p class="calc-msg" id="calcMsg">Analyzing your inputs...</p>
-    <div class="calc-track"><div class="calc-fill" id="calcBar"></div></div>
-  </div>
-</section>
-
-<!-- ══════════════════ RESULTS ══════════════════ -->
-<section id="resultsSection" class="sec">
-  <div id="resultsWrap"></div>
-</section>
-
-<!-- ══════════════════ LEADERBOARD ══════════════════ -->
-<section id="leaderboardSection" class="sec">
-  <div class="lb-shell">
-    <p class="eyebrow" style="text-align:center">Global Rankings</p>
-    <h2 class="block-h2" style="text-align:center;margin-bottom:.5rem">The <span class="grad-text">Leaderboard</span></h2>
-    <p class="lb-desc">Anonymous scores updated in real time. Run your simulation to claim your rank.</p>
-    <div class="lb-grid">
-      <div class="lb-card"><p class="lb-lbl">Top Scores This Week</p><div id="lbTop"></div></div>
-      <div class="lb-card"><p class="lb-lbl">Most Common Archetypes</p><div id="lbArch"></div></div>
-      <div class="lb-card"><p class="lb-lbl">Tier Distribution</p><div id="lbTiers"></div></div>
-    </div>
-    <div style="text-align:center;margin-top:2.5rem">
-      <button class="cta-btn" onclick="startSim()">Get Your Score →</button>
-    </div>
-  </div>
-</section>
-
-<div id="toast"></div>
-
-<!-- SHARE MODAL -->
-<div id="shareModal" class="modal-bg" onclick="closeModal(event)">
-  <div class="modal-box">
-    <button class="modal-x" onclick="closeModal()">✕</button>
-    <h3 class="modal-title">Share Your Result</h3>
-    <div id="shareCardInner"></div>
-    <div class="share-grid">
-      <button class="share-btn sx" onclick="shareX()">Share on X</button>
-      <button class="share-btn sli" onclick="shareLinkedIn()">LinkedIn</button>
-      <button class="share-btn swa" onclick="shareWhatsApp()">WhatsApp</button>
-      <button class="share-btn scp" onclick="copyResult()">Copy Link</button>
-    </div>
-    <div class="challenge-box">
-      <p class="challenge-label">⚡ Challenge a Friend</p>
-      <p class="challenge-desc">Send them your unique challenge link. They take the test, you both see who scored higher.</p>
-      <div class="challenge-link-row">
-        <input type="text" class="challenge-inp" id="challengeLink" readonly/>
-        <button class="cta-btn" onclick="copyChallenge()" style="padding:.6rem 1.2rem;font-size:.85rem">Copy</button>
-      </div>
+    <div class="death-actions">
+      <button class="btn-restart" id="btnRestart" onclick="restartGame()">↺ PLAY AGAIN</button>
+      <button class="btn-challenge" onclick="generateChallenge()">⚔ Challenge a Friend</button>
+      <div class="challenge-copied hidden" id="challengeCopied">✓ Link copied to clipboard!</div>
+      <button class="btn-share-img" onclick="shareCard()">📸 Save Share Card</button>
+      <button class="btn-secondary" style="width:100%;padding:13px;" onclick="showScreen('landing')">← Main Menu</button>
     </div>
   </div>
 </div>
 
-<script src="script.js"></script>
+<!-- LEADERBOARD SCREEN (modal-style) -->
+<div id="screen-leaderboard" class="screen hidden">
+  <div class="modal-box">
+    <div class="modal-title">🏆 Top Signals</div>
+    <div class="modal-sub">Global leaderboard — localStorage top 10</div>
+    <div id="leaderboardList"></div>
+    <button class="btn-close-modal" onclick="showScreen('landing')">← Back</button>
+  </div>
+</div>
+
+<!-- SHOP SCREEN (modal-style) -->
+<div id="screen-shop" class="screen hidden">
+  <div class="modal-box">
+    <div class="modal-title">⚡ Shop</div>
+    <div class="shop-coins-hero">
+      <span style="font-size:22px;">💰</span>
+      <span class="shop-coins-count" id="shopCoinsCount">15</span>
+      <span style="font-size:13px;color:#5a5a8a;">coins</span>
+    </div>
+
+    <div class="shop-section-label">Power-ups (per run)</div>
+    <div class="powerup-grid">
+      <div class="powerup-card" id="shopPulseBoost" onclick="buyPowerup('pulse_boost')">
+        <div class="powerup-icon">⚡</div>
+        <div class="powerup-name">Pulse Boost</div>
+        <div class="powerup-desc">Pulse cooldown 6s for one run</div>
+        <div class="powerup-cost" id="pulseCostLabel">5 coins</div>
+      </div>
+      <div class="powerup-card" id="shopGhostVision" onclick="buyPowerup('ghost_vision')">
+        <div class="powerup-icon">👻</div>
+        <div class="powerup-name">Ghost Vision</div>
+        <div class="powerup-desc">See 10 ghost trails instead of 5</div>
+        <div class="powerup-cost" id="ghostCostLabel">8 coins</div>
+      </div>
+    </div>
+
+    <div class="shop-section-label">Node Skins</div>
+    <div class="skins-grid" id="skinsGrid"></div>
+
+    <div class="shop-section-label buy-coins-section">Buy Coins</div>
+    <div class="buy-coins-grid">
+      <div class="buy-coin-row" onclick="buyCoinsPack(49,100)">
+        <div class="buy-coin-amount">💰 100</div>
+        <div class="buy-coin-price">₹49</div>
+      </div>
+      <div class="buy-coin-row" onclick="buyCoinsPack(99,280)">
+        <div class="buy-coin-amount">💰 280 <span class="buy-coin-bonus">+BEST VALUE</span></div>
+        <div class="buy-coin-price">₹99</div>
+      </div>
+      <div class="buy-coin-row" onclick="buyCoinsPack(199,650)">
+        <div class="buy-coin-amount">💰 650 <span class="buy-coin-bonus">+POPULAR</span></div>
+        <div class="buy-coin-price">₹199</div>
+      </div>
+    </div>
+
+    <button class="btn-close-modal" onclick="closeShop()">← Back</button>
+  </div>
+</div>
+
+<!-- DEATH FLASH -->
+<div class="death-flash" id="deathFlash"></div>
+
+<!-- PULSE FREEZE OVERLAY -->
+<div id="pulse-freeze-overlay"></div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* ============================================================
+   CONSTANTS & CONFIG
+   ============================================================ */
+const GRID_SIZE = 7;
+const BASE_DECAY_INTERVAL = 2500;     // ms between node going unstable
+const UNSTABLE_DURATION = 1000;       // ms node flickers before dying
+const HUNTER_SPAWN_INTERVAL = 8000;   // ms between hunter spawns
+const HUNTER_MOVE_INTERVAL = 1000;    // ms between hunter moves
+const PULSE_DURATION = 2000;          // ms decay frozen
+const PULSE_COOLDOWN_BASE = 10000;    // ms base cooldown
+const PULSE_COOLDOWN_BOOST = 6000;    // ms boosted cooldown
+const DECAY_RATE_INCREASE = 0.15;     // 15% faster every 30s
+const DECAY_RATE_INTERVAL = 30000;    // ms between rate increases
+const STILL_ALIVE_INTERVAL = 15000;   // ms between still-alive flashes
+const ADJACENT_COLLAPSE_COUNT = 3;    // dead neighbors to collapse center
+const MAX_GHOSTS_DEFAULT = 5;
+const MAX_GHOSTS_BOOSTED = 10;
+const GHOST_MAX_STEPS = 500;          // max steps recorded per ghost
+
+/* ============================================================
+   SKINS CONFIG
+   ============================================================ */
+const SKINS = [
+  { id: 'default', name: 'Default', color: '#1a1a2e', playerColor: '#00FFB2', cost: 0 },
+  { id: 'crimson', name: 'Crimson', color: '#2e1a1a', playerColor: '#FF4444', cost: 20 },
+  { id: 'arctic', name: 'Arctic', color: '#1a2a2e', playerColor: '#44CCFF', cost: 20 },
+  { id: 'solar', name: 'Solar', color: '#2e2a1a', playerColor: '#FFB200', cost: 20 },
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let gameState = {
+  running: false,
+  startTime: 0,
+  elapsed: 0,
+  playerPos: { x: 3, y: 3 },
+  nodes: [],           // 2D array [y][x]: 'alive'|'unstable'|'dead'
+  unstableTimers: [],  // { x, y, timeLeft }
+  hunters: [],         // { x, y }
+  hunterSpawnTimer: 0,
+  hunterMoveTimer: 0,
+  pulseFrozen: false,
+  pulseTimer: 0,       // cooldown remaining (ms)
+  pulseCooldown: PULSE_COOLDOWN_BASE,
+  pulseActive: false,
+  pulseActiveTimer: 0,
+  decayInterval: BASE_DECAY_INTERVAL,
+  nextDecayTime: 0,
+  nextDecayRateTime: 0,
+  nextStillAliveTime: 0,
+  playerTrail: [],     // [{x,y}] current run trail
+  ghosts: [],          // [{path:[{x,y}], color}] up to 5/10
+  challengeGhost: null,// {path, color, timeMs}
+  killCause: 'dark node',
+  killNode: null,      // {x,y} for death screen highlight
+  lastFrameTime: 0,
+  rafId: null,
+  hasPulseBoost: false,
+  hasGhostVision: false,
+  activeSkin: 'default',
+};
+
+let gameData = {
+  coins: 15,
+  personalBest: 0,
+  leaderboard: [],    // [{name, time, timeMs}]
+  ghostHistory: [],   // last 10 ghost paths
+  ownedSkins: ['default'],
+  activeSkin: 'default',
+  lastPlayDate: '',
+  isFirstVisit: true,
+};
+
+let challengeData = null; // decoded from URL hash
+
+/* ============================================================
+   CANVAS
+   ============================================================ */
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let CELL_SIZE = 40;
+let CELL_GAP = 4;
+let GRID_PIXEL = 0;
+let CANVAS_OFFSET_X = 0;
+let CANVAS_OFFSET_Y = 0;
+
+function resizeCanvas() {
+  const margin = 90;
+  const availW = window.innerWidth - margin;
+  const availH = window.innerHeight - margin;
+  const availMin = Math.min(availW, availH);
+  CELL_SIZE = Math.floor((availMin - (GRID_SIZE + 1) * CELL_GAP) / GRID_SIZE);
+  CELL_SIZE = Math.max(28, Math.min(80, CELL_SIZE));
+  GRID_PIXEL = GRID_SIZE * CELL_SIZE + (GRID_SIZE + 1) * CELL_GAP;
+  canvas.width = GRID_PIXEL;
+  canvas.height = GRID_PIXEL;
+  CANVAS_OFFSET_X = (window.innerWidth - GRID_PIXEL) / 2;
+  CANVAS_OFFSET_Y = (window.innerHeight - GRID_PIXEL) / 2;
+  canvas.style.position = 'absolute';
+  canvas.style.left = CANVAS_OFFSET_X + 'px';
+  canvas.style.top = CANVAS_OFFSET_Y + 'px';
+}
+
+/* ============================================================
+   PERSISTENCE
+   ============================================================ */
+function saveData() {
+  localStorage.setItem('stelaron_data', JSON.stringify(gameData));
+}
+function loadData() {
+  try {
+    const d = JSON.parse(localStorage.getItem('stelaron_data') || 'null');
+    if (d) {
+      Object.assign(gameData, d);
+    }
+  } catch(e) {}
+}
+
+/* ============================================================
+   COIN HELPERS
+   ============================================================ */
+function addCoins(n) {
+  gameData.coins += n;
+  saveData();
+  updateCoinDisplays();
+}
+function spendCoins(n) {
+  if (gameData.coins < n) return false;
+  gameData.coins -= n;
+  saveData();
+  updateCoinDisplays();
+  return true;
+}
+function updateCoinDisplays() {
+  document.getElementById('coinCountLanding').textContent = gameData.coins;
+  document.getElementById('coinCountGame').textContent = gameData.coins;
+  document.getElementById('shopCoinsCount').textContent = gameData.coins;
+}
+
+/* ============================================================
+   SCREEN MANAGEMENT
+   ============================================================ */
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+  const el = document.getElementById('screen-' + name);
+  if (el) el.classList.remove('hidden');
+  if (name === 'leaderboard') renderLeaderboard();
+  if (name === 'shop') renderShop();
+  if (name === 'landing') {
+    updateCoinDisplays();
+    updateSurvivorsCounter();
+  }
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+let toastTimeout = null;
+function showToast(msg, duration = 3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), duration);
+}
+
+/* ============================================================
+   LANDING — SURVIVORS COUNTER
+   ============================================================ */
+let survivorsBase = 2847;
+let survivorsTimer = null;
+function updateSurvivorsCounter() {
+  const el = document.getElementById('survivorsBadge');
+  if (el) el.textContent = `⬤ ${survivorsBase.toLocaleString()} signals lost today`;
+}
+function startSurvivorsCounter() {
+  updateSurvivorsCounter();
+  if (survivorsTimer) clearInterval(survivorsTimer);
+  survivorsTimer = setInterval(() => {
+    survivorsBase++;
+    updateSurvivorsCounter();
+  }, 45000);
+}
+
+/* ============================================================
+   LANDING GRID PREVIEW
+   ============================================================ */
+function buildLandingGrid() {
+  const container = document.getElementById('landingGridPreview');
+  if (!container) return;
+  container.innerHTML = '';
+  for (let i = 0; i < 49; i++) {
+    const node = document.createElement('div');
+    node.className = 'landing-node' + (Math.random() < 0.15 ? ' dead' : '');
+    node.style.animationDelay = (-Math.random() * 3) + 's';
+    container.appendChild(node);
+  }
+}
+
+/* ============================================================
+   HOW TO PLAY
+   ============================================================ */
+function showHowToPlay() {
+  showToast('Arrow/WASD/Swipe to move · Space/Double-tap for Pulse · Avoid dark nodes & hunters · Survive!', 5000);
+}
+
+/* ============================================================
+   URL HASH — CHALLENGE DETECTION
+   ============================================================ */
+function parseChallenge() {
+  const hash = window.location.hash;
+  if (!hash || !hash.startsWith('#challenge=')) return null;
+  try {
+    const encoded = hash.slice('#challenge='.length);
+    const data = JSON.parse(atob(encoded));
+    return data; // { name, timeMs }
+  } catch(e) { return null; }
+}
+
+function showChallengeIntro(data) {
+  document.getElementById('challengerName').textContent = data.name || 'Someone';
+  document.getElementById('challengerTime').textContent = formatTime(data.timeMs || 0);
+  showScreen('challenge');
+}
+
+/* ============================================================
+   TIME FORMAT
+   ============================================================ */
+function formatTime(ms) {
+  const totalSec = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSec / 60);
+  const seconds = totalSec % 60;
+  const milli = ms % 1000;
+  return `${minutes}:${String(seconds).padStart(2,'0')}.${String(milli).padStart(3,'0')}`;
+}
+
+/* ============================================================
+   GHOST TRAILS
+   ============================================================ */
+function getGhostColor(index) {
+  const colors = ['#4466FF', '#FF44AA', '#44FFAA', '#FFAA44', '#AA44FF', '#44AAFF', '#FF6644', '#44FF66', '#AAFF44', '#FF44FF'];
+  return colors[index % colors.length];
+}
+
+function loadGhostHistory() {
+  gameState.ghosts = [];
+  const maxGhosts = gameState.hasGhostVision ? MAX_GHOSTS_BOOSTED : MAX_GHOSTS_DEFAULT;
+  const history = gameData.ghostHistory || [];
+  const take = Math.min(maxGhosts, history.length);
+  for (let i = 0; i < take; i++) {
+    gameState.ghosts.push({
+      path: history[history.length - 1 - i],
+      color: getGhostColor(i),
+    });
+  }
+  // Add challenge ghost if present
+  if (challengeData) {
+    gameState.challengeGhost = {
+      path: challengeData.path || [],
+      color: '#4488FF',
+      timeMs: challengeData.timeMs,
+    };
+  }
+}
+
+/* ============================================================
+   INIT GAME
+   ============================================================ */
+function initGame() {
+  resizeCanvas();
+  // Init grid
+  gameState.nodes = [];
+  for (let y = 0; y < GRID_SIZE; y++) {
+    gameState.nodes[y] = [];
+    for (let x = 0; x < GRID_SIZE; x++) {
+      gameState.nodes[y][x] = 'alive';
+    }
+  }
+  // Player center
+  gameState.playerPos = { x: 3, y: 3 };
+  gameState.playerTrail = [{ x: 3, y: 3 }];
+  gameState.hunters = [];
+  gameState.unstableTimers = [];
+  gameState.running = true;
+  gameState.startTime = performance.now();
+  gameState.elapsed = 0;
+  gameState.pulseFrozen = false;
+  gameState.pulseActive = false;
+  gameState.pulseTimer = 0;
+  gameState.pulseActiveTimer = 0;
+  gameState.pulseCooldown = gameState.hasPulseBoost ? PULSE_COOLDOWN_BOOST : PULSE_COOLDOWN_BASE;
+  gameState.hunterSpawnTimer = HUNTER_SPAWN_INTERVAL;
+  gameState.hunterMoveTimer = HUNTER_MOVE_INTERVAL;
+  gameState.decayInterval = BASE_DECAY_INTERVAL;
+  gameState.nextDecayTime = BASE_DECAY_INTERVAL;
+  gameState.nextDecayRateTime = DECAY_RATE_INTERVAL;
+  gameState.nextStillAliveTime = STILL_ALIVE_INTERVAL;
+  gameState.killCause = 'dark node';
+  gameState.killNode = null;
+  gameState.lastFrameTime = performance.now();
+  loadGhostHistory();
+  document.getElementById('hunterWarning').classList.remove('active');
+  document.getElementById('pulse-freeze-overlay').classList.remove('active');
+  document.getElementById('btnPulse').disabled = false;
+  updatePulseBar();
+}
+
+/* ============================================================
+   START GAME
+   ============================================================ */
+function startGame(fromChallenge = false) {
+  // Reset one-run powerups
+  gameState.hasPulseBoost = false;
+  gameState.hasGhostVision = false;
+  gameState.activeSkin = gameData.activeSkin || 'default';
+
+  if (gameState.rafId) cancelAnimationFrame(gameState.rafId);
+  initGame();
+  showScreen('game');
+  gameState.rafId = requestAnimationFrame(gameLoop);
+}
+
+function restartGame() {
+  if (gameState.rafId) cancelAnimationFrame(gameState.rafId);
+  gameState.hasPulseBoost = false;
+  gameState.hasGhostVision = false;
+  initGame();
+  showScreen('game');
+  gameState.rafId = requestAnimationFrame(gameLoop);
+}
+
+/* ============================================================
+   GAME LOOP
+   ============================================================ */
+function gameLoop(timestamp) {
+  if (!gameState.running) return;
+  const dt = Math.min(timestamp - gameState.lastFrameTime, 100);
+  gameState.lastFrameTime = timestamp;
+  gameState.elapsed = timestamp - gameState.startTime;
+
+  update(dt);
+  render();
+
+  // Update HUD
+  document.getElementById('timerDisplay').textContent = formatTime(Math.floor(gameState.elapsed));
+
+  gameState.rafId = requestAnimationFrame(gameLoop);
+}
+
+/* ============================================================
+   UPDATE
+   ============================================================ */
+function update(dt) {
+  if (!gameState.running) return;
+
+  // Pulse active timer
+  if (gameState.pulseActive) {
+    gameState.pulseActiveTimer -= dt;
+    if (gameState.pulseActiveTimer <= 0) {
+      gameState.pulseActive = false;
+      document.getElementById('pulse-freeze-overlay').classList.remove('active');
+    }
+  }
+
+  // Pulse cooldown
+  if (gameState.pulseTimer > 0) {
+    gameState.pulseTimer -= dt;
+    if (gameState.pulseTimer <= 0) {
+      gameState.pulseTimer = 0;
+      document.getElementById('pulseReadyLabel').textContent = 'READY';
+      document.getElementById('btnPulse').disabled = false;
+    }
+    updatePulseBar();
+  }
+
+  if (!gameState.pulseActive) {
+    // Decay rate increase
+    gameState.nextDecayRateTime -= dt;
+    if (gameState.nextDecayRateTime <= 0) {
+      gameState.decayInterval = Math.max(600, gameState.decayInterval * (1 - DECAY_RATE_INCREASE));
+      gameState.nextDecayRateTime = DECAY_RATE_INTERVAL;
+    }
+
+    // Spawn unstable node
+    gameState.nextDecayTime -= dt;
+    if (gameState.nextDecayTime <= 0) {
+      spawnUnstableNode();
+      gameState.nextDecayTime = gameState.decayInterval;
+    }
+
+    // Tick unstable nodes
+    for (let i = gameState.unstableTimers.length - 1; i >= 0; i--) {
+      gameState.unstableTimers[i].timeLeft -= dt;
+      if (gameState.unstableTimers[i].timeLeft <= 0) {
+        const { x, y } = gameState.unstableTimers[i];
+        killNode(x, y);
+        gameState.unstableTimers.splice(i, 1);
+      }
+    }
+
+    // Hunter spawn
+    gameState.hunterSpawnTimer -= dt;
+    if (gameState.hunterSpawnTimer <= 0) {
+      spawnHunter();
+      gameState.hunterSpawnTimer = HUNTER_SPAWN_INTERVAL;
+    }
+
+    // Hunter movement
+    gameState.hunterMoveTimer -= dt;
+    if (gameState.hunterMoveTimer <= 0) {
+      moveHunters();
+      gameState.hunterMoveTimer = HUNTER_MOVE_INTERVAL;
+    }
+  }
+
+  // Hunter warning HUD
+  const hunterWarning = document.getElementById('hunterWarning');
+  if (gameState.hunters.length > 0) {
+    hunterWarning.classList.add('active');
+  } else {
+    hunterWarning.classList.remove('active');
+  }
+
+  // Still alive flash
+  gameState.nextStillAliveTime -= dt;
+  if (gameState.nextStillAliveTime <= 0) {
+    triggerStillAlive();
+    gameState.nextStillAliveTime = STILL_ALIVE_INTERVAL;
+  }
+
+  // Check player death — on dark node
+  const { x, y } = gameState.playerPos;
+  if (gameState.nodes[y][x] === 'dead') {
+    endGame('dark node', { x, y });
+  }
+}
+
+/* ============================================================
+   NODE LOGIC
+   ============================================================ */
+function spawnUnstableNode() {
+  // Find a random alive node that's not the player
+  const alive = [];
+  for (let y = 0; y < GRID_SIZE; y++) {
+    for (let x = 0; x < GRID_SIZE; x++) {
+      if (gameState.nodes[y][x] === 'alive') {
+        if (!(x === gameState.playerPos.x && y === gameState.playerPos.y)) {
+          alive.push({ x, y });
+        }
+      }
+    }
+  }
+  if (alive.length === 0) return;
+  const pick = alive[Math.floor(Math.random() * alive.length)];
+  gameState.nodes[pick.y][pick.x] = 'unstable';
+  gameState.unstableTimers.push({ x: pick.x, y: pick.y, timeLeft: UNSTABLE_DURATION });
+}
+
+function killNode(x, y) {
+  if (x < 0 || x >= GRID_SIZE || y < 0 || y >= GRID_SIZE) return;
+  gameState.nodes[y][x] = 'dead';
+  checkCollapseAround(x, y);
+  // If player is on this node, die
+  if (gameState.playerPos.x === x && gameState.playerPos.y === y) {
+    endGame('dark node', { x, y });
+  }
+}
+
+function checkCollapseAround(cx, cy) {
+  const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+  // For each neighbor of the newly dead node, check if it should collapse
+  for (const [dx, dy] of dirs) {
+    const nx = cx + dx, ny = cy + dy;
+    if (nx < 0 || nx >= GRID_SIZE || ny < 0 || ny >= GRID_SIZE) continue;
+    if (gameState.nodes[ny][nx] === 'dead') continue;
+    countDeadNeighbors(nx, ny);
+  }
+}
+
+function countDeadNeighbors(x, y) {
+  const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+  let deadCount = 0;
+  for (const [dx, dy] of dirs) {
+    const nx = x + dx, ny = y + dy;
+    if (nx < 0 || nx >= GRID_SIZE || ny < 0 || ny >= GRID_SIZE) {
+      deadCount++; // edge counts as "dead" neighbor
+      continue;
+    }
+    if (gameState.nodes[ny][nx] === 'dead') deadCount++;
+  }
+  if (deadCount >= ADJACENT_COLLAPSE_COUNT) {
+    killNode(x, y);
+  }
+}
+
+/* ============================================================
+   HUNTER LOGIC
+   ============================================================ */
+function spawnHunter() {
+  const corners = [
+    { x: 0, y: 0 }, { x: GRID_SIZE-1, y: 0 },
+    { x: 0, y: GRID_SIZE-1 }, { x: GRID_SIZE-1, y: GRID_SIZE-1 }
+  ];
+  // Pick a corner that's alive
+  const valid = corners.filter(c => gameState.nodes[c.y][c.x] !== 'dead');
+  if (valid.length === 0) return;
+  const pick = valid[Math.floor(Math.random() * valid.length)];
+  gameState.hunters.push({ x: pick.x, y: pick.y });
+}
+
+function moveHunters() {
+  const { x: px, y: py } = gameState.playerPos;
+  for (let i = gameState.hunters.length - 1; i >= 0; i--) {
+    const h = gameState.hunters[i];
+    // Move one step toward player (Manhattan)
+    const dx = px - h.x, dy = py - h.y;
+    let nx = h.x, ny = h.y;
+    if (Math.abs(dx) >= Math.abs(dy)) {
+      nx = h.x + Math.sign(dx);
+    } else {
+      ny = h.y + Math.sign(dy);
+    }
+    // Don't move onto dead nodes
+    if (nx >= 0 && nx < GRID_SIZE && ny >= 0 && ny < GRID_SIZE &&
+        gameState.nodes[ny][nx] !== 'dead') {
+      h.x = nx; h.y = ny;
+    }
+    // Check if hunter reached player
+    if (h.x === px && h.y === py) {
+      endGame('hunter', null);
+      return;
+    }
+  }
+}
+
+/* ============================================================
+   PULSE
+   ============================================================ */
+function activatePulse() {
+  if (!gameState.running) return;
+  if (gameState.pulseTimer > 0) return;
+  gameState.pulseActive = true;
+  gameState.pulseActiveTimer = PULSE_DURATION;
+  gameState.pulseTimer = gameState.pulseCooldown;
+  document.getElementById('pulse-freeze-overlay').classList.add('active');
+  document.getElementById('btnPulse').disabled = true;
+  document.getElementById('pulseReadyLabel').textContent = '';
+  updatePulseBar();
+}
+
+function updatePulseBar() {
+  const fill = document.getElementById('pulseBarFill');
+  const label = document.getElementById('pulseReadyLabel');
+  if (gameState.pulseTimer <= 0) {
+    fill.style.width = '100%';
+    label.textContent = 'READY';
+  } else {
+    const pct = 1 - (gameState.pulseTimer / gameState.pulseCooldown);
+    fill.style.width = (pct * 100) + '%';
+    label.textContent = (gameState.pulseTimer / 1000).toFixed(1) + 's';
+  }
+}
+
+/* ============================================================
+   PLAYER MOVEMENT
+   ============================================================ */
+function movePlayer(dx, dy) {
+  if (!gameState.running) return;
+  const nx = gameState.playerPos.x + dx;
+  const ny = gameState.playerPos.y + dy;
+  if (nx < 0 || nx >= GRID_SIZE || ny < 0 || ny >= GRID_SIZE) return;
+  if (gameState.nodes[ny][nx] === 'dead') {
+    endGame('dark node', { x: nx, y: ny });
+    return;
+  }
+  gameState.playerPos.x = nx;
+  gameState.playerPos.y = ny;
+  // Record trail
+  if (gameState.playerTrail.length >= GHOST_MAX_STEPS) gameState.playerTrail.shift();
+  gameState.playerTrail.push({ x: nx, y: ny });
+  // Check hunter collision
+  for (const h of gameState.hunters) {
+    if (h.x === nx && h.y === ny) {
+      endGame('hunter', null);
+    }
+  }
+}
+
+/* ============================================================
+   STILL ALIVE FLASH
+   ============================================================ */
+function triggerStillAlive() {
+  const el = document.getElementById('stillAliveFlash');
+  el.classList.remove('show');
+  void el.offsetWidth;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 1300);
+}
+
+/* ============================================================
+   END GAME
+   ============================================================ */
+function endGame(cause, killNode) {
+  if (!gameState.running) return;
+  gameState.running = false;
+  gameState.killCause = cause;
+  gameState.killNode = killNode;
+
+  // Death flash
+  const flash = document.getElementById('deathFlash');
+  flash.classList.add('show');
+  setTimeout(() => flash.classList.remove('show'), 200);
+
+  // Save ghost trail
+  const path = [...gameState.playerTrail];
+  const maxHist = MAX_GHOSTS_BOOSTED;
+  gameData.ghostHistory.push(path);
+  if (gameData.ghostHistory.length > maxHist) gameData.ghostHistory.shift();
+
+  // Personal best
+  const timeMs = Math.floor(gameState.elapsed);
+  const isNewRecord = timeMs > gameData.personalBest;
+  if (isNewRecord) gameData.personalBest = timeMs;
+
+  // Leaderboard
+  updateLeaderboard(timeMs);
+  saveData();
+
+  // Render share grid
+  renderShareGrid(killNode);
+
+  // Show death screen
+  setTimeout(() => {
+    cancelAnimationFrame(gameState.rafId);
+    showDeathScreen(timeMs, isNewRecord, cause, killNode);
+  }, 250);
+}
+
+function showDeathScreen(timeMs, isNewRecord, cause, killNode) {
+  document.getElementById('deathTimeBig').textContent = formatTime(timeMs);
+  document.getElementById('shareCardTime').textContent = formatTime(timeMs);
+  document.getElementById('shareCardSub').textContent = `Survived ${formatTime(timeMs)} · stelaron.com`;
+  document.getElementById('deathPBLabel').textContent = `Personal Best: ${formatTime(gameData.personalBest)}`;
+  document.getElementById('newRecordBadge').classList.toggle('hidden', !isNewRecord);
+
+  // Rank
+  const rank = getPlayerRank(timeMs);
+  document.getElementById('deathRank').textContent = `Global Rank: #${rank}`;
+
+  // Cause
+  const causeEl = document.getElementById('deathCause');
+  if (cause === 'hunter') {
+    causeEl.innerHTML = 'Eliminated by <span>Hunter node</span>';
+  } else {
+    causeEl.innerHTML = 'Eliminated by <span>dark node collapse</span>';
+  }
+
+  document.getElementById('challengeCopied').classList.add('hidden');
+  showScreen('death');
+}
+
+function getPlayerRank(timeMs) {
+  const all = gameData.leaderboard.map(e => e.timeMs);
+  all.push(timeMs);
+  all.sort((a, b) => b - a);
+  return all.indexOf(timeMs) + 1;
+}
+
+function updateLeaderboard(timeMs) {
+  const name = 'You';
+  gameData.leaderboard.push({ name, time: formatTime(timeMs), timeMs });
+  gameData.leaderboard.sort((a, b) => b.timeMs - a.timeMs);
+  // Deduplicate "You" entries — keep top
+  const others = gameData.leaderboard.filter(e => e.name !== 'You');
+  const mine = gameData.leaderboard.filter(e => e.name === 'You');
+  gameData.leaderboard = [...mine.slice(0, 1), ...others].sort((a, b) => b.timeMs - a.timeMs).slice(0, 10);
+}
+
+/* ============================================================
+   RENDER — CANVAS
+   ============================================================ */
+const skinColors = {
+  default: { alive: '#1a1a2e', alive2: '#16213e', player: '#00FFB2', playerGlow: '#00FFB244' },
+  crimson: { alive: '#2e1a1a', alive2: '#3e1616', player: '#FF4444', playerGlow: '#FF444444' },
+  arctic: { alive: '#1a2a2e', alive2: '#163040', player: '#44CCFF', playerGlow: '#44CCFF44' },
+  solar: { alive: '#2e2a1a', alive2: '#3e3416', player: '#FFB200', playerGlow: '#FFB20044' },
+};
+
+function getSkinColors() {
+  return skinColors[gameState.activeSkin] || skinColors.default;
+}
+
+function render() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#060608';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const skin = getSkinColors();
+  const t = performance.now();
+
+  // Draw ghost trails
+  drawGhosts();
+
+  // Draw nodes
+  for (let y = 0; y < GRID_SIZE; y++) {
+    for (let x = 0; x < GRID_SIZE; x++) {
+      const cx = CELL_GAP + x * (CELL_SIZE + CELL_GAP);
+      const cy = CELL_GAP + y * (CELL_SIZE + CELL_GAP);
+      const state = gameState.nodes[y][x];
+
+      if (state === 'dead') {
+        // Highlight kill node
+        if (gameState.killNode && gameState.killNode.x === x && gameState.killNode.y === y) {
+          ctx.fillStyle = '#FF444444';
+        } else {
+          ctx.fillStyle = '#0a0a0a';
+        }
+        ctx.beginPath();
+        ctx.roundRect(cx, cy, CELL_SIZE, CELL_SIZE, 4);
+        ctx.fill();
+      } else if (state === 'unstable') {
+        // Flicker between red and black
+        const flicker = Math.sin(t * 0.02) > 0;
+        ctx.fillStyle = flicker ? '#FF4444' : '#1a0000';
+        ctx.beginPath();
+        ctx.roundRect(cx, cy, CELL_SIZE, CELL_SIZE, 4);
+        ctx.fill();
+        // Glow
+        ctx.shadowColor = '#FF4444';
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = 'transparent';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      } else {
+        // Alive — pulse
+        const pulse = (Math.sin(t * 0.001 + x * 0.5 + y * 0.3) + 1) / 2;
+        ctx.fillStyle = lerpColor(skin.alive, skin.alive2, pulse);
+        ctx.beginPath();
+        ctx.roundRect(cx, cy, CELL_SIZE, CELL_SIZE, 4);
+        ctx.fill();
+      }
+    }
+  }
+
+  // Draw unstable flickers (already handled above, but add outer ring)
+  for (const { x, y } of gameState.unstableTimers) {
+    const cx = CELL_GAP + x * (CELL_SIZE + CELL_GAP);
+    const cy = CELL_GAP + y * (CELL_SIZE + CELL_GAP);
+    ctx.strokeStyle = '#FF4444';
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = '#FF4444';
+    ctx.shadowBlur = 6;
+    ctx.beginPath();
+    ctx.roundRect(cx, cy, CELL_SIZE, CELL_SIZE, 4);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+
+  // Draw hunters
+  for (const h of gameState.hunters) {
+    const cx = CELL_GAP + h.x * (CELL_SIZE + CELL_GAP) + CELL_SIZE / 2;
+    const cy = CELL_GAP + h.y * (CELL_SIZE + CELL_GAP) + CELL_SIZE / 2;
+    const pulse = (Math.sin(t * 0.008) + 1) / 2;
+    const r = CELL_SIZE * 0.3 + pulse * CELL_SIZE * 0.05;
+    ctx.shadowColor = '#FF6B00';
+    ctx.shadowBlur = 14;
+    ctx.fillStyle = '#FF6B00';
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    // Inner mark
+    ctx.fillStyle = '#FF4400';
+    ctx.beginPath();
+    ctx.arc(cx, cy, r * 0.45, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Draw player
+  drawPlayer(skin, t);
+}
+
+function drawGhosts() {
+  const allGhosts = [...gameState.ghosts];
+  if (gameState.challengeGhost) allGhosts.push(gameState.challengeGhost);
+
+  for (const ghost of allGhosts) {
+    if (!ghost.path || ghost.path.length < 2) continue;
+    ctx.globalAlpha = 0.15;
+    ctx.strokeStyle = ghost.color;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    let started = false;
+    for (let i = 0; i < ghost.path.length; i++) {
+      const p = ghost.path[i];
+      const cx = CELL_GAP + p.x * (CELL_SIZE + CELL_GAP) + CELL_SIZE / 2;
+      const cy = CELL_GAP + p.y * (CELL_SIZE + CELL_GAP) + CELL_SIZE / 2;
+      if (!started) { ctx.moveTo(cx, cy); started = true; }
+      else ctx.lineTo(cx, cy);
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+}
+
+function drawPlayer(skin, t) {
+  const { x, y } = gameState.playerPos;
+  const cx = CELL_GAP + x * (CELL_SIZE + CELL_GAP) + CELL_SIZE / 2;
+  const cy = CELL_GAP + y * (CELL_SIZE + CELL_GAP) + CELL_SIZE / 2;
+  const pulse = (Math.sin(t * 0.005) + 1) / 2;
+  const r = 6 + pulse * 2;
+
+  // Outer glow
+  const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 4);
+  grad.addColorStop(0, skin.player + '88');
+  grad.addColorStop(1, skin.player + '00');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 4, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Core
+  ctx.shadowColor = skin.player;
+  ctx.shadowBlur = 16;
+  ctx.fillStyle = skin.player;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Inner dot
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.35, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+/* ============================================================
+   SHARE GRID CANVAS
+   ============================================================ */
+function renderShareGrid(killNode) {
+  const sc = document.getElementById('shareGridCanvas');
+  const sctx = sc.getContext('2d');
+  const size = 300;
+  sc.width = size; sc.height = size;
+  const cSize = Math.floor((size - (GRID_SIZE + 1) * 3) / GRID_SIZE);
+  const gap = 3;
+
+  sctx.fillStyle = '#0d0d1a';
+  sctx.fillRect(0, 0, size, size);
+
+  const skin = getSkinColors();
+  for (let y = 0; y < GRID_SIZE; y++) {
+    for (let x = 0; x < GRID_SIZE; x++) {
+      const cx = gap + x * (cSize + gap);
+      const cy = gap + y * (cSize + gap);
+      const state = gameState.nodes[y][x];
+      if (state === 'dead') {
+        if (killNode && killNode.x === x && killNode.y === y) {
+          sctx.fillStyle = '#FF4444';
+        } else {
+          sctx.fillStyle = '#111118';
+        }
+      } else if (state === 'unstable') {
+        sctx.fillStyle = '#FF4444';
+      } else {
+        sctx.fillStyle = skin.alive;
+      }
+      sctx.beginPath();
+      sctx.roundRect(cx, cy, cSize, cSize, 2);
+      sctx.fill();
+    }
+  }
+  // Player position
+  const px = gap + gameState.playerPos.x * (cSize + gap) + cSize / 2;
+  const py = gap + gameState.playerPos.y * (cSize + gap) + cSize / 2;
+  sctx.shadowColor = skin.player;
+  sctx.shadowBlur = 10;
+  sctx.fillStyle = skin.player;
+  sctx.beginPath();
+  sctx.arc(px, py, cSize * 0.3, 0, Math.PI * 2);
+  sctx.fill();
+  sctx.shadowBlur = 0;
+}
+
+/* ============================================================
+   COLOR LERP UTILITY
+   ============================================================ */
+function lerpColor(a, b, t) {
+  const ah = parseInt(a.slice(1), 16);
+  const bh = parseInt(b.slice(1), 16);
+  const ar = (ah >> 16) & 0xff, ag = (ah >> 8) & 0xff, ab = ah & 0xff;
+  const br = (bh >> 16) & 0xff, bg = (bh >> 8) & 0xff, bb = bh & 0xff;
+  const r = Math.round(ar + (br - ar) * t);
+  const g = Math.round(ag + (bg - ag) * t);
+  const bl2 = Math.round(ab + (bb - ab) * t);
+  return `#${((r << 16) | (g << 8) | bl2).toString(16).padStart(6, '0')}`;
+}
+
+/* ============================================================
+   LEADERBOARD
+   ============================================================ */
+function renderLeaderboard() {
+  const list = document.getElementById('leaderboardList');
+  if (!list) return;
+  if (gameData.leaderboard.length === 0) {
+    list.innerHTML = '<div class="lb-empty">No signals recorded yet.<br>Play to claim the top spot.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  gameData.leaderboard.forEach((entry, i) => {
+    const row = document.createElement('div');
+    row.className = 'lb-row';
+    row.style.animationDelay = (i * 0.05) + 's';
+    row.innerHTML = `
+      <div class="lb-rank">${i + 1}</div>
+      <div class="lb-name">${entry.name}${entry.name === 'You' ? ' <span class="lb-you-badge">YOU</span>' : ''}</div>
+      <div class="lb-time">${entry.time}</div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+/* ============================================================
+   SHOP
+   ============================================================ */
+function renderShop() {
+  updateCoinDisplays();
+
+  // Render skins
+  const grid = document.getElementById('skinsGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  SKINS.forEach(skin => {
+    const owned = gameData.ownedSkins.includes(skin.id);
+    const active = gameData.activeSkin === skin.id;
+    const card = document.createElement('div');
+    card.className = 'skin-card' + (active ? ' active' : '');
+    card.onclick = () => buySkin(skin.id);
+    const skinCol = skinColors[skin.id] || skinColors.default;
+    card.innerHTML = `
+      <div class="skin-swatch" style="background:${skinCol.player};color:${skinCol.player};"></div>
+      <div class="skin-name">${skin.name}</div>
+      <div class="skin-cost ${owned ? 'owned' : ''}">${owned ? (active ? '✓ Active' : 'Equip') : skin.cost + ' coins'}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function buySkin(id) {
+  const skin = SKINS.find(s => s.id === id);
+  if (!skin) return;
+  const owned = gameData.ownedSkins.includes(id);
+  if (!owned) {
+    if (gameData.coins < skin.cost) { showToast('Not enough coins! Buy more below.'); return; }
+    spendCoins(skin.cost);
+    gameData.ownedSkins.push(id);
+    showToast(`${skin.name} skin unlocked!`);
+  }
+  gameData.activeSkin = id;
+  saveData();
+  renderShop();
+}
+
+function buyPowerup(type) {
+  if (type === 'pulse_boost') {
+    if (gameData.coins < 5) { showToast('Not enough coins!'); return; }
+    spendCoins(5);
+    gameState.hasPulseBoost = true;
+    showToast('⚡ Pulse Boost active for your next run!');
+  } else if (type === 'ghost_vision') {
+    if (gameData.coins < 8) { showToast('Not enough coins!'); return; }
+    spendCoins(8);
+    gameState.hasGhostVision = true;
+    showToast('👻 Ghost Vision active for your next run!');
+  }
+  updateCoinDisplays();
+}
+
+function buyCoinsPack(price, amount) {
+  showToast('Payments launching soon — follow stelaron.com for updates 🚀');
+}
+
+function closeShop() {
+  const prev = document.querySelector('.screen:not(.hidden)');
+  const prevId = prev ? prev.id : 'screen-landing';
+  showScreen(prevId === 'screen-shop' ? 'landing' : prevId.replace('screen-', ''));
+}
+
+/* ============================================================
+   CHALLENGE GENERATION
+   ============================================================ */
+function generateChallenge() {
+  const timeMs = Math.floor(gameState.elapsed);
+  const data = {
+    name: 'You',
+    timeMs,
+    path: gameState.playerTrail,
+  };
+  const encoded = btoa(JSON.stringify(data));
+  const url = `${location.origin}${location.pathname}#challenge=${encoded}`;
+
+  navigator.clipboard.writeText(url).then(() => {
+    document.getElementById('challengeCopied').classList.remove('hidden');
+    showToast('Challenge link copied! Send it to a friend.');
+  }).catch(() => {
+    showToast('Challenge link: ' + url);
+  });
+}
+
+/* ============================================================
+   SHARE CARD — html2canvas
+   ============================================================ */
+function shareCard() {
+  if (typeof html2canvas === 'undefined') {
+    showToast('Screenshot not available — try manually screenshotting!');
+    return;
+  }
+  html2canvas(document.getElementById('shareCard'), {
+    backgroundColor: '#0d0d1a',
+    scale: 2,
+  }).then(canvas2 => {
+    const link = document.createElement('a');
+    link.download = `stelaron-${formatTime(Math.floor(gameState.elapsed)).replace(/:/g, '-')}.png`;
+    link.href = canvas2.toDataURL('image/png');
+    link.click();
+    showToast('Share card saved! Post it to challenge your friends.');
+  }).catch(() => {
+    showToast('Screenshot saved — post it anywhere!');
+  });
+}
+
+/* ============================================================
+   KEYBOARD INPUT
+   ============================================================ */
+const keysDown = {};
+document.addEventListener('keydown', (e) => {
+  const key = e.key.toLowerCase();
+  if (keysDown[key]) return;
+  keysDown[key] = true;
+
+  if (!gameState.running) {
+    if ((key === 'enter' || key === ' ') && !document.getElementById('screen-death').classList.contains('hidden')) {
+      restartGame();
+    }
+    return;
+  }
+
+  switch (key) {
+    case 'arrowup': case 'w': e.preventDefault(); movePlayer(0, -1); break;
+    case 'arrowdown': case 's': e.preventDefault(); movePlayer(0, 1); break;
+    case 'arrowleft': case 'a': e.preventDefault(); movePlayer(-1, 0); break;
+    case 'arrowright': case 'd': e.preventDefault(); movePlayer(1, 0); break;
+    case ' ': e.preventDefault(); activatePulse(); break;
+  }
+});
+document.addEventListener('keyup', (e) => {
+  delete keysDown[e.key.toLowerCase()];
+});
+
+/* ============================================================
+   TOUCH / SWIPE INPUT
+   ============================================================ */
+let touchStartX = 0, touchStartY = 0, touchTime = 0;
+let lastTapTime = 0;
+
+document.addEventListener('touchstart', (e) => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  touchTime = Date.now();
+}, { passive: true });
+
+document.addEventListener('touchend', (e) => {
+  if (!gameState.running) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  const now = Date.now();
+
+  if (dist < 15) {
+    // Tap — double-tap for pulse
+    if (now - lastTapTime < 300) {
+      activatePulse();
+    }
+    lastTapTime = now;
+    return;
+  }
+
+  if (dist < 20) return;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    movePlayer(dx > 0 ? 1 : -1, 0);
+  } else {
+    movePlayer(0, dy > 0 ? 1 : -1);
+  }
+}, { passive: true });
+
+/* ============================================================
+   FIRST VISIT / RETURN BONUS
+   ============================================================ */
+function closeReturnOverlay() {
+  document.getElementById('return-overlay').classList.add('hidden');
+}
+
+function checkFirstVisitAndReturnBonus() {
+  const today = new Date().toISOString().slice(0, 10);
+
+  if (gameData.isFirstVisit) {
+    // Already granted 15 coins at init
+    gameData.isFirstVisit = false;
+    gameData.lastPlayDate = today;
+    saveData();
+    updateCoinDisplays();
+    // Show welcome overlay
+    const wo = document.getElementById('welcome-overlay');
+    wo.classList.remove('hidden');
+    setTimeout(() => wo.classList.add('hidden'), 4200);
+  } else {
+    // Check return bonus
+    if (gameData.lastPlayDate && gameData.lastPlayDate !== today) {
+      const last = new Date(gameData.lastPlayDate);
+      const diff = (new Date(today) - last) / (1000 * 60 * 60 * 24);
+      if (diff >= 1) {
+        addCoins(8);
+        gameData.lastPlayDate = today;
+        saveData();
+        document.getElementById('return-overlay').classList.remove('hidden');
+        return;
+      }
+    }
+    gameData.lastPlayDate = today;
+    saveData();
+  }
+}
+
+/* ============================================================
+   WINDOW RESIZE
+   ============================================================ */
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  if (!gameState.running) render();
+});
+
+/* ============================================================
+   INIT ON LOAD
+   ============================================================ */
+window.addEventListener('load', () => {
+  loadData();
+
+  // If first visit, start with 15 coins
+  if (gameData.isFirstVisit) {
+    gameData.coins = 15;
+  }
+
+  updateCoinDisplays();
+  buildLandingGrid();
+  startSurvivorsCounter();
+
+  // Check for challenge link
+  challengeData = parseChallenge();
+  if (challengeData) {
+    showChallengeIntro(challengeData);
+  } else {
+    checkFirstVisitAndReturnBonus();
+    showScreen('landing');
+  }
+
+  // Initial canvas setup
+  resizeCanvas();
+  // Draw empty grid on canvas so it's ready
+  ctx.fillStyle = '#060608';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+});
+
+/* ============================================================
+   ADDITIONAL: roundRect polyfill for older browsers
+   ============================================================ */
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    this.beginPath();
+    this.moveTo(x + r, y);
+    this.arcTo(x + w, y, x + w, y + h, r);
+    this.arcTo(x + w, y + h, x, y + h, r);
+    this.arcTo(x, y + h, x, y, r);
+    this.arcTo(x, y, x + w, y, r);
+    this.closePath();
+    return this;
+  };
+}
+</script>
 </body>
 </html>
